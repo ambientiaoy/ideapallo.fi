@@ -1,0 +1,30 @@
+{
+    "name": "ideapallo",
+    "models": [{
+        "name": "Idea",
+        "properties": [{
+            "dslType": "uuid",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "text",
+            "name": "title",
+            "wrappers": [],
+            "maxSize": "255"
+        }, {
+            "dslType": "text",
+            "name": "content",
+            "wrappers": [],
+            "maxSize": "255"
+        }],
+        "references": [],
+        "primaryKeys": [{
+            "dslType": "uuid",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_IDEA_I_6F45FD",
+        "uniques": [],
+        "indices": []
+    }]
+}

@@ -4,42 +4,64 @@ ideapallo project[
 ](
 
   #SERVER
-  backend server[
+  ideapallo server[
     template java-springboot
     developer (akis)
+    default model type sql
+    security(
+      principal Account 
+#      permission  // I have no idea what permission actually does and how to make use of it.
+      role AccountTypes 
+      defaultRole CLIENT
+      adminRole ADMIN
+      signIn[query findUserWithStuff, response(Account, Idealist)]
+      type (username, email, facebook)
+    )
   ](
 
+
+    #ENUMS
+    AccountTypes enum( ADMIN, CLIENT)
+
     #MODEL
-    Note model(
+    Account model(
+      findUserWithStuff find from Account join Idealist on Idealist.account where Account.id == id
+    )
+
+    Idealist model(
+      account Account[oneToOne]
+    )
+
+    Idea model(
       title text
       content text
     )
 
     #API
-    NoteApi api(
-      note crud[model Note, rest]
-      notes find[from Note, rest]
+    IdeaApi api(
+      idea crud[model Idea, rest]
+      ideas find[from Idea, rest]
     )
   )
 
   #CLIENT
   webApp client[
     template js-angular
-    connectedTo backend
+    connectedTo ideapallo
     path /home
-    home notesPage
+    home ideasPage
   ](
-    NoteUpdated event
+    IdeaUpdated event
 
-    notesPage page[path /notes](
-      addNote button{on click open createNewNote}
-      notes table[load NoteApi.notes]{
-        on NoteUpdated reload
+    ideasPage page[path /ideas](
+      addNote button{on click open createNewIdea}
+      ideas table[load IdeaApi.ideas]{
+        on IdeaUpdated reload
       }
     )
 
-    createNewNote form[submit NoteApi.createNote]{
-      on success (close, fire NoteUpdated)
+    createNewIdea form[submit IdeaApi.createIdea]{
+      on success (close, fire IdeaUpdated)
     }
   )
 )

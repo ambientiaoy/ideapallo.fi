@@ -1,0 +1,173 @@
+{
+    "name": "ideapallo",
+    "models": [{
+        "name": "Account",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "enum",
+            "name": "role",
+            "wrappers": []
+        }, {
+            "dslType": "text",
+            "name": "username",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "3",
+            "maxSize": "128"
+        }, {
+            "dslType": "text",
+            "name": "passwordHash",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "6",
+            "maxSize": "128"
+        }, {
+            "dslType": "text",
+            "name": "email",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "6",
+            "maxSize": "128"
+        }, {
+            "dslType": "text",
+            "name": "emailVerificationCode",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "64",
+            "maxSize": "64"
+        }, {
+            "dslType": "datetime",
+            "name": "emailVerificationCodeTimestamp",
+            "wrappers": ["OPTIONAL"]
+        }, {
+            "dslType": "boolean",
+            "name": "emailVerified",
+            "wrappers": ["OPTIONAL"],
+            "default": "false"
+        }, {
+            "dslType": "text",
+            "name": "resetPasswordCode",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "64",
+            "maxSize": "64"
+        }, {
+            "dslType": "datetime",
+            "name": "resetPasswordCodeTimestamp",
+            "wrappers": ["OPTIONAL"]
+        }, {
+            "dslType": "text",
+            "name": "facebookId",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "6",
+            "maxSize": "255"
+        }],
+        "references": [],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_ACCO_I_302F25",
+        "uniques": [{
+            "properties": [{
+                "dslType": "text",
+                "name": "username",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "3",
+                "maxSize": "128"
+            }],
+            "sqlName": "UNQ_ACCO_U_93B38A"
+        }, {
+            "properties": [{
+                "dslType": "text",
+                "name": "email",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "6",
+                "maxSize": "128"
+            }],
+            "sqlName": "UNQ_ACCO_E_637A1E"
+        }, {
+            "properties": [{
+                "dslType": "text",
+                "name": "emailVerificationCode",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "64",
+                "maxSize": "64"
+            }],
+            "sqlName": "UNQ_ACCO_EVC_9F1591"
+        }, {
+            "properties": [{
+                "dslType": "text",
+                "name": "resetPasswordCode",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "64",
+                "maxSize": "64"
+            }],
+            "sqlName": "UNQ_ACCO_RPC_402383"
+        }, {
+            "properties": [{
+                "dslType": "text",
+                "name": "facebookId",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "6",
+                "maxSize": "255"
+            }],
+            "sqlName": "UNQ_ACCO_FI_16E314"
+        }],
+        "indices": []
+    }, {
+        "name": "Idealist",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "long",
+            "name": "accountId",
+            "wrappers": []
+        }],
+        "references": [{
+            "name": "account",
+            "model": "Account",
+            "properties": [{
+                "dslType": "long",
+                "name": "accountId",
+                "wrappers": []
+            }],
+            "sqlName": "FK_IDEA.AI_ACCO.I_4F4134"
+        }],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_IDEA_I_FEA67D",
+        "uniques": [],
+        "indices": []
+    }, {
+        "name": "Idea",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "text",
+            "name": "title",
+            "wrappers": [],
+            "maxSize": "255"
+        }, {
+            "dslType": "text",
+            "name": "content",
+            "wrappers": [],
+            "maxSize": "255"
+        }],
+        "references": [],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_IDEA_I_6F45FD",
+        "uniques": [],
+        "indices": []
+    }]
+}

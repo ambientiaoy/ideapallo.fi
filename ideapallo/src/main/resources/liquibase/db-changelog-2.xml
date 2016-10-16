@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="generator" id="2">
+        <!--DROP PRIMARY KEYS-->
+        <dropPrimaryKey constraintName="PK_IDEA_I_6F45FD" tableName="Idea"/>
+        <!--DROP COLUMNS-->
+        <dropColumn columnName="id" tableName="Idea"/>
+        <!--ADD COLUMNS-->
+        <addColumn tableName="Idea">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </addColumn>
+        <!--ADD PRIMARY KEYS-->
+        <addPrimaryKey columnNames="id" constraintName="PK_IDEA_I_6F45FD" tableName="Idea"/>
+    </changeSet>
+</databaseChangeLog>

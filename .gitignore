@@ -1,0 +1,9 @@
+ideapallo/target/
+.settings/
+.classpath
+.project
+.metadata/
+.cache
+.idea/
+*.iml
+**/target/
