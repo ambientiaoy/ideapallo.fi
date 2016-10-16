@@ -1,0 +1,246 @@
+ideapallo project[
+    url www.ideapallo.com
+    namespace com.ideapallo](
+    backend server[
+        template java-springboot
+        developer(
+            akis
+            docker
+        )
+        default model type nosql
+        path /](
+        Idea model[
+            type nosql](
+            id uuid[
+                primarykey]
+            title text[
+                max 255]
+            content text[
+                max 255]
+            findAll find from Idea as Idea
+            countAll count from Idea as Idea
+            findById find from Idea as Idea where Idea.id == id
+            getById get from Idea as Idea where Idea.id == id
+            deleteById delete from Idea as Idea where Idea.id == id
+            findByTitle find from Idea as Idea where Idea.title == title
+            findByContent find from Idea as Idea where Idea.content == content
+            ideas find from Idea as Idea
+        )
+        IdeaApi api(
+            readIdea find[
+                get /idea/:id
+                query Idea.findById
+                response(
+                    Idea.id
+                    Idea.title
+                    Idea.content
+                )
+                errors
+                request ReadIdeaRequest
+                response ReadIdeaResponse]
+            ReadIdeaRequest dto(
+                id uuid
+            )
+            ReadIdeaResponse dto(
+                id uuid
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            createIdea create[
+                post /idea
+                model Idea
+                query Idea.findById
+                response(
+                    Idea.id
+                    Idea.title
+                    Idea.content
+                )
+                errors
+                request CreateIdeaRequest
+                response CreateIdeaResponse](
+                id id[
+                    visible(
+                        read
+                    )]
+                title title[
+                    visible(
+                        create
+                        read
+                    )]
+                content content[
+                    visible(
+                        create
+                        read
+                    )]
+            )
+            CreateIdeaRequest dto(
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            CreateIdeaResponse dto(
+                id uuid
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            updateIdea update[
+                put /idea/:id
+                model Idea
+                query Idea.findById
+                response(
+                    Idea.id
+                    Idea.title
+                    Idea.content
+                )
+                errors
+                request UpdateIdeaRequest
+                response UpdateIdeaResponse](
+                id id[
+                    visible(
+                        read
+                        update
+                    )]
+                title title[
+                    visible(
+                        read
+                        update
+                    )]
+                content content[
+                    visible(
+                        read
+                        update
+                    )]
+            )
+            UpdateIdeaRequest dto(
+                id uuid
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            UpdateIdeaResponse dto(
+                id uuid
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            deleteIdea delete[
+                delete /idea/:id
+                query Idea.findById
+                errors
+                request DeleteIdeaRequest]
+            DeleteIdeaRequest dto(
+                id uuid
+            )
+            ideas find[
+                query Idea.ideas
+                get /ideas
+                errors
+                response(
+                    Idea.id
+                    Idea.title
+                    Idea.content
+                )
+                response list IdeasResponse]
+            IdeasResponse dto(
+                id uuid
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+        )
+    )
+    webApp client[
+        template js-angular
+        connectedTo(
+            backend.IdeaApi.readIdea
+            backend.IdeaApi.createIdea
+            backend.IdeaApi.updateIdea
+            backend.IdeaApi.deleteIdea
+            backend.IdeaApi.ideas
+        )
+        path /home
+        home ideasPage
+        i18n(
+            en
+        )](
+        IdeaUpdated event
+        ideasPage page[
+            path /ideas](
+            addNote button{
+                on click(
+                    open createNewIdea
+                )}
+            ideas ideas
+        )
+        createNewIdea form[
+            submit IdeaApi.createIdea
+            model[
+                dto backend.IdeaApi.CreateIdeaRequest](
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            visible(
+                title
+                content
+            )](
+            title text[
+                bind(
+                    model . title
+                )
+                max 255]
+            content text[
+                bind(
+                    model . content
+                )
+                max 255]
+            submit button
+        ){
+            on success(
+                close
+                fire IdeaUpdated
+            )}
+        ideas table[
+            load IdeaApi.ideas
+            model[
+                dto backend.IdeaApi.IdeasResponse](
+                id uuid
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            visible(
+                id
+                title
+                content
+            )](
+            id uuid[
+                bind(
+                    model . id
+                )]
+            title text[
+                bind(
+                    model . title
+                )
+                max 255]
+            content text[
+                bind(
+                    model . content
+                )
+                max 255]
+        ){
+            on IdeaUpdated(
+                reload
+            )}
+    )
+)

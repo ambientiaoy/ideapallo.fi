@@ -7,18 +7,19 @@ ideapallo project[
   backend server[
     template java-springboot
     developer (akis)
+    default model type nosql
   ](
 
     #MODEL
-    Note model(
+    Idea model(
       title text
       content text
     )
 
     #API
-    NoteApi api(
-      note crud[model Note, rest]
-      notes find[from Note, rest]
+    IdeaApi api(
+      idea crud[model Idea, rest]
+      ideas find[from Idea, rest]
     )
   )
 
@@ -27,19 +28,19 @@ ideapallo project[
     template js-angular
     connectedTo backend
     path /home
-    home notesPage
+    home ideasPage
   ](
-    NoteUpdated event
+    IdeaUpdated event
 
-    notesPage page[path /notes](
-      addNote button{on click open createNewNote}
-      notes table[load NoteApi.notes]{
-        on NoteUpdated reload
+    ideasPage page[path /ideas](
+      addNote button{on click open createNewIdea}
+      ideas table[load IdeaApi.ideas]{
+        on IdeaUpdated reload
       }
     )
 
-    createNewNote form[submit NoteApi.createNote]{
-      on success (close, fire NoteUpdated)
+    createNewIdea form[submit IdeaApi.createIdea]{
+      on success (close, fire IdeaUpdated)
     }
   )
 )
