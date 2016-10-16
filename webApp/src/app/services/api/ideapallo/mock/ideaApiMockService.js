@@ -36,7 +36,7 @@
             ideas: ideas
         };
 
-        /** readIdea 
+        /** readIdea (secured)
          * request - Unit
          *
          * response - ReadIdeaResponse {
@@ -54,7 +54,7 @@
             });
         }
 
-        /** createIdea 
+        /** createIdea (secured)
          * request - CreateIdeaRequest {
          *   title: String
          *   content: String
@@ -75,7 +75,7 @@
             });
         }
 
-        /** updateIdea 
+        /** updateIdea (secured)
          * request - RestUpdateIdeaRequest {
          *   title: String
          *   content: String
@@ -96,7 +96,7 @@
             });
         }
 
-        /** deleteIdea 
+        /** deleteIdea (secured)
          * request - DeleteIdeaRequest {
          *   id: Int
          * }
@@ -112,7 +112,7 @@
             });
         }
 
-        /** ideas 
+        /** ideas (secured)
          * request - Unit
          *
          * response - List [

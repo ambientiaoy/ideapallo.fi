@@ -30,6 +30,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +54,7 @@ public class IdeaApi {
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<ReadIdeaResponse> readIdea(@PathVariable Long id) {
         log.debug("GET /idea/{}", id);
         final Optional<Idea> result = Optional.ofNullable(ideaRepository.findOne(id));
@@ -65,6 +67,7 @@ public class IdeaApi {
     @RequestMapping(value = "/idea", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
+    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<CreateIdeaResponse> createIdea(@Valid @RequestBody CreateIdeaRequest request) throws URISyntaxException {
         log.debug("POST /idea {}", request);
         final Idea idea = convertToIdea(request);
@@ -75,6 +78,7 @@ public class IdeaApi {
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
+    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<UpdateIdeaResponse> updateIdea(@PathVariable Long id, @Valid @RequestBody RestUpdateIdeaRequest request) {
         log.debug("PUT /idea/{} {}", id, request);
         final Idea idea = convertToIdea(id, request);
@@ -85,6 +89,7 @@ public class IdeaApi {
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
+    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteIdea(@PathVariable Long id) {
         log.debug("DELETE /idea/{}", id);
         ideaRepository.delete(id);
@@ -94,6 +99,7 @@ public class IdeaApi {
     @RequestMapping(value = "/ideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<List<IdeasResponse>> ideas() {
         log.debug("GET /ideas");
         final List<Idea> result = ideaRepository.ideas();

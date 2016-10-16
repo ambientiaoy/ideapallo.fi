@@ -43,7 +43,7 @@
             ideapalloApiUrl = ideapalloUrl;
         }
 
-        /** readIdea 
+        /** readIdea (secured)
          * request - Unit
          *
          * response - ReadIdeaResponse {
@@ -56,11 +56,14 @@
         function readIdea(model) {
             return $http({
                 method: 'GET',
-                url: ideapalloApiUrl + '/api/idea/' + model.id + ''
+                url: ideapalloApiUrl + '/api/idea/' + model.id + '',
+                headers: {
+                    'Authorization': "Bearer " + sessionService.getSessionData().accessToken
+                }
             });
         }
 
-        /** createIdea 
+        /** createIdea (secured)
          * request - CreateIdeaRequest {
          *   title: String
          *   content: String
@@ -80,11 +83,14 @@
                 data: {
                     title: model.title,
                     content: model.content
+                },
+                headers: {
+                    'Authorization': "Bearer " + sessionService.getSessionData().accessToken
                 }
             });
         }
 
-        /** updateIdea 
+        /** updateIdea (secured)
          * request - RestUpdateIdeaRequest {
          *   title: String
          *   content: String
@@ -104,11 +110,14 @@
                 data: {
                     title: model.title,
                     content: model.content
+                },
+                headers: {
+                    'Authorization': "Bearer " + sessionService.getSessionData().accessToken
                 }
             });
         }
 
-        /** deleteIdea 
+        /** deleteIdea (secured)
          * request - DeleteIdeaRequest {
          *   id: Int
          * }
@@ -122,11 +131,14 @@
                 url: ideapalloApiUrl + '/api/idea/' + model.id + '',
                 data: {
                     id: model.id
+                },
+                headers: {
+                    'Authorization': "Bearer " + sessionService.getSessionData().accessToken
                 }
             });
         }
 
-        /** ideas 
+        /** ideas (secured)
          * request - Unit
          *
          * response - List [
@@ -141,7 +153,10 @@
         function ideas() {
             return $http({
                 method: 'GET',
-                url: ideapalloApiUrl + '/api/ideas'
+                url: ideapalloApiUrl + '/api/ideas',
+                headers: {
+                    'Authorization': "Bearer " + sessionService.getSessionData().accessToken
+                }
             });
         }
 
