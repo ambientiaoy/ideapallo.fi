@@ -1,26 +1,30 @@
 {
     "development": {
         "clientConfigurationValues": {
-
+            "facebookAppId": ""
         }
     },
     "development-mock": {
         "clientConfigurationValues": {
+            "facebookAppId": "",
             "useServerMock": true
         }
     },
     "development-remote": {
         "clientConfigurationValues": {
+            "facebookAppId": "",
             "remoteIdeapalloUrl": "http://localhost:8080"
         }
     },
     "development-docker": {
         "clientConfigurationValues": {
+            "facebookAppId": "",
             "remoteIdeapalloUrl": "http://localhost:8080"
         }
     },
     "deployment": {
         "clientConfigurationValues": {
+            "facebookAppId": "",
             "remoteIdeapalloUrl": "/"
         }
     }

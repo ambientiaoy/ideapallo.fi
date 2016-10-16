@@ -8,7 +8,123 @@ ideapallo project[
             docker
         )
         default model type sql
-        path /](
+        security(
+            principal Account
+            role AccountTypes
+            defaultRole CLIENT
+            adminRole ADMIN
+            signIn[
+                query findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )]
+            type(
+                username
+                email
+                facebook
+            )
+        )
+        path /
+        mail support@www.ideapallo.com](
+        AccountTypes enum(
+            ADMIN ADMIN
+            CLIENT CLIENT
+        )
+        Account model[
+            type sql
+            unique(
+                username
+            )
+            unique(
+                email
+            )
+            unique(
+                emailVerificationCode
+            )
+            unique(
+                resetPasswordCode
+            )
+            unique(
+                facebookId
+            )](
+            id integer[
+                primarykey
+                max 9223372036854775807]
+            findUserWithStuff find from Account as Account join Idealist as Idealist on Account with Idealist.account where Account.id == id
+            role AccountTypes
+            username optional text[
+                unique
+                min 3
+                max 128]
+            passwordHash optional text[
+                min 6
+                max 128
+                sensitive]
+            email optional text[
+                unique
+                min 6
+                max 128
+                regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            emailVerificationCode optional text[
+                unique
+                min 64
+                max 64
+                sensitive]
+            emailVerificationCodeTimestamp optional datetime
+            emailVerified optional boolean[
+                default false]
+            resetPasswordCode optional text[
+                unique
+                min 64
+                max 64
+                sensitive]
+            resetPasswordCodeTimestamp optional datetime
+            facebookId optional text[
+                unique
+                min 6
+                max 255]
+            findAll find from Account as Account
+            countAll count from Account as Account
+            findById find from Account as Account where Account.id == id
+            getById get from Account as Account where Account.id == id
+            deleteById delete from Account as Account where Account.id == id
+            findByRole find from Account as Account where Account.role == role
+            findByUsername find from Account as Account where Account.username == username
+            findByUsernameMandatory find from Account as Account where mandatory Account.username == username
+            findByPasswordHash find from Account as Account where Account.passwordHash == passwordHash
+            findByPasswordHashMandatory find from Account as Account where mandatory Account.passwordHash == passwordHash
+            findByEmail find from Account as Account where Account.email == email
+            findByEmailMandatory find from Account as Account where mandatory Account.email == email
+            findByEmailVerificationCode find from Account as Account where Account.emailVerificationCode == emailVerificationCode
+            findByEmailVerificationCodeMandatory find from Account as Account where mandatory Account.emailVerificationCode == emailVerificationCode
+            findByEmailVerificationCodeTimestamp find from Account as Account where Account.emailVerificationCodeTimestamp == emailVerificationCodeTimestamp
+            findByEmailVerificationCodeTimestampMandatory find from Account as Account where mandatory Account.emailVerificationCodeTimestamp == emailVerificationCodeTimestamp
+            findByEmailVerified find from Account as Account where Account.emailVerified == emailVerified
+            findByEmailVerifiedMandatory find from Account as Account where mandatory Account.emailVerified == emailVerified
+            findByResetPasswordCode find from Account as Account where Account.resetPasswordCode == resetPasswordCode
+            findByResetPasswordCodeMandatory find from Account as Account where mandatory Account.resetPasswordCode == resetPasswordCode
+            findByResetPasswordCodeTimestamp find from Account as Account where Account.resetPasswordCodeTimestamp == resetPasswordCodeTimestamp
+            findByResetPasswordCodeTimestampMandatory find from Account as Account where mandatory Account.resetPasswordCodeTimestamp == resetPasswordCodeTimestamp
+            findByFacebookId find from Account as Account where Account.facebookId == facebookId
+            findByFacebookIdMandatory find from Account as Account where mandatory Account.facebookId == facebookId
+        )
+        Idealist model[
+            type sql](
+            id integer[
+                primarykey
+                max 9223372036854775807]
+            account Account[
+                oneToOne]
+            findAll find from Idealist as Idealist
+            countAll count from Idealist as Idealist
+            findById find from Idealist as Idealist where Idealist.id == id
+            getById get from Idealist as Idealist where Idealist.id == id
+            deleteById delete from Idealist as Idealist where Idealist.id == id
+            findByAccount find from Idealist as Idealist where Idealist.account.id == accountId
+        )
         Idea model[
             type sql](
             id integer[
@@ -164,6 +280,300 @@ ideapallo project[
                     max 255]
             )
         )
+        CREDENTIALS_ARE_INVALID unauthorized
+        ACCESS_TOKEN_IS_EXPIRED unauthorized
+        USER_ALREADY_EXIST dataConstraint
+        INSUFFICIENT_RIGHTS unauthorized
+        EMAIL_NOT_VERIFIED unauthorized
+        EMAIL_VERIFICATION_CODE_EXPIRED badRequest
+        EMAIL_RESET_PASSWORD_CODE_EXPIRED badRequest
+        AuthenticationApi api(
+            signUp signup[
+                post /sign-up
+                query Account.findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )
+                errors
+                request SignUpRequest
+                response list SignUpResponse](
+                username mandatory username
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            SignUpRequest dto(
+                username text[
+                    min 3
+                    max 128]
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            SignUpResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                role AccountTypes
+                username optional text[
+                    min 3
+                    max 128]
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            signIn signIn[
+                request SignInRequest
+                post /sign-in
+                query Account.findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )
+                errors
+                response SignInResponse]
+            SignInRequest dto(
+                username text[
+                    min 3
+                    max 128]
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            SignInResponse dto(
+                accessToken text[
+                    min 64
+                    max 64
+                    sensitive]
+                id integer[
+                    max 9223372036854775807]
+                role AccountTypes
+                username optional text[
+                    min 3
+                    max 128]
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            emailSignUp emailsignup[
+                post /email-sign-up
+                query Account.findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )
+                errors
+                request EmailSignUpRequest
+                response list EmailSignUpResponse](
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+                email mandatory email
+            )
+            EmailSignUpRequest dto(
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+                email text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            EmailSignUpResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                role AccountTypes
+                username optional text[
+                    min 3
+                    max 128]
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            emailSignIn emailsignin[
+                request EmailSignInRequest
+                post /email-sign-in
+                query Account.findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )
+                errors
+                response EmailSignInResponse]
+            EmailSignInRequest dto(
+                email text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            EmailSignInResponse dto(
+                accessToken text[
+                    min 64
+                    max 64
+                    sensitive]
+                id integer[
+                    max 9223372036854775807]
+                role AccountTypes
+                username optional text[
+                    min 3
+                    max 128]
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            forgotPassword forgotpassword[
+                request ForgotPasswordRequest
+                post /forgot-password
+                errors]
+            ForgotPasswordRequest dto(
+                email text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            resetPassword resetpassword[
+                request ResetPasswordRequest
+                post /reset-password
+                errors]
+            ResetPasswordRequest dto(
+                resetPasswordCode text[
+                    min 64
+                    max 64
+                    sensitive]
+                newPassword text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            verifyEmail verifyemail[
+                request VerifyEmailRequest
+                post /verify-email
+                query Account.findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )
+                errors
+                response list VerifyEmailResponse]
+            VerifyEmailRequest dto(
+                emailVerificationCode text[
+                    min 64
+                    max 64
+                    sensitive]
+            )
+            VerifyEmailResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                role AccountTypes
+                username optional text[
+                    min 3
+                    max 128]
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            changePassword changepassword[
+                request ChangePasswordRequest
+                secured
+                post /change-password
+                query Account.findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )
+                errors
+                response list ChangePasswordResponse]
+            ChangePasswordRequest dto(
+                oldPassword text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+                newPassword text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            ChangePasswordResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                role AccountTypes
+                username optional text[
+                    min 3
+                    max 128]
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            facebookSignIn facebooksignin[
+                request FacebookSignInRequest
+                post /facebook-sign-in
+                query Account.findUserWithStuff
+                response(
+                    Account.id
+                    Account.role
+                    Account.username
+                    Account.email
+                )
+                errors
+                response FacebookSignInResponse]
+            FacebookSignInRequest dto(
+                facebookAccessToken text[
+                    min 6
+                    max 255]
+            )
+            FacebookSignInResponse dto(
+                accessToken text[
+                    min 64
+                    max 64
+                    sensitive]
+                id integer[
+                    max 9223372036854775807]
+                role AccountTypes
+                username optional text[
+                    min 3
+                    max 128]
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+        )
     )
     webApp client[
         template js-angular
@@ -173,6 +583,15 @@ ideapallo project[
             ideapallo.IdeaApi.updateIdea
             ideapallo.IdeaApi.deleteIdea
             ideapallo.IdeaApi.ideas
+            ideapallo.AuthenticationApi.signUp
+            ideapallo.AuthenticationApi.signIn
+            ideapallo.AuthenticationApi.emailSignUp
+            ideapallo.AuthenticationApi.emailSignIn
+            ideapallo.AuthenticationApi.forgotPassword
+            ideapallo.AuthenticationApi.resetPassword
+            ideapallo.AuthenticationApi.verifyEmail
+            ideapallo.AuthenticationApi.changePassword
+            ideapallo.AuthenticationApi.facebookSignIn
         )
         path /home
         home ideasPage
@@ -217,6 +636,114 @@ ideapallo project[
                 close
                 fire IdeaUpdated
             )}
+        signInPage page[
+            path /sign-in](
+            signInForm signInForm
+            emailSignInForm emailSignInForm
+            facebookSignInForm facebookSignInForm
+            forgotPassword link{
+                on click(
+                    goto forgotPasswordPage
+                )}
+            signUp link{
+                on click(
+                    goto signUpPage
+                )}
+        )
+        signUpPage page[
+            path /sign-up](
+            signUpForm signUpForm
+            emailSignUpForm emailSignUpForm
+            signIn link{
+                on click(
+                    goto signInPage
+                )}
+        )
+        verifyEmailPage page[
+            path /verify-email/:emailVerificationCode
+            params(
+                emailVerificationCode text[
+                    min 64
+                    max 64]
+            )](
+            verifyEmailForm verifyEmailForm[
+                bind(
+                    params . emailVerificationCode
+                )]
+        )
+        forgotPasswordPage page[
+            path /forgot-password](
+            forgotPasswordForm forgotPasswordForm
+        )
+        resetPasswordPage page[
+            path /reset-password/:resetPasswordCode
+            params(
+                resetPasswordCode text[
+                    min 64
+                    max 64]
+            )](
+            resetPasswordForm resetPasswordForm[
+                bind(
+                    params . resetPasswordCode
+                )]
+        )
+        UserSignedIn event[
+            dto ideapallo.AuthenticationApi.SignInResponse](
+            accessToken text[
+                min 64
+                max 64
+                sensitive]
+            id integer[
+                max 9223372036854775807]
+            role ideapallo.AccountTypes
+            username optional text[
+                min 3
+                max 128]
+            email optional text[
+                min 6
+                max 128
+                regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+        )
+        changePasswordForm form[
+            submit ideapallo.AuthenticationApi.changePassword
+            model[
+                dto ideapallo.AuthenticationApi.ChangePasswordRequest](
+                oldPassword text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+                newPassword text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            visible(
+                oldPassword
+                newPassword
+            )](
+            oldPassword text[
+                bind(
+                    model . oldPassword
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
+            newPassword text[
+                bind(
+                    model . newPassword
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
+            submit button
+        ){
+            on success(
+                goto signInPage
+            )}
         ideas table[
             load IdeaApi.ideas
             model[
@@ -251,6 +778,290 @@ ideapallo project[
         ){
             on IdeaUpdated(
                 reload
+            )}
+        signInForm form[
+            submit ideapallo.AuthenticationApi.signIn
+            model[
+                dto ideapallo.AuthenticationApi.SignInRequest](
+                username text[
+                    min 3
+                    max 128]
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            visible(
+                username
+                password
+            )](
+            username text[
+                bind(
+                    model . username
+                )
+                min 3
+                max 128]
+            password text[
+                bind(
+                    model . password
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
+            submit button
+        ){
+            on success(
+                fire UserSignedIn(
+                    success . accessToken
+                    success . id
+                    success . role
+                    success . username
+                    success . email
+                )
+            )}
+        emailSignInForm form[
+            submit ideapallo.AuthenticationApi.emailSignIn
+            model[
+                dto ideapallo.AuthenticationApi.EmailSignInRequest](
+                email text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            visible(
+                email
+                password
+            )](
+            email text[
+                bind(
+                    model . email
+                )
+                min 6
+                max 128
+                regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            password text[
+                bind(
+                    model . password
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
+            submit button
+        ){
+            on success(
+                fire UserSignedIn(
+                    success . accessToken
+                    success . id
+                    success . role
+                    success . username
+                    success . email
+                )
+            )}
+        facebookSignInForm form[
+            submit ideapallo.AuthenticationApi.facebookSignIn
+            model[
+                dto ideapallo.AuthenticationApi.FacebookSignInRequest](
+                facebookAccessToken text[
+                    min 6
+                    max 255]
+            )
+            visible(
+                facebookAccessToken
+            )](
+            facebookAccessToken text[
+                bind(
+                    model . facebookAccessToken
+                )
+                min 6
+                max 255]
+            facebookSignInButton
+        ){
+            on success(
+                fire UserSignedIn(
+                    success . accessToken
+                    success . id
+                    success . role
+                    success . username
+                    success . email
+                )
+            )}
+        signUpForm form[
+            submit ideapallo.AuthenticationApi.signUp
+            model[
+                dto ideapallo.AuthenticationApi.SignUpRequest](
+                username text[
+                    min 3
+                    max 128]
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            visible(
+                username
+                password
+            )](
+            username text[
+                bind(
+                    model . username
+                )
+                min 3
+                max 128]
+            password text[
+                bind(
+                    model . password
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
+            submit button
+        ){
+            on success(
+                goto signInPage
+            )}
+        emailSignUpForm form[
+            submit ideapallo.AuthenticationApi.emailSignUp
+            model[
+                dto ideapallo.AuthenticationApi.EmailSignUpRequest](
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+                email text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            visible(
+                password
+                email
+            )](
+            password text[
+                bind(
+                    model . password
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
+            email text[
+                bind(
+                    model . email
+                )
+                min 6
+                max 128
+                regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            submit button
+        ){
+            on success(
+                goto signInPage
+            )}
+        verifyEmailForm form[
+            submit ideapallo.AuthenticationApi.verifyEmail
+            params(
+                emailVerificationCode text[
+                    min 64
+                    max 64]
+            )
+            model[
+                dto ideapallo.AuthenticationApi.VerifyEmailRequest](
+                emailVerificationCode text[
+                    min 64
+                    max 64
+                    sensitive]
+            )
+            visible(
+                emailVerificationCode
+            )](
+            emailVerificationCode text[
+                bind(
+                    model . emailVerificationCode
+                )
+                min 64
+                max 64
+                sensitive]
+            submit button
+        ){
+            on success(
+                goto signInPage
+            )}
+        forgotPasswordForm form[
+            submit ideapallo.AuthenticationApi.forgotPassword
+            model[
+                dto ideapallo.AuthenticationApi.ForgotPasswordRequest](
+                email text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            )
+            visible(
+                email
+            )](
+            email text[
+                bind(
+                    model . email
+                )
+                min 6
+                max 128
+                regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            submit button
+        ){
+            on success(
+                goto signInPage
+            )}
+        resetPasswordForm form[
+            submit ideapallo.AuthenticationApi.resetPassword
+            params(
+                resetPasswordCode text[
+                    min 64
+                    max 64]
+            )
+            model[
+                dto ideapallo.AuthenticationApi.ResetPasswordRequest](
+                resetPasswordCode text[
+                    min 64
+                    max 64
+                    sensitive]
+                newPassword text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
+            )
+            visible(
+                resetPasswordCode
+                newPassword
+            )](
+            resetPasswordCode text[
+                bind(
+                    model . resetPasswordCode
+                )
+                min 64
+                max 64
+                sensitive]
+            newPassword text[
+                bind(
+                    model . newPassword
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
+            submit button
+        ){
+            on success(
+                goto signInPage
             )}
     )
 )

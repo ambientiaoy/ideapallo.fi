@@ -19,6 +19,9 @@
 **/
 package com.ideapallo.ideapallo.web.rest.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 
+import org.springframework.social.NotAuthorizedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -66,6 +71,60 @@ public class ExceptionResolver {
             return new ErrorResponse(ConstraintMapping.getErrorCodeForConstraint(constraint), message);
         }
         return new ErrorResponse(message, Collections.emptyList());
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ExpiredJwtException.class)
+    public @ResponseBody ErrorResponse expiredTokenError(HttpServletRequest request, ExpiredJwtException exception) {
+        if (log.isErrorEnabled()) {
+            log.error(exception.getMessage(), exception);
+        }
+        return new ErrorResponse("jwt.expired", "Authentication token expired!");
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(JwtException.class)
+    public @ResponseBody ErrorResponse tokenError(HttpServletRequest request, JwtException exception) {
+        if (log.isErrorEnabled()) {
+            log.error(exception.getMessage(), exception);
+        }
+        return new ErrorResponse("jwt.invalid", "Authentication token is invalid!");
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AccessDeniedException.class)
+    public @ResponseBody ErrorResponse accessDenied(HttpServletRequest request, AccessDeniedException exception) {
+        if (log.isErrorEnabled()) {
+            log.error(exception.getMessage(), exception);
+        }
+        return new ErrorResponse("access.denied", "Access is denied!");
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthenticationError.class)
+    public @ResponseBody ErrorResponse authenticationError(HttpServletRequest request, AuthenticationError exception) {
+        if (log.isErrorEnabled()) {
+            log.error(exception.getMessage(), exception);
+        }
+        return new ErrorResponse(exception.getErrorCode(), exception.getErrorMessage());
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(NotAuthorizedException.class)
+    public @ResponseBody ErrorResponse facebookSignInError(HttpServletRequest request, NotAuthorizedException exception) {
+        if (log.isErrorEnabled()) {
+            log.error(exception.getMessage(), exception);
+        }
+        return new ErrorResponse("facebook.access.denied", "Facebook sign in failed!");
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AccountWithEmailAlreadyExists.class)
+    public @ResponseBody ErrorResponse emailExists(HttpServletRequest request, AccountWithEmailAlreadyExists exception) {
+        if (log.isErrorEnabled()) {
+            log.error(exception.getMessage(), exception);
+        }
+        return new ErrorResponse("email.exists", exception.getMessage());
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)

@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-lg-12">
+        <form name="verifyEmailForm" role="form" novalidate ng-submit="submit(verifyEmailForm)">
+            <div class="form-group">
+                <label for="emailVerificationCode">{{'VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE' | translate}}</label>
+                <input type="password" id="emailVerificationCode" name="emailVerificationCode" class="form-control" ng-model="model.emailVerificationCode" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }" minlength="64" maxlength="64" required />
+                <div ng-messages="verifyEmailForm.emailVerificationCode.$error" ng-if="verifyEmailForm.$submitted || !verifyEmailForm.emailVerificationCode.$pristine">
+                    <div ng-message="required">{{'VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_IS_REQUIRED' | translate}}</div>
+                    <div ng-message="minlength" ng-if="!verifyEmailForm.emailVerificationCode.$pristine">{{'VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_MIN' | translate:'{ min: 64 }'}}</div>
+                    <div ng-message="maxlength" ng-if="!verifyEmailForm.emailVerificationCode.$pristine">{{'VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_MAX' | translate:'{ max: 64 }'}}</div>
+
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                {{'VERIFY_EMAIL_FORM_SUBMIT' | translate}}
+            </button>
+        </form>
+    </div>
+</div>
+<div class="row" ng-show="errorCode">
+    <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="{{'ALERT_CLOSE' | translate}}">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{errorCode}}
+        </div>
+    </div>
+</div>

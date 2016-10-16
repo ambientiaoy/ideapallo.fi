@@ -21,12 +21,12 @@
     'use strict';
 
     angular
-        .module('webApp', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router',
+        .module('webApp', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'satellizer',
             'ui.bootstrap', 'ngMessages', 'pascalprecht.translate', 'app.config'
         ])
         .config(appConfig)
-
-    .run(run);
+        .config(facebookApiConfig)
+        .run(run);
 
     appConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 
@@ -36,15 +36,75 @@
                 url: '/home/ideas',
                 templateUrl: 'src/app/components/pages/ideasPage.html',
                 controller: 'IdeasPageController'
+            })
+            .state('signInPage', {
+                url: '/home/sign-in',
+                templateUrl: 'src/app/components/pages/signInPage.html',
+                controller: 'SignInPageController'
+            })
+            .state('signUpPage', {
+                url: '/home/sign-up',
+                templateUrl: 'src/app/components/pages/signUpPage.html',
+                controller: 'SignUpPageController'
+            })
+            .state('verifyEmailPage', {
+                url: '/home/verify-email/{emailVerificationCode}',
+                templateUrl: 'src/app/components/pages/verifyEmailPage.html',
+                controller: 'VerifyEmailPageController'
+            })
+            .state('forgotPasswordPage', {
+                url: '/home/forgot-password',
+                templateUrl: 'src/app/components/pages/forgotPasswordPage.html',
+                controller: 'ForgotPasswordPageController'
+            })
+            .state('resetPasswordPage', {
+                url: '/home/reset-password/{resetPasswordCode}',
+                templateUrl: 'src/app/components/pages/resetPasswordPage.html',
+                controller: 'ResetPasswordPageController'
             });
 
         $urlRouterProvider.otherwise('/home/ideas');
     }
 
-    run.$inject = ['$rootScope', '$state', '$log'];
+    facebookApiConfig.$inject = ['$authProvider', 'clientConfigurationValues'];
 
-    function run($rootScope, $state, $log) {
+    function facebookApiConfig($authProvider, clientConfigurationValues) {
+        $authProvider.withCredentials = false;
+        $authProvider.tokenName = 'token';
+        $authProvider.tokenPrefix = 'facebook';
+
+        $authProvider.httpInterceptor = function() {
+            return false;
+        }
+
+        $authProvider.oauth2({
+            name: 'facebook',
+            clientId: clientConfigurationValues.facebookAppId,
+            redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host + '/',
+            authorizationEndpoint: 'https://www.facebook.com/v2.5/dialog/oauth',
+            scope: ['public_profile'],
+            scopeDelimiter: ',',
+            display: 'popup',
+            type: '2.0',
+            popupOptions: {
+                width: 580,
+                height: 400
+            },
+            responseType: 'token'
+        });
+    }
+
+    run.$inject = ['$rootScope', '$state', 'sessionService', '$log'];
+
+    function run($rootScope, $state, sessionService, $log) {
         $rootScope.$on('$stateChangeStart', function(ev, to) {
+            if (to.name === 'signInPage') {
+                sessionService.clear();
+            } else if (!sessionService.canUserAccessState(to.name)) {
+                $log.warn('Unauthorized access to secured page, redirecting to signIn.');
+                ev.preventDefault();
+                $state.go('signInPage');
+            }
             $rootScope.pageTitle = to.title;
         });
     }

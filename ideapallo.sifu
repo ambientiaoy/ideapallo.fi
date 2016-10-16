@@ -8,9 +8,30 @@ ideapallo project[
     template java-springboot
     developer (akis)
     default model type sql
+    security(
+      principal Account 
+#      permission  // I have no idea what permission actually does and how to make use of it.
+      role AccountTypes 
+      defaultRole CLIENT
+      adminRole ADMIN
+      signIn[query findUserWithStuff, response(Account, Idealist)]
+      type (username, email, facebook)
+    )
   ](
 
+
+    #ENUMS
+    AccountTypes enum( ADMIN, CLIENT)
+
     #MODEL
+    Account model(
+      findUserWithStuff find from Account join Idealist on Idealist.account where Account.id == id
+    )
+
+    Idealist model(
+      account Account[oneToOne]
+    )
+
     Idea model(
       title text
       content text

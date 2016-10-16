@@ -46,7 +46,15 @@ custom:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
-
+    mail:
+        from: support@ideapallo.com
+        host: localhost
+        port: 587
+        username:
+        password:
+        starttls: true
+        auth: false
+    clientUrl: http://localhost:3000/#/home
     metrics:
          logs:
               enabled: true

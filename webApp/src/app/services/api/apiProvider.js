@@ -22,6 +22,35 @@
 
     angular
         .module('webApp')
+        .provider('authenticationApi', authenticationApi)
+        .config(authenticationApiProvider);
+
+    function authenticationApi() {
+        var isMocked = false;
+
+        var $get = ['authenticationApiService', 'authenticationApiMockService', 'clientConfigurationValues', function(authenticationApiService, authenticationApiMockService, clientConfigurationValues) {
+            if (this.isMocked) {
+                return authenticationApiMockService;
+            } else {
+                if (clientConfigurationValues.remoteIdeapalloUrl) {
+                    authenticationApiService.init(clientConfigurationValues.remoteIdeapalloUrl);
+                }
+                return authenticationApiService;
+            }
+        }];
+
+        return {
+            isMocked: isMocked,
+            $get: $get
+        };
+    }
+
+    function authenticationApiProvider(clientConfigurationValues, authenticationApiProvider) {
+        authenticationApiProvider.isMocked = clientConfigurationValues.useServerMock;
+    }
+
+    angular
+        .module('webApp')
         .provider('ideaApi', ideaApi)
         .config(ideaApiProvider);
 

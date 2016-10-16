@@ -24,9 +24,9 @@
         .module('webApp')
         .service('ideaApiService', ideaApiService);
 
-    ideaApiService.$inject = ['$http'];
+    ideaApiService.$inject = ['$http', 'sessionService'];
 
-    function ideaApiService($http) {
+    function ideaApiService($http, sessionService) {
 
         var ideapalloApiUrl = '';
 
