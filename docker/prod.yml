@@ -18,24 +18,24 @@
 # along with ideapallo. If not, see <http://www.gnu.org/licenses/>.#
 version: '2'
 services:
-  backend_db:
+  ideapallo_db:
     image: mysql:5.7
     expose:
       - "3306"
     environment:
-      - MYSQL_DATABASE=backend
+      - MYSQL_DATABASE=ideapallo
       - MYSQL_ROOT_PASSWORD=root
-  backend:
+  ideapallo:
     image: drytools/maven
     depends_on:
-      - backend_server
+      - ideapallo_server
       - grafana-dashboard
-    working_dir: /home/docker/backend
+    working_dir: /home/docker/ideapallo
     volumes:
-      - ../backend/:/home/docker/backend
+      - ../ideapallo/:/home/docker/ideapallo
       - ./deploy/:/deploy
     command: /bin/bash -c "mvn clean package && cp target/*.war /deploy"
-  backend_server:
+  ideapallo_server:
     image: drytools/tomcat:8.0
     ports:
      - "8080:8080"
@@ -44,7 +44,7 @@ services:
     environment:
     - SPRING_PROFILES_ACTIVE=dev
     links:
-     - backend_db
+     - ideapallo_db
   grafana-dashboard:
     image: choopooly/grafana-graphite
     ports:

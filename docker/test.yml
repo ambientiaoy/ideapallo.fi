@@ -18,21 +18,21 @@
 # along with ideapallo. If not, see <http://www.gnu.org/licenses/>.#
 version: '2'
 services:
-  backend_db:
+  ideapallo_db:
     image: mysql:5.7
     expose:
       - "3306"
     environment:
-      - MYSQL_DATABASE=backend
+      - MYSQL_DATABASE=ideapallo
       - MYSQL_ROOT_PASSWORD=root
-  backend:
+  ideapallo:
     image: drytools/maven
-    working_dir: /home/docker/backend
+    working_dir: /home/docker/ideapallo
     volumes:
-      - ../backend/:/home/docker/backend
+      - ../ideapallo/:/home/docker/ideapallo
     ports:
       - "8080:8080"
     links:
-      - backend_db
+      - ideapallo_db
     command: mvn test
      

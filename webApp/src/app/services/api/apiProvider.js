@@ -32,8 +32,8 @@
             if (this.isMocked) {
                 return ideaApiMockService;
             } else {
-                if (clientConfigurationValues.remoteBackendUrl) {
-                    ideaApiService.init(clientConfigurationValues.remoteBackendUrl);
+                if (clientConfigurationValues.remoteIdeapalloUrl) {
+                    ideaApiService.init(clientConfigurationValues.remoteIdeapalloUrl);
                 }
                 return ideaApiService;
             }

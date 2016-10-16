@@ -4,7 +4,7 @@ ideapallo project[
 ](
 
   #SERVER
-  backend server[
+  ideapallo server[
     template java-springboot
     developer (akis)
     default model type nosql
@@ -26,7 +26,7 @@ ideapallo project[
   #CLIENT
   webApp client[
     template js-angular
-    connectedTo backend
+    connectedTo ideapallo
     path /home
     home ideasPage
   ](

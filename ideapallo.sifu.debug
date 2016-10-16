@@ -1,7 +1,7 @@
 ideapallo project[
     url www.ideapallo.com
     namespace com.ideapallo](
-    backend server[
+    ideapallo server[
         template java-springboot
         developer(
             akis
@@ -160,11 +160,11 @@ ideapallo project[
     webApp client[
         template js-angular
         connectedTo(
-            backend.IdeaApi.readIdea
-            backend.IdeaApi.createIdea
-            backend.IdeaApi.updateIdea
-            backend.IdeaApi.deleteIdea
-            backend.IdeaApi.ideas
+            ideapallo.IdeaApi.readIdea
+            ideapallo.IdeaApi.createIdea
+            ideapallo.IdeaApi.updateIdea
+            ideapallo.IdeaApi.deleteIdea
+            ideapallo.IdeaApi.ideas
         )
         path /home
         home ideasPage
@@ -183,7 +183,7 @@ ideapallo project[
         createNewIdea form[
             submit IdeaApi.createIdea
             model[
-                dto backend.IdeaApi.CreateIdeaRequest](
+                dto ideapallo.IdeaApi.CreateIdeaRequest](
                 title text[
                     max 255]
                 content text[
@@ -212,7 +212,7 @@ ideapallo project[
         ideas table[
             load IdeaApi.ideas
             model[
-                dto backend.IdeaApi.IdeasResponse](
+                dto ideapallo.IdeaApi.IdeasResponse](
                 id uuid
                 title text[
                     max 255]

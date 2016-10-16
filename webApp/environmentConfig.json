@@ -11,17 +11,17 @@
     },
     "development-remote": {
         "clientConfigurationValues": {
-            "remoteBackendUrl": "http://localhost:8080"
+            "remoteIdeapalloUrl": "http://localhost:8080"
         }
     },
     "development-docker": {
         "clientConfigurationValues": {
-            "remoteBackendUrl": "http://localhost:8080"
+            "remoteIdeapalloUrl": "http://localhost:8080"
         }
     },
     "deployment": {
         "clientConfigurationValues": {
-            "remoteBackendUrl": "/"
+            "remoteIdeapalloUrl": "/"
         }
     }
 }
