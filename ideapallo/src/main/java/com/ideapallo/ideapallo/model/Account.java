@@ -108,8 +108,8 @@ public class Account implements Serializable {
         return Optional.ofNullable(passwordHash);
     }
 
-    public void setPasswordHash(Optional<String> passwordHash) {
-        this.passwordHash = passwordHash.orElse(null);
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public Optional<String> getEmail() {
@@ -136,8 +136,8 @@ public class Account implements Serializable {
         this.emailVerificationCodeTimestamp = emailVerificationCodeTimestamp.orElse(null);
     }
 
-    public Optional<Boolean> getEmailVerified() {
-        return Optional.ofNullable(emailVerified);
+    public Boolean getEmailVerified() {
+        return Optional.ofNullable(emailVerified).orElse(false);
     }
 
     public void setEmailVerified(Optional<Boolean> emailVerified) {

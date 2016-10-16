@@ -19,23 +19,41 @@
 **/
 package com.ideapallo.ideapallo.web.rest;
 
-import javax.inject.Inject;
-
+import com.codahale.metrics.annotation.Timed;
+import com.ideapallo.ideapallo.model.Account;
+import com.ideapallo.ideapallo.service.AccountService;
+import com.ideapallo.ideapallo.web.rest.dto.ChangePasswordRequest;
+import com.ideapallo.ideapallo.web.rest.dto.ChangePasswordResponse;
+import com.ideapallo.ideapallo.web.rest.dto.EmailSignInRequest;
+import com.ideapallo.ideapallo.web.rest.dto.EmailSignInResponse;
+import com.ideapallo.ideapallo.web.rest.dto.EmailSignUpRequest;
+import com.ideapallo.ideapallo.web.rest.dto.EmailSignUpResponse;
+import com.ideapallo.ideapallo.web.rest.dto.FacebookSignInRequest;
+import com.ideapallo.ideapallo.web.rest.dto.FacebookSignInResponse;
+import com.ideapallo.ideapallo.web.rest.dto.ForgotPasswordRequest;
+import com.ideapallo.ideapallo.web.rest.dto.ResetPasswordRequest;
+import com.ideapallo.ideapallo.web.rest.dto.SignInRequest;
+import com.ideapallo.ideapallo.web.rest.dto.SignInResponse;
+import com.ideapallo.ideapallo.web.rest.dto.SignUpRequest;
+import com.ideapallo.ideapallo.web.rest.dto.SignUpResponse;
+import com.ideapallo.ideapallo.web.rest.dto.VerifyEmailRequest;
+import com.ideapallo.ideapallo.web.rest.dto.VerifyEmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
-import com.codahale.metrics.annotation.Timed;
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.Optional;
-import com.ideapallo.ideapallo.model.*;
-import com.ideapallo.ideapallo.web.rest.dto.*;
-
-import com.ideapallo.ideapallo.service.*;
 
 
 @RestController
@@ -50,7 +68,7 @@ public class AuthenticationApi {
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<List<SignUpResponse>> signUp(@Valid @RequestBody SignUpRequest request) {
+    public ResponseEntity<SignUpResponse> signUp(@Valid @RequestBody SignUpRequest request) {
         log.debug("POST /sign-up {}", request);
         final Account account = accountService.signUp(request.getUsername(), request.getPassword());
         return ResponseEntity.ok().body(convertToSignUpResponse(account));
@@ -68,7 +86,7 @@ public class AuthenticationApi {
     @RequestMapping(value = "/email-sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<List<EmailSignUpResponse>> emailSignUp(@Valid @RequestBody EmailSignUpRequest request) {
+    public ResponseEntity<EmailSignUpResponse> emailSignUp(@Valid @RequestBody EmailSignUpRequest request) {
         log.debug("POST /email-sign-up {}", request);
         final Account account = accountService.emailSignUp(request.getEmail(), request.getPassword());
         return ResponseEntity.ok().body(convertToEmailSignUpResponse(account));
@@ -88,7 +106,7 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         log.debug("POST /forgot-password {}", request);
-        userService.forgotPassword(request.getEmail());
+        accountService.forgotPassword(request.getEmail());
         return ResponseEntity.ok().build();
     }
 
@@ -97,14 +115,14 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
         log.debug("POST /reset-password {}", request);
-        userService.resetPassword(request.getResetPasswordCode(), request.getNewPassword());
+        accountService.resetPassword(request.getResetPasswordCode(), request.getNewPassword());
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/verify-email", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<List<VerifyEmailResponse>> verifyEmail(@Valid @RequestBody VerifyEmailRequest request) {
+    public ResponseEntity<VerifyEmailResponse> verifyEmail(@Valid @RequestBody VerifyEmailRequest request) {
         log.debug("POST /verify-email {}", request);
         final Account account = accountService.verifyEmail(request.getEmailVerificationCode());
         return ResponseEntity.ok().body(convertToVerifyEmailResponse(account));
@@ -113,7 +131,7 @@ public class AuthenticationApi {
     @RequestMapping(value = "/change-password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<List<ChangePasswordResponse>> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
+    public ResponseEntity<ChangePasswordResponse> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
         log.debug("POST /change-password {}", request);
         final Account account = accountService.changePassword(principalId, request.getOldPassword(), request.getNewPassword());
         return ResponseEntity.ok().body(convertToChangePasswordResponse(account));
@@ -124,7 +142,7 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<FacebookSignInResponse> facebookSignIn(@Valid @RequestBody FacebookSignInRequest request) {
         log.debug("POST /facebook-sign-in {}", request);
-        final Optional<FacebookSignInResponse> response = userService.facebookSignIn(request.getFacebookAccessToken());
+        final Optional<FacebookSignInResponse> response = accountService.facebookSignIn(request.getFacebookAccessToken());
         if (response.isPresent()) {
             return ResponseEntity.ok().body(response.get());
         }

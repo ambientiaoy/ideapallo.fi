@@ -65,7 +65,7 @@ public class AccountService {
         final Account account = new Account();
         account.setUsername(Optional.ofNullable(username));
         account.setRole(AccountTypes.CLIENT);
-        account.setPasswordHash(Optional.of(passwordEncoder.encode(password)));
+        account.setPasswordHash(passwordEncoder.encode(password));
         accountRepository.save(account);
         return account;
     }
@@ -99,7 +99,7 @@ public class AccountService {
         if (!passwordEncoder.matches(oldPassword, account.getPasswordHash().get())) {
             throw new AuthenticationError("credentials.invalid", "Credentials are invalid!");
         }
-        account.setPasswordHash(Optional.of(passwordEncoder.encode(newPassword)));
+        account.setPasswordHash(passwordEncoder.encode(newPassword));
         accountRepository.save(account);
         return account;
     }
@@ -116,7 +116,7 @@ public class AccountService {
         final Account account = new Account();
         account.setEmail(Optional.ofNullable(email));
         account.setRole(AccountTypes.CLIENT);
-        account.setPasswordHash(Optional.of(passwordEncoder.encode(password)));
+        account.setPasswordHash(passwordEncoder.encode(password)    );
         account.setEmailVerificationCode(Optional.of(RandomStringUtils.randomAlphanumeric(64)));
         account.setEmailVerificationCodeTimestamp(Optional.of(ZonedDateTime.now(ZoneId.of("UTC")).plusDays(1)));
         account.setEmailVerified(Optional.of(false));
@@ -168,7 +168,7 @@ public class AccountService {
 
         log.debug("forgotPassword(email: {})", email);
 
-        final Optional<Account> optionalAccount = accountRepository.findByEmail(email).filter(Account::getEmailVerified);
+        final Optional<Account> optionalAccount = accountRepository.findByEmail(Optional.of(email)).stream().filter(Account::getEmailVerified).findFirst();
         if (!optionalAccount.isPresent()) {
             throw new BadRequestError("invalid.email", "Email: " + email + " does not exist or is not registered.");
         }
@@ -179,7 +179,7 @@ public class AccountService {
         account.setResetPasswordCodeTimestamp(Optional.of(ZonedDateTime.now(ZoneOffset.UTC).plusHours(1)));
         accountRepository.save(account);
 
-        mailService.sendResetPasswordEmail(account.getEmail(), resetPasswordCode, Locale.ENGLISH);
+        mailService.sendResetPasswordEmail(email, resetPasswordCode, Locale.ENGLISH);
     }
 
     public void resetPassword(String resetPasswordCode, String newPassword) {
