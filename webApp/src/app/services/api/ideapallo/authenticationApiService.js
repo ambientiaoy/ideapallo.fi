@@ -32,8 +32,6 @@
 
         return {
             init: init,
-            signUp: signUp,
-            signIn: signIn,
             emailSignUp: emailSignUp,
             emailSignIn: emailSignIn,
             forgotPassword: forgotPassword,
@@ -47,70 +45,17 @@
             ideapalloApiUrl = ideapalloUrl;
         }
 
-        /** signUp 
-         * request - SignUpRequest {
-         *   username: String
-         *   password: String
-         * }
-         *
-         * response - List [
-         *   SignUpResponse {
-         *     id: Int
-         *     role: AccountTypes
-         *     username: Optional[String]
-         *     email: Optional[String]
-         *   }
-         * ]
-         *
-         */
-        function signUp(model) {
-            return $http({
-                method: 'POST',
-                url: ideapalloApiUrl + '/api/sign-up',
-                data: {
-                    username: model.username,
-                    password: model.password
-                }
-            });
-        }
-
-        /** signIn 
-         * request - SignInRequest {
-         *   username: String
-         *   password: String
-         * }
-         *
-         * response - SignInResponse {
-         *   accessToken: String
-         *   id: Int
-         *   role: AccountTypes
-         *   username: Optional[String]
-         *   email: Optional[String]
-         * }
-         *
-         */
-        function signIn(model) {
-            return $http({
-                method: 'POST',
-                url: ideapalloApiUrl + '/api/sign-in',
-                data: {
-                    username: model.username,
-                    password: model.password
-                }
-            });
-        }
-
         /** emailSignUp 
          * request - EmailSignUpRequest {
-         *   password: String
          *   email: String
+         *   password: String
          * }
          *
          * response - List [
          *   EmailSignUpResponse {
          *     id: Int
+         *     username: String
          *     role: AccountTypes
-         *     username: Optional[String]
          *     email: Optional[String]
          *   }
          * ]
@@ -121,8 +66,8 @@
                 method: 'POST',
                 url: ideapalloApiUrl + '/api/email-sign-up',
                 data: {
-                    password: model.password,
-                    email: model.email
+                    email: model.email,
+                    password: model.password
                 }
             });
         }
@@ -136,8 +81,8 @@
          * response - EmailSignInResponse {
          *   accessToken: String
          *   id: Int
+         *   username: String
          *   role: AccountTypes
-         *   username: Optional[String]
          *   email: Optional[String]
          * }
          *
@@ -199,8 +144,8 @@
          * response - List [
          *   VerifyEmailResponse {
          *     id: Int
+         *     username: String
          *     role: AccountTypes
-         *     username: Optional[String]
          *     email: Optional[String]
          *   }
          * ]
@@ -225,8 +170,8 @@
          * response - List [
          *   ChangePasswordResponse {
          *     id: Int
+         *     username: String
          *     role: AccountTypes
-         *     username: Optional[String]
          *     email: Optional[String]
          *   }
          * ]
@@ -254,8 +199,8 @@
          * response - FacebookSignInResponse {
          *   accessToken: String
          *   id: Int
+         *   username: String
          *   role: AccountTypes
-         *   username: Optional[String]
          *   email: Optional[String]
          * }
          *
@@ -269,5 +214,6 @@
                 }
             });
         }
+
     }
 })();

@@ -52,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.trace(".loadUserByUsername({})", username);
 
         final String lowercaseUsername = username.toLowerCase();
-        final Optional<Account> optionalAccount = accountRepository.findByUsernameMandatory(lowercaseUsername);
+        final Optional<Account> optionalAccount = accountRepository.findByEmailMandatory(lowercaseUsername);
 
         if (!optionalAccount.isPresent()) {
             throw new UsernameNotFoundException("Account " + username + " not found!");

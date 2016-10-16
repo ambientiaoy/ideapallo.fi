@@ -32,19 +32,17 @@ public interface AccountRepositoryCustom {
 
     List<AccountIdealistTuple> findUserWithStuff(Long id);
 
+    Optional<Account> findByUsername(String username);
+
     List<Account> findByRole(AccountTypes role);
-
-    List<Account> findByUsername(Optional<String> username);
-
-    Optional<Account> findByUsernameMandatory(String username);
-
-    List<Account> findByPasswordHash(Optional<String> passwordHash);
-
-    List<Account> findByPasswordHashMandatory(String passwordHash);
 
     List<Account> findByEmail(Optional<String> email);
 
     Optional<Account> findByEmailMandatory(String email);
+
+    List<Account> findByPasswordHash(Optional<String> passwordHash);
+
+    List<Account> findByPasswordHashMandatory(String passwordHash);
 
     List<Account> findByEmailVerificationCode(Optional<String> emailVerificationCode);
 

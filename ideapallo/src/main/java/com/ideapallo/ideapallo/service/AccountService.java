@@ -59,35 +59,6 @@ public class AccountService {
     @Inject
     private AccountRepository accountRepository;
 
-    public Account signUp(String username, String password) {
-        log.debug("signUp(username: {})", username);
-
-        final Account account = new Account();
-        account.setUsername(Optional.ofNullable(username));
-        account.setRole(AccountTypes.CLIENT);
-        account.setPasswordHash(passwordEncoder.encode(password));
-        accountRepository.save(account);
-        return account;
-    }
-
-    public SignInResponse signIn(String username, String password) {
-
-        log.debug("signIn(username: {})", username);
-
-        final Account account = accountRepository.findByUsernameMandatory(username).orElseThrow(() -> new AuthenticationError("credentials.invalid", "Credentials are invalid!"));
-        if (!passwordEncoder.matches(password, account.getPasswordHash().get()))
-            throw new AuthenticationError("credentials.invalid", "Credentials are invalid!");
-
-        final SignInResponse response = new SignInResponse();
-        final String accessToken = JWTUtils.createToken(account.getId(), account.getRole(), customProperties.getSecretKey());
-        response.setAccessToken(accessToken);
-        response.setId(account.getId());
-        response.setRole(account.getRole());
-        response.setUsername(account.getUsername().orElse(null));
-        response.setEmail(account.getEmail().orElse(null));
-        return response;
-    }
-
     public Account changePassword(Long accountId, String oldPassword, String newPassword) {
 
         log.debug("changePassword(accountId: {})", accountId);
@@ -99,7 +70,7 @@ public class AccountService {
         if (!passwordEncoder.matches(oldPassword, account.getPasswordHash().get())) {
             throw new AuthenticationError("credentials.invalid", "Credentials are invalid!");
         }
-        account.setPasswordHash(passwordEncoder.encode(newPassword));
+        account.setPasswordHash(Optional.of(passwordEncoder.encode(newPassword)));
         accountRepository.save(account);
         return account;
     }
@@ -116,7 +87,7 @@ public class AccountService {
         final Account account = new Account();
         account.setEmail(Optional.ofNullable(email));
         account.setRole(AccountTypes.CLIENT);
-        account.setPasswordHash(passwordEncoder.encode(password)    );
+        account.setPasswordHash(Optional.of(passwordEncoder.encode(password)));
         account.setEmailVerificationCode(Optional.of(RandomStringUtils.randomAlphanumeric(64)));
         account.setEmailVerificationCodeTimestamp(Optional.of(ZonedDateTime.now(ZoneId.of("UTC")).plusDays(1)));
         account.setEmailVerified(Optional.of(false));
@@ -139,8 +110,8 @@ public class AccountService {
         final String accessToken = JWTUtils.createToken(account.getId(), account.getRole(), customProperties.getSecretKey());
         response.setAccessToken(accessToken);
         response.setId(account.getId());
+        response.setUsername(account.getUsername());
         response.setRole(account.getRole());
-        response.setUsername(account.getUsername().orElse(null));
         response.setEmail(account.getEmail().orElse(null));
         return response;
     }
@@ -168,7 +139,7 @@ public class AccountService {
 
         log.debug("forgotPassword(email: {})", email);
 
-        final Optional<Account> optionalAccount = accountRepository.findByEmail(Optional.of(email)).stream().filter(Account::getEmailVerified).findFirst();
+        final Optional<Account> optionalAccount = accountRepository.findByEmailMandatory(email).filter(account -> account.getEmailVerified().orElse(false));
         if (!optionalAccount.isPresent()) {
             throw new BadRequestError("invalid.email", "Email: " + email + " does not exist or is not registered.");
         }
@@ -179,7 +150,7 @@ public class AccountService {
         account.setResetPasswordCodeTimestamp(Optional.of(ZonedDateTime.now(ZoneOffset.UTC).plusHours(1)));
         accountRepository.save(account);
 
-        mailService.sendResetPasswordEmail(email, resetPasswordCode, Locale.ENGLISH);
+        mailService.sendResetPasswordEmail(account.getEmail().get(), resetPasswordCode, Locale.ENGLISH);
     }
 
     public void resetPassword(String resetPasswordCode, String newPassword) {
@@ -196,7 +167,7 @@ public class AccountService {
             throw new AuthenticationError("resetPasswordCode.expired", "Reset password code expired!");
         }
 
-        account.setPasswordHash(passwordEncoder.encode(newPassword));
+        account.setPasswordHash(Optional.of(passwordEncoder.encode(newPassword)));
         account.setResetPasswordCodeTimestamp(Optional.empty());
         accountRepository.save(account);
     }
@@ -220,8 +191,8 @@ public class AccountService {
 
         response.setAccessToken(accessToken);
         response.setId(account.getId());
+        response.setUsername(account.getUsername());
         response.setRole(account.getRole());
-        response.setUsername(account.getUsername().orElse(null));
         response.setEmail(account.getEmail().orElse(null));
         return Optional.of(response);
     }

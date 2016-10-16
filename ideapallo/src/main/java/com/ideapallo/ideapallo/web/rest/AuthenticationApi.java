@@ -40,9 +40,14 @@ import com.ideapallo.ideapallo.web.rest.dto.VerifyEmailRequest;
 import com.ideapallo.ideapallo.web.rest.dto.VerifyEmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+=======
+import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+>>>>>>> refs/heads/sifu
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,6 +69,7 @@ public class AuthenticationApi {
 
     @Inject
     private AccountService accountService;
+<<<<<<< HEAD
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -82,6 +88,8 @@ public class AuthenticationApi {
         final SignInResponse response = accountService.signIn(request.getUsername(), request.getPassword());
         return ResponseEntity.ok().body(response);
     }
+=======
+>>>>>>> refs/heads/sifu
 
     @RequestMapping(value = "/email-sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -131,7 +139,12 @@ public class AuthenticationApi {
     @RequestMapping(value = "/change-password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
+<<<<<<< HEAD
     public ResponseEntity<ChangePasswordResponse> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
+=======
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<ChangePasswordResponse>> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
+>>>>>>> refs/heads/sifu
         log.debug("POST /change-password {}", request);
         final Account account = accountService.changePassword(principalId, request.getOldPassword(), request.getNewPassword());
         return ResponseEntity.ok().body(convertToChangePasswordResponse(account));
@@ -149,20 +162,11 @@ public class AuthenticationApi {
         return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
-    private SignUpResponse convertToSignUpResponse(Account model) {
-        final SignUpResponse dto = new SignUpResponse();
-        dto.setId(model.getId());
-        dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
-        dto.setEmail(model.getEmail().orElse(null));
-        return dto;
-    }
-
     private EmailSignUpResponse convertToEmailSignUpResponse(Account model) {
         final EmailSignUpResponse dto = new EmailSignUpResponse();
         dto.setId(model.getId());
+        dto.setUsername(model.getUsername());
         dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
     }
@@ -170,8 +174,8 @@ public class AuthenticationApi {
     private VerifyEmailResponse convertToVerifyEmailResponse(Account model) {
         final VerifyEmailResponse dto = new VerifyEmailResponse();
         dto.setId(model.getId());
+        dto.setUsername(model.getUsername());
         dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
     }
@@ -179,8 +183,8 @@ public class AuthenticationApi {
     private ChangePasswordResponse convertToChangePasswordResponse(Account model) {
         final ChangePasswordResponse dto = new ChangePasswordResponse();
         dto.setId(model.getId());
+        dto.setUsername(model.getUsername());
         dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
     }

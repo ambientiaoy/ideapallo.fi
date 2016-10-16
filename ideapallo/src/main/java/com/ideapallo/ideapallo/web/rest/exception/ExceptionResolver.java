@@ -19,9 +19,6 @@
 **/
 package com.ideapallo.ideapallo.web.rest.exception;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,24 +68,6 @@ public class ExceptionResolver {
             return new ErrorResponse(ConstraintMapping.getErrorCodeForConstraint(constraint), message);
         }
         return new ErrorResponse(message, Collections.emptyList());
-    }
-
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(ExpiredJwtException.class)
-    public @ResponseBody ErrorResponse expiredTokenError(HttpServletRequest request, ExpiredJwtException exception) {
-        if (log.isErrorEnabled()) {
-            log.error(exception.getMessage(), exception);
-        }
-        return new ErrorResponse("jwt.expired", "Authentication token expired!");
-    }
-
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(JwtException.class)
-    public @ResponseBody ErrorResponse tokenError(HttpServletRequest request, JwtException exception) {
-        if (log.isErrorEnabled()) {
-            log.error(exception.getMessage(), exception);
-        }
-        return new ErrorResponse("jwt.invalid", "Authentication token is invalid!");
     }
 
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)

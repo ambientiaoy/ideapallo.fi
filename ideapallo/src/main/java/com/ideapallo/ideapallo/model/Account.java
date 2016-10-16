@@ -26,6 +26,7 @@ import java.time.*;
 import java.util.Optional;
 
 import javax.persistence.*;
+import javax.swing.text.html.Option;
 import javax.validation.constraints.*;
 
 import com.ideapallo.ideapallo.model.enumeration.*;
@@ -42,22 +43,23 @@ public class Account implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private AccountTypes role;
-
-    @Size(min = 3, max = 128)
+    @Size(min = 4, max = 40)
     @Column(name = "username")
     private String username;
 
-    @Size(min = 6, max = 128)
-    @Column(name = "passwordHash")
-    private String passwordHash;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private AccountTypes role;
 
     @Size(min = 6, max = 128)
     @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$")
     @Column(name = "email")
     private String email;
+
+    @Size(min = 6, max = 128)
+    @Column(name = "passwordHash")
+    private String passwordHash;
 
     @Size(min = 64, max = 64)
     @Column(name = "emailVerificationCode")
@@ -88,6 +90,14 @@ public class Account implements Serializable {
         this.id = id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public AccountTypes getRole() {
         return role;
     }
@@ -96,28 +106,20 @@ public class Account implements Serializable {
         this.role = role;
     }
 
-    public Optional<String> getUsername() {
-        return Optional.ofNullable(username);
-    }
-
-    public void setUsername(Optional<String> username) {
-        this.username = username.orElse(null);
-    }
-
-    public Optional<String> getPasswordHash() {
-        return Optional.ofNullable(passwordHash);
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
     public Optional<String> getEmail() {
         return Optional.ofNullable(email);
     }
 
     public void setEmail(Optional<String> email) {
         this.email = email.orElse(null);
+    }
+
+    public Optional<String> getPasswordHash() {
+        return Optional.ofNullable(passwordHash);
+    }
+
+    public void setPasswordHash(Optional<String> passwordHash) {
+        this.passwordHash = passwordHash.orElse(null);
     }
 
     public Optional<String> getEmailVerificationCode() {
@@ -136,8 +138,8 @@ public class Account implements Serializable {
         this.emailVerificationCodeTimestamp = emailVerificationCodeTimestamp.orElse(null);
     }
 
-    public Boolean getEmailVerified() {
-        return Optional.ofNullable(emailVerified).orElse(false);
+    public Optional<Boolean> getEmailVerified() {
+        return Optional.ofNullable(emailVerified);
     }
 
     public void setEmailVerified(Optional<Boolean> emailVerified) {
@@ -179,13 +181,13 @@ public class Account implements Serializable {
         final Account other = (Account) obj;
         if ((id == null && other.id != null) || !id.equals(other.id))
             return false;
-        if ((role == null && other.role != null) || !role.equals(other.role))
-            return false;
         if ((username == null && other.username != null) || !username.equals(other.username))
             return false;
-        if ((passwordHash == null && other.passwordHash != null) || !passwordHash.equals(other.passwordHash))
+        if ((role == null && other.role != null) || !role.equals(other.role))
             return false;
         if ((email == null && other.email != null) || !email.equals(other.email))
+            return false;
+        if ((passwordHash == null && other.passwordHash != null) || !passwordHash.equals(other.passwordHash))
             return false;
         if ((emailVerificationCode == null && other.emailVerificationCode != null) || !emailVerificationCode.equals(other.emailVerificationCode))
             return false;
@@ -207,10 +209,10 @@ public class Account implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((role == null) ? 0 : role.hashCode());
         result = prime * result + ((username == null) ? 0 : username.hashCode());
-        result = prime * result + ((passwordHash == null) ? 0 : passwordHash.hashCode());
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((passwordHash == null) ? 0 : passwordHash.hashCode());
         result = prime * result + ((emailVerificationCode == null) ? 0 : emailVerificationCode.hashCode());
         result = prime * result + ((emailVerificationCodeTimestamp == null) ? 0 : emailVerificationCodeTimestamp.hashCode());
         result = prime * result + ((emailVerified == null) ? 0 : emailVerified.hashCode());
@@ -222,7 +224,7 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account[" + "id=" + id + ", role=" + role + ", username=" + username + ", email=" + email + ", emailVerificationCodeTimestamp=" + emailVerificationCodeTimestamp + ", emailVerified="
+        return "Account[" + "id=" + id + ", username=" + username + ", role=" + role + ", email=" + email + ", emailVerificationCodeTimestamp=" + emailVerificationCodeTimestamp + ", emailVerified="
                 + emailVerified + ", resetPasswordCodeTimestamp=" + resetPasswordCodeTimestamp + ", facebookId=" + facebookId + "]";
     }
 
