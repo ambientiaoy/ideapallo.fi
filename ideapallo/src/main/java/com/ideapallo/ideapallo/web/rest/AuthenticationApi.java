@@ -32,22 +32,14 @@ import com.ideapallo.ideapallo.web.rest.dto.FacebookSignInRequest;
 import com.ideapallo.ideapallo.web.rest.dto.FacebookSignInResponse;
 import com.ideapallo.ideapallo.web.rest.dto.ForgotPasswordRequest;
 import com.ideapallo.ideapallo.web.rest.dto.ResetPasswordRequest;
-import com.ideapallo.ideapallo.web.rest.dto.SignInRequest;
-import com.ideapallo.ideapallo.web.rest.dto.SignInResponse;
-import com.ideapallo.ideapallo.web.rest.dto.SignUpRequest;
-import com.ideapallo.ideapallo.web.rest.dto.SignUpResponse;
 import com.ideapallo.ideapallo.web.rest.dto.VerifyEmailRequest;
 import com.ideapallo.ideapallo.web.rest.dto.VerifyEmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-=======
-import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
->>>>>>> refs/heads/sifu
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,7 +52,6 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/api/")
 public class AuthenticationApi {
@@ -69,27 +60,7 @@ public class AuthenticationApi {
 
     @Inject
     private AccountService accountService;
-<<<<<<< HEAD
 
-    @RequestMapping(value = "/sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @Transactional
-    public ResponseEntity<SignUpResponse> signUp(@Valid @RequestBody SignUpRequest request) {
-        log.debug("POST /sign-up {}", request);
-        final Account account = accountService.signUp(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok().body(convertToSignUpResponse(account));
-    }
-
-    @RequestMapping(value = "/sign-in", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @Transactional
-    public ResponseEntity<SignInResponse> signIn(@Valid @RequestBody SignInRequest request) {
-        log.debug("POST /sign-in {}", request);
-        final SignInResponse response = accountService.signIn(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok().body(response);
-    }
-=======
->>>>>>> refs/heads/sifu
 
     @RequestMapping(value = "/email-sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -139,12 +110,8 @@ public class AuthenticationApi {
     @RequestMapping(value = "/change-password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-<<<<<<< HEAD
-    public ResponseEntity<ChangePasswordResponse> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
-=======
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<ChangePasswordResponse>> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
->>>>>>> refs/heads/sifu
+    public ResponseEntity<ChangePasswordResponse> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
         log.debug("POST /change-password {}", request);
         final Account account = accountService.changePassword(principalId, request.getOldPassword(), request.getNewPassword());
         return ResponseEntity.ok().body(convertToChangePasswordResponse(account));
