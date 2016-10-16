@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,24 +47,6 @@ public class AuthenticationApi {
 
     @Inject
     private AccountService accountService;
-
-    @RequestMapping(value = "/sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @Transactional
-    public ResponseEntity<List<SignUpResponse>> signUp(@Valid @RequestBody SignUpRequest request) {
-        log.debug("POST /sign-up {}", request);
-        final Account account = accountService.signUp(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok().body(convertToSignUpResponse(account));
-    }
-
-    @RequestMapping(value = "/sign-in", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @Transactional
-    public ResponseEntity<SignInResponse> signIn(@Valid @RequestBody SignInRequest request) {
-        log.debug("POST /sign-in {}", request);
-        final SignInResponse response = accountService.signIn(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok().body(response);
-    }
 
     @RequestMapping(value = "/email-sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -88,7 +71,7 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         log.debug("POST /forgot-password {}", request);
-        userService.forgotPassword(request.getEmail());
+        accountService.forgotPassword(request.getEmail());
         return ResponseEntity.ok().build();
     }
 
@@ -97,7 +80,7 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
         log.debug("POST /reset-password {}", request);
-        userService.resetPassword(request.getResetPasswordCode(), request.getNewPassword());
+        accountService.resetPassword(request.getResetPasswordCode(), request.getNewPassword());
         return ResponseEntity.ok().build();
     }
 
@@ -113,6 +96,7 @@ public class AuthenticationApi {
     @RequestMapping(value = "/change-password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<ChangePasswordResponse>> changePassword(@Valid @RequestBody ChangePasswordRequest request, @ApiIgnore @AuthenticationPrincipal Long principalId) {
         log.debug("POST /change-password {}", request);
         final Account account = accountService.changePassword(principalId, request.getOldPassword(), request.getNewPassword());
@@ -124,27 +108,18 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<FacebookSignInResponse> facebookSignIn(@Valid @RequestBody FacebookSignInRequest request) {
         log.debug("POST /facebook-sign-in {}", request);
-        final Optional<FacebookSignInResponse> response = userService.facebookSignIn(request.getFacebookAccessToken());
+        final Optional<FacebookSignInResponse> response = accountService.facebookSignIn(request.getFacebookAccessToken());
         if (response.isPresent()) {
             return ResponseEntity.ok().body(response.get());
         }
         return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
-    private SignUpResponse convertToSignUpResponse(Account model) {
-        final SignUpResponse dto = new SignUpResponse();
-        dto.setId(model.getId());
-        dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
-        dto.setEmail(model.getEmail().orElse(null));
-        return dto;
-    }
-
     private EmailSignUpResponse convertToEmailSignUpResponse(Account model) {
         final EmailSignUpResponse dto = new EmailSignUpResponse();
         dto.setId(model.getId());
+        dto.setUsername(model.getUsername());
         dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
     }
@@ -152,8 +127,8 @@ public class AuthenticationApi {
     private VerifyEmailResponse convertToVerifyEmailResponse(Account model) {
         final VerifyEmailResponse dto = new VerifyEmailResponse();
         dto.setId(model.getId());
+        dto.setUsername(model.getUsername());
         dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
     }
@@ -161,8 +136,8 @@ public class AuthenticationApi {
     private ChangePasswordResponse convertToChangePasswordResponse(Account model) {
         final ChangePasswordResponse dto = new ChangePasswordResponse();
         dto.setId(model.getId());
+        dto.setUsername(model.getUsername());
         dto.setRole(model.getRole());
-        dto.setUsername(model.getUsername().orElse(null));
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
     }

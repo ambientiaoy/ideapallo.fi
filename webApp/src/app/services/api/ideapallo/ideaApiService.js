@@ -144,5 +144,6 @@
                 url: ideapalloApiUrl + '/api/ideas'
             });
         }
+
     }
 })();

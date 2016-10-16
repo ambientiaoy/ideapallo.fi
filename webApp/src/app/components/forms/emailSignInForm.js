@@ -55,8 +55,8 @@
                 eventBus.emitEvent('UserSignedIn', {
                     accessToken: response.data.accessToken,
                     id: response.data.id,
-                    role: response.data.role,
                     username: response.data.username,
+                    role: response.data.role,
                     email: response.data.email
                 });
                 $scope.errorCode = null;

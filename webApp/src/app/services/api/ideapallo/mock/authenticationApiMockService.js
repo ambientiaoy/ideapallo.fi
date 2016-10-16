@@ -29,8 +29,6 @@
     function authenticationApiMockService($timeout) {
 
         return {
-            signUp: signUp,
-            signIn: signIn,
             emailSignUp: emailSignUp,
             emailSignIn: emailSignIn,
             forgotPassword: forgotPassword,
@@ -40,64 +38,17 @@
             facebookSignIn: facebookSignIn
         };
 
-        /** signUp 
-         * request - SignUpRequest {
-         *   username: String
-         *   password: String
-         * }
-         *
-         * response - List [
-         *   SignUpResponse {
-         *     id: Int
-         *     role: AccountTypes
-         *     username: Optional[String]
-         *     email: Optional[String]
-         *   }
-         * ]
-         *
-         */
-        function signUp(model) {
-            $timeout(function() {
-                successCallback({
-                    //TODO fill up mocked data values
-                }, 500);
-            });
-        }
-
-        /** signIn 
-         * request - SignInRequest {
-         *   username: String
-         *   password: String
-         * }
-         *
-         * response - SignInResponse {
-         *   accessToken: String
-         *   id: Int
-         *   role: AccountTypes
-         *   username: Optional[String]
-         *   email: Optional[String]
-         * }
-         *
-         */
-        function signIn(model) {
-            $timeout(function() {
-                successCallback({
-                    //TODO fill up mocked data values
-                }, 500);
-            });
-        }
-
         /** emailSignUp 
          * request - EmailSignUpRequest {
-         *   password: String
          *   email: String
+         *   password: String
          * }
          *
          * response - List [
          *   EmailSignUpResponse {
          *     id: Int
+         *     username: String
          *     role: AccountTypes
-         *     username: Optional[String]
          *     email: Optional[String]
          *   }
          * ]
@@ -120,8 +71,8 @@
          * response - EmailSignInResponse {
          *   accessToken: String
          *   id: Int
+         *   username: String
          *   role: AccountTypes
-         *   username: Optional[String]
          *   email: Optional[String]
          * }
          *
@@ -175,8 +126,8 @@
          * response - List [
          *   VerifyEmailResponse {
          *     id: Int
+         *     username: String
          *     role: AccountTypes
-         *     username: Optional[String]
          *     email: Optional[String]
          *   }
          * ]
@@ -199,8 +150,8 @@
          * response - List [
          *   ChangePasswordResponse {
          *     id: Int
+         *     username: String
          *     role: AccountTypes
-         *     username: Optional[String]
          *     email: Optional[String]
          *   }
          * ]
@@ -222,8 +173,8 @@
          * response - FacebookSignInResponse {
          *   accessToken: String
          *   id: Int
+         *   username: String
          *   role: AccountTypes
-         *   username: Optional[String]
          *   email: Optional[String]
          * }
          *

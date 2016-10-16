@@ -48,16 +48,16 @@
         function save(sessionData) {
             localStorage.setItem('accessToken', sessionData.accessToken);
             localStorage.setItem('id', sessionData.id);
-            localStorage.setItem('role', sessionData.role);
             localStorage.setItem('username', sessionData.username);
+            localStorage.setItem('role', sessionData.role);
             localStorage.setItem('email', sessionData.email);
         }
 
         function clear() {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('id');
-            localStorage.removeItem('role');
             localStorage.removeItem('username');
+            localStorage.removeItem('role');
             localStorage.removeItem('email');
         }
 
@@ -65,8 +65,8 @@
             return {
                 accessToken: localStorage.getItem('accessToken'),
                 id: localStorage.getItem('id'),
-                role: localStorage.getItem('role'),
                 username: localStorage.getItem('username'),
+                role: localStorage.getItem('role'),
                 email: localStorage.getItem('email')
             };
         }

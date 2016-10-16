@@ -8,7 +8,6 @@
                     <div ng-message="required">{{'VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_IS_REQUIRED' | translate}}</div>
                     <div ng-message="minlength" ng-if="!verifyEmailForm.emailVerificationCode.$pristine">{{'VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_MIN' | translate:'{ min: 64 }'}}</div>
                     <div ng-message="maxlength" ng-if="!verifyEmailForm.emailVerificationCode.$pristine">{{'VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_MAX' | translate:'{ max: 64 }'}}</div>
-
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">

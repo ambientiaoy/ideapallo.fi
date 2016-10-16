@@ -38,10 +38,11 @@ public class FacebookSignInResponse implements Serializable {
     private Long id;
 
     @NotNull
-    private AccountTypes role;
-
-    @Size(min = 3, max = 128)
+    @Size(min = 4, max = 40)
     private String username;
+
+    @NotNull
+    private AccountTypes role;
 
     @Size(min = 6, max = 128)
     @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$")
@@ -63,20 +64,20 @@ public class FacebookSignInResponse implements Serializable {
         this.id = id;
     }
 
-    public AccountTypes getRole() {
-        return role;
-    }
-
-    public void setRole(AccountTypes role) {
-        this.role = role;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public AccountTypes getRole() {
+        return role;
+    }
+
+    public void setRole(AccountTypes role) {
+        this.role = role;
     }
 
     public String getEmail() {
@@ -100,9 +101,9 @@ public class FacebookSignInResponse implements Serializable {
             return false;
         if ((id == null && other.id != null) || !id.equals(other.id))
             return false;
-        if ((role == null && other.role != null) || !role.equals(other.role))
-            return false;
         if ((username == null && other.username != null) || !username.equals(other.username))
+            return false;
+        if ((role == null && other.role != null) || !role.equals(other.role))
             return false;
         if ((email == null && other.email != null) || !email.equals(other.email))
             return false;
@@ -115,15 +116,15 @@ public class FacebookSignInResponse implements Serializable {
         int result = 1;
         result = prime * result + ((accessToken == null) ? 0 : accessToken.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((role == null) ? 0 : role.hashCode());
         result = prime * result + ((username == null) ? 0 : username.hashCode());
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "FacebookSignInResponse[" + "id=" + id + ", role=" + role + ", username=" + username + ", email=" + email + "]";
+        return "FacebookSignInResponse[" + "id=" + id + ", username=" + username + ", role=" + role + ", email=" + email + "]";
     }
 
 }

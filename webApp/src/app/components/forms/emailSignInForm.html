@@ -9,7 +9,6 @@
                     <div ng-message="minlength" ng-if="!emailSignInForm.email.$pristine">{{'EMAIL_SIGN_IN_FORM_EMAIL_MIN' | translate:'{ min: 6 }'}}</div>
                     <div ng-message="maxlength" ng-if="!emailSignInForm.email.$pristine">{{'EMAIL_SIGN_IN_FORM_EMAIL_MAX' | translate:'{ max: 128 }'}}</div>
                     <div ng-message="pattern" ng-if="!emailSignInForm.email.$pristine">{{'EMAIL_SIGN_IN_FORM_EMAIL_PATTERN' | translate:'{ max: 128 }'}}</div>
-
                 </div>
             </div>
             <div class="form-group">
@@ -20,7 +19,6 @@
                     <div ng-message="minlength" ng-if="!emailSignInForm.password.$pristine">{{'EMAIL_SIGN_IN_FORM_PASSWORD_MIN' | translate:'{ min: 6 }'}}</div>
                     <div ng-message="maxlength" ng-if="!emailSignInForm.password.$pristine">{{'EMAIL_SIGN_IN_FORM_PASSWORD_MAX' | translate:'{ max: 32 }'}}</div>
                     <div ng-message="pattern" ng-if="!emailSignInForm.password.$pristine">{{'EMAIL_SIGN_IN_FORM_PASSWORD_PATTERN' | translate:'{ max: 32 }'}}</div>
-
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">

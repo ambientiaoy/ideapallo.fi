@@ -7,7 +7,7 @@ ideapallo project[
   ideapallo server[
     template java-springboot
     developer (akis)
-    default model type sql
+    default model type mysql
     security(
       principal Account 
 #      permission  // I have no idea what permission actually does and how to make use of it.
@@ -15,7 +15,7 @@ ideapallo project[
       defaultRole CLIENT
       adminRole ADMIN
       signIn[query findUserWithStuff, response(Account, Idealist)]
-      type (username, email, facebook)
+      type (email, facebook)
     )
   ](
 
@@ -24,8 +24,9 @@ ideapallo project[
     AccountTypes enum( ADMIN, CLIENT)
 
     #MODEL
-    Account model(
+    Account model [unique(username)](
       findUserWithStuff find from Account join Idealist on Idealist.account where Account.id == id
+      username text[min 4, max 40]
     )
 
     Idealist model(

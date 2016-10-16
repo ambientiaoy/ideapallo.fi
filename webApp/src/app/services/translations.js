@@ -94,29 +94,9 @@
                 RESET_PASSWORD_FORM_RESET_PASSWORD_CODE_MAX: 'Reset password code max',
                 RESET_PASSWORD_FORM_RESET_PASSWORD_CODE_MIN: 'Reset password code min',
                 RESET_PASSWORD_FORM_SUBMIT: 'Submit',
-                SIGN_IN_FORM_PASSWORD: 'Password',
-                SIGN_IN_FORM_PASSWORD_IS_REQUIRED: 'Password is required',
-                SIGN_IN_FORM_PASSWORD_MAX: 'Password max',
-                SIGN_IN_FORM_PASSWORD_MIN: 'Password min',
-                SIGN_IN_FORM_PASSWORD_PATTERN: 'Password pattern',
-                SIGN_IN_FORM_SUBMIT: 'Submit',
-                SIGN_IN_FORM_USERNAME: 'Username',
-                SIGN_IN_FORM_USERNAME_IS_REQUIRED: 'Username is required',
-                SIGN_IN_FORM_USERNAME_MAX: 'Username max',
-                SIGN_IN_FORM_USERNAME_MIN: 'Username min',
                 SIGN_IN_PAGE_FORGOT_PASSWORD: 'Forgot password',
                 SIGN_IN_PAGE_SIGN_UP: 'Sign up',
                 SIGN_IN_WITH_FACEBOOK: 'Sign in with facebook',
-                SIGN_UP_FORM_PASSWORD: 'Password',
-                SIGN_UP_FORM_PASSWORD_IS_REQUIRED: 'Password is required',
-                SIGN_UP_FORM_PASSWORD_MAX: 'Password max',
-                SIGN_UP_FORM_PASSWORD_MIN: 'Password min',
-                SIGN_UP_FORM_PASSWORD_PATTERN: 'Password pattern',
-                SIGN_UP_FORM_SUBMIT: 'Submit',
-                SIGN_UP_FORM_USERNAME: 'Username',
-                SIGN_UP_FORM_USERNAME_IS_REQUIRED: 'Username is required',
-                SIGN_UP_FORM_USERNAME_MAX: 'Username max',
-                SIGN_UP_FORM_USERNAME_MIN: 'Username min',
                 SIGN_UP_PAGE_SIGN_IN: 'Sign in',
                 VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE: 'Email verification code',
                 VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_IS_REQUIRED: 'Email verification code is required',
@@ -128,6 +108,6 @@
 
             $translateProvider.preferredLanguage('en');
 
-            $translateProvider.useSanitizeValueStrategy('sanitize');
+            $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
         });
 })();

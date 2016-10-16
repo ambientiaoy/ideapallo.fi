@@ -29,22 +29,14 @@ public class EmailSignUpRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Size(min = 6, max = 32)
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$")
-    private String password;
-
-    @NotNull
     @Size(min = 6, max = 128)
     @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$")
     private String email;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @NotNull
+    @Size(min = 6, max = 32)
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$")
+    private String password;
 
     public String getEmail() {
         return email;
@@ -52,6 +44,14 @@ public class EmailSignUpRequest implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -63,9 +63,9 @@ public class EmailSignUpRequest implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         final EmailSignUpRequest other = (EmailSignUpRequest) obj;
-        if ((password == null && other.password != null) || !password.equals(other.password))
-            return false;
         if ((email == null && other.email != null) || !email.equals(other.email))
+            return false;
+        if ((password == null && other.password != null) || !password.equals(other.password))
             return false;
         return true;
     }
@@ -74,8 +74,8 @@ public class EmailSignUpRequest implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((password == null) ? 0 : password.hashCode());
         return result;
     }
 

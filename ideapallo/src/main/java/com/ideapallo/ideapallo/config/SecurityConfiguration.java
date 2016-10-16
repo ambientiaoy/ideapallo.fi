@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable().headers().frameOptions().disable().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(new JWTFilter(customProperties.getSecretKey()), UsernamePasswordAuthenticationFilter.class);
 
-        http.authorizeRequests().antMatchers("/management/**").hasAuthority("SYSTEM_ADMIN");
+        http.authorizeRequests().antMatchers("/management/**").hasAuthority("CLIENT");
     }
 
 }

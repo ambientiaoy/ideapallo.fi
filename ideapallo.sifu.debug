@@ -7,7 +7,7 @@ ideapallo project[
             akis
             docker
         )
-        default model type sql
+        default model type mysql
         security(
             principal Account
             role AccountTypes
@@ -17,12 +17,11 @@ ideapallo project[
                 query findUserWithStuff
                 response(
                     Account.id
-                    Account.role
                     Account.username
+                    Account.role
                     Account.email
                 )]
             type(
-                username
                 email
                 facebook
             )
@@ -34,10 +33,10 @@ ideapallo project[
             CLIENT CLIENT
         )
         Account model[
-            type sql
             unique(
                 username
             )
+            type mysql
             unique(
                 email
             )
@@ -54,20 +53,19 @@ ideapallo project[
                 primarykey
                 max 9223372036854775807]
             findUserWithStuff find from Account as Account join Idealist as Idealist on Account with Idealist.account where Account.id == id
+            username text[
+                min 4
+                max 40]
             role AccountTypes
-            username optional text[
-                unique
-                min 3
-                max 128]
-            passwordHash optional text[
-                min 6
-                max 128
-                sensitive]
             email optional text[
                 unique
                 min 6
                 max 128
                 regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            passwordHash optional text[
+                min 6
+                max 128
+                sensitive]
             emailVerificationCode optional text[
                 unique
                 min 64
@@ -91,13 +89,12 @@ ideapallo project[
             findById find from Account as Account where Account.id == id
             getById get from Account as Account where Account.id == id
             deleteById delete from Account as Account where Account.id == id
-            findByRole find from Account as Account where Account.role == role
             findByUsername find from Account as Account where Account.username == username
-            findByUsernameMandatory find from Account as Account where mandatory Account.username == username
-            findByPasswordHash find from Account as Account where Account.passwordHash == passwordHash
-            findByPasswordHashMandatory find from Account as Account where mandatory Account.passwordHash == passwordHash
+            findByRole find from Account as Account where Account.role == role
             findByEmail find from Account as Account where Account.email == email
             findByEmailMandatory find from Account as Account where mandatory Account.email == email
+            findByPasswordHash find from Account as Account where Account.passwordHash == passwordHash
+            findByPasswordHashMandatory find from Account as Account where mandatory Account.passwordHash == passwordHash
             findByEmailVerificationCode find from Account as Account where Account.emailVerificationCode == emailVerificationCode
             findByEmailVerificationCodeMandatory find from Account as Account where mandatory Account.emailVerificationCode == emailVerificationCode
             findByEmailVerificationCodeTimestamp find from Account as Account where Account.emailVerificationCodeTimestamp == emailVerificationCodeTimestamp
@@ -112,7 +109,7 @@ ideapallo project[
             findByFacebookIdMandatory find from Account as Account where mandatory Account.facebookId == facebookId
         )
         Idealist model[
-            type sql](
+            type mysql](
             id integer[
                 primarykey
                 max 9223372036854775807]
@@ -126,7 +123,7 @@ ideapallo project[
             findByAccount find from Idealist as Idealist where Idealist.account.id == accountId
         )
         Idea model[
-            type sql](
+            type mysql](
             id integer[
                 primarykey
                 max 9223372036854775807]
@@ -288,122 +285,43 @@ ideapallo project[
         EMAIL_VERIFICATION_CODE_EXPIRED badRequest
         EMAIL_RESET_PASSWORD_CODE_EXPIRED badRequest
         AuthenticationApi api(
-            signUp signup[
-                post /sign-up
-                query Account.findUserWithStuff
-                response(
-                    Account.id
-                    Account.role
-                    Account.username
-                    Account.email
-                )
-                errors
-                request SignUpRequest
-                response list SignUpResponse](
-                username mandatory username
-                password text[
-                    min 6
-                    max 32
-                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                    sensitive]
-            )
-            SignUpRequest dto(
-                username text[
-                    min 3
-                    max 128]
-                password text[
-                    min 6
-                    max 32
-                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                    sensitive]
-            )
-            SignUpResponse dto(
-                id integer[
-                    max 9223372036854775807]
-                role AccountTypes
-                username optional text[
-                    min 3
-                    max 128]
-                email optional text[
-                    min 6
-                    max 128
-                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
-            )
-            signIn signIn[
-                request SignInRequest
-                post /sign-in
-                query Account.findUserWithStuff
-                response(
-                    Account.id
-                    Account.role
-                    Account.username
-                    Account.email
-                )
-                errors
-                response SignInResponse]
-            SignInRequest dto(
-                username text[
-                    min 3
-                    max 128]
-                password text[
-                    min 6
-                    max 32
-                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                    sensitive]
-            )
-            SignInResponse dto(
-                accessToken text[
-                    min 64
-                    max 64
-                    sensitive]
-                id integer[
-                    max 9223372036854775807]
-                role AccountTypes
-                username optional text[
-                    min 3
-                    max 128]
-                email optional text[
-                    min 6
-                    max 128
-                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
-            )
             emailSignUp emailsignup[
                 post /email-sign-up
                 query Account.findUserWithStuff
                 response(
                     Account.id
-                    Account.role
                     Account.username
+                    Account.role
                     Account.email
                 )
                 errors
                 request EmailSignUpRequest
                 response list EmailSignUpResponse](
+                email mandatory email
                 password text[
                     min 6
                     max 32
                     regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
                     sensitive]
-                email mandatory email
             )
             EmailSignUpRequest dto(
-                password text[
-                    min 6
-                    max 32
-                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                    sensitive]
                 email text[
                     min 6
                     max 128
                     regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+                password text[
+                    min 6
+                    max 32
+                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                    sensitive]
             )
             EmailSignUpResponse dto(
                 id integer[
                     max 9223372036854775807]
+                username text[
+                    min 4
+                    max 40]
                 role AccountTypes
-                username optional text[
-                    min 3
-                    max 128]
                 email optional text[
                     min 6
                     max 128
@@ -415,8 +333,8 @@ ideapallo project[
                 query Account.findUserWithStuff
                 response(
                     Account.id
-                    Account.role
                     Account.username
+                    Account.role
                     Account.email
                 )
                 errors
@@ -439,10 +357,10 @@ ideapallo project[
                     sensitive]
                 id integer[
                     max 9223372036854775807]
+                username text[
+                    min 4
+                    max 40]
                 role AccountTypes
-                username optional text[
-                    min 3
-                    max 128]
                 email optional text[
                     min 6
                     max 128
@@ -479,8 +397,8 @@ ideapallo project[
                 query Account.findUserWithStuff
                 response(
                     Account.id
-                    Account.role
                     Account.username
+                    Account.role
                     Account.email
                 )
                 errors
@@ -494,10 +412,10 @@ ideapallo project[
             VerifyEmailResponse dto(
                 id integer[
                     max 9223372036854775807]
+                username text[
+                    min 4
+                    max 40]
                 role AccountTypes
-                username optional text[
-                    min 3
-                    max 128]
                 email optional text[
                     min 6
                     max 128
@@ -510,8 +428,8 @@ ideapallo project[
                 query Account.findUserWithStuff
                 response(
                     Account.id
-                    Account.role
                     Account.username
+                    Account.role
                     Account.email
                 )
                 errors
@@ -531,10 +449,10 @@ ideapallo project[
             ChangePasswordResponse dto(
                 id integer[
                     max 9223372036854775807]
+                username text[
+                    min 4
+                    max 40]
                 role AccountTypes
-                username optional text[
-                    min 3
-                    max 128]
                 email optional text[
                     min 6
                     max 128
@@ -546,8 +464,8 @@ ideapallo project[
                 query Account.findUserWithStuff
                 response(
                     Account.id
-                    Account.role
                     Account.username
+                    Account.role
                     Account.email
                 )
                 errors
@@ -564,10 +482,10 @@ ideapallo project[
                     sensitive]
                 id integer[
                     max 9223372036854775807]
+                username text[
+                    min 4
+                    max 40]
                 role AccountTypes
-                username optional text[
-                    min 3
-                    max 128]
                 email optional text[
                     min 6
                     max 128
@@ -583,8 +501,6 @@ ideapallo project[
             ideapallo.IdeaApi.updateIdea
             ideapallo.IdeaApi.deleteIdea
             ideapallo.IdeaApi.ideas
-            ideapallo.AuthenticationApi.signUp
-            ideapallo.AuthenticationApi.signIn
             ideapallo.AuthenticationApi.emailSignUp
             ideapallo.AuthenticationApi.emailSignIn
             ideapallo.AuthenticationApi.forgotPassword
@@ -638,7 +554,6 @@ ideapallo project[
             )}
         signInPage page[
             path /sign-in](
-            signInForm signInForm
             emailSignInForm emailSignInForm
             facebookSignInForm facebookSignInForm
             forgotPassword link{
@@ -652,7 +567,6 @@ ideapallo project[
         )
         signUpPage page[
             path /sign-up](
-            signUpForm signUpForm
             emailSignUpForm emailSignUpForm
             signIn link{
                 on click(
@@ -688,17 +602,17 @@ ideapallo project[
                 )]
         )
         UserSignedIn event[
-            dto ideapallo.AuthenticationApi.SignInResponse](
+            dto ideapallo.AuthenticationApi.EmailSignInResponse](
             accessToken text[
                 min 64
                 max 64
                 sensitive]
             id integer[
                 max 9223372036854775807]
+            username text[
+                min 4
+                max 40]
             role ideapallo.AccountTypes
-            username optional text[
-                min 3
-                max 128]
             email optional text[
                 min 6
                 max 128
@@ -779,48 +693,6 @@ ideapallo project[
             on IdeaUpdated(
                 reload
             )}
-        signInForm form[
-            submit ideapallo.AuthenticationApi.signIn
-            model[
-                dto ideapallo.AuthenticationApi.SignInRequest](
-                username text[
-                    min 3
-                    max 128]
-                password text[
-                    min 6
-                    max 32
-                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                    sensitive]
-            )
-            visible(
-                username
-                password
-            )](
-            username text[
-                bind(
-                    model . username
-                )
-                min 3
-                max 128]
-            password text[
-                bind(
-                    model . password
-                )
-                min 6
-                max 32
-                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                sensitive]
-            submit button
-        ){
-            on success(
-                fire UserSignedIn(
-                    success . accessToken
-                    success . id
-                    success . role
-                    success . username
-                    success . email
-                )
-            )}
         emailSignInForm form[
             submit ideapallo.AuthenticationApi.emailSignIn
             model[
@@ -860,8 +732,8 @@ ideapallo project[
                 fire UserSignedIn(
                     success . accessToken
                     success . id
-                    success . role
                     success . username
+                    success . role
                     success . email
                 )
             )}
@@ -888,73 +760,29 @@ ideapallo project[
                 fire UserSignedIn(
                     success . accessToken
                     success . id
-                    success . role
                     success . username
+                    success . role
                     success . email
                 )
-            )}
-        signUpForm form[
-            submit ideapallo.AuthenticationApi.signUp
-            model[
-                dto ideapallo.AuthenticationApi.SignUpRequest](
-                username text[
-                    min 3
-                    max 128]
-                password text[
-                    min 6
-                    max 32
-                    regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                    sensitive]
-            )
-            visible(
-                username
-                password
-            )](
-            username text[
-                bind(
-                    model . username
-                )
-                min 3
-                max 128]
-            password text[
-                bind(
-                    model . password
-                )
-                min 6
-                max 32
-                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                sensitive]
-            submit button
-        ){
-            on success(
-                goto signInPage
             )}
         emailSignUpForm form[
             submit ideapallo.AuthenticationApi.emailSignUp
             model[
                 dto ideapallo.AuthenticationApi.EmailSignUpRequest](
+                email text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
                 password text[
                     min 6
                     max 32
                     regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
                     sensitive]
-                email text[
-                    min 6
-                    max 128
-                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
             )
             visible(
-                password
                 email
+                password
             )](
-            password text[
-                bind(
-                    model . password
-                )
-                min 6
-                max 32
-                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-                sensitive]
             email text[
                 bind(
                     model . email
@@ -962,6 +790,14 @@ ideapallo project[
                 min 6
                 max 128
                 regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+            password text[
+                bind(
+                    model . password
+                )
+                min 6
+                max 32
+                regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
+                sensitive]
             submit button
         ){
             on success(

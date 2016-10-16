@@ -34,6 +34,7 @@ import com.ideapallo.ideapallo.model.enumeration.*;
 import com.ideapallo.ideapallo.repository.AccountRepositoryCustom;
 import com.ideapallo.ideapallo.repository.tuple.*;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQueryFactory;
 
 
@@ -49,8 +50,17 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         log.trace(".findUserWithStuff(id: {})", id);
         final QIdealist idealist = QIdealist.idealist;
         final QAccount account = QAccount.account;
-        return factory.select(idealist, account).from(idealist).innerJoin(idealist.account, account).where(account.id.eq(id)).fetch().stream()
-                .map(t -> new AccountIdealistTuple(t.get(account), t.get(idealist))).collect(Collectors.toList());
+        final QAccount idealistAccount = new QAccount("idealistAccount");
+        return factory.select(idealist, account).from(account, idealist).innerJoin(idealist.account, idealistAccount)
+                .where(new BooleanBuilder().and(account.id.eq(id)).and(account.id.eq(idealistAccount.id))).fetch().stream().map(t -> new AccountIdealistTuple(t.get(account), t.get(idealist)))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Account> findByUsername(String username) {
+        log.trace(".findByUsername(username: {})", username);
+        final QAccount account = QAccount.account;
+        return Optional.ofNullable(factory.select(account).from(account).where(account.username.eq(username)).fetchOne());
     }
 
     @Override
@@ -58,34 +68,6 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         log.trace(".findByRole(role: {})", role);
         final QAccount account = QAccount.account;
         return factory.select(account).from(account).where(account.role.eq(role)).fetch();
-    }
-
-    @Override
-    public List<Account> findByUsername(Optional<String> username) {
-        log.trace(".findByUsername(username: {})", username);
-        final QAccount account = QAccount.account;
-        return factory.select(account).from(account).where(username.isPresent() ? account.username.eq(username.get()) : null).fetch();
-    }
-
-    @Override
-    public Optional<Account> findByUsernameMandatory(String username) {
-        log.trace(".findByUsernameMandatory(username: {})", username);
-        final QAccount account = QAccount.account;
-        return Optional.ofNullable(factory.select(account).from(account).where(account.username.eq(username)).fetchOne());
-    }
-
-    @Override
-    public List<Account> findByPasswordHash(Optional<String> passwordHash) {
-        log.trace(".findByPasswordHash(passwordHash)");
-        final QAccount account = QAccount.account;
-        return factory.select(account).from(account).where(passwordHash.isPresent() ? account.passwordHash.eq(passwordHash.get()) : null).fetch();
-    }
-
-    @Override
-    public List<Account> findByPasswordHashMandatory(String passwordHash) {
-        log.trace(".findByPasswordHashMandatory(passwordHash)");
-        final QAccount account = QAccount.account;
-        return factory.select(account).from(account).where(account.passwordHash.eq(passwordHash)).fetch();
     }
 
     @Override
@@ -100,6 +82,20 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         log.trace(".findByEmailMandatory(email: {})", email);
         final QAccount account = QAccount.account;
         return Optional.ofNullable(factory.select(account).from(account).where(account.email.eq(email)).fetchOne());
+    }
+
+    @Override
+    public List<Account> findByPasswordHash(Optional<String> passwordHash) {
+        log.trace(".findByPasswordHash(passwordHash)");
+        final QAccount account = QAccount.account;
+        return factory.select(account).from(account).where(passwordHash.isPresent() ? account.passwordHash.eq(passwordHash.get()) : null).fetch();
+    }
+
+    @Override
+    public List<Account> findByPasswordHashMandatory(String passwordHash) {
+        log.trace(".findByPasswordHashMandatory(passwordHash)");
+        final QAccount account = QAccount.account;
+        return factory.select(account).from(account).where(account.passwordHash.eq(passwordHash)).fetch();
     }
 
     @Override
