@@ -21,8 +21,6 @@ package com.ideapallo.ideapallo.web.rest.dto;
 
 import java.io.Serializable;
 
-import java.util.UUID;
-
 import javax.validation.constraints.*;
 
 
@@ -31,7 +29,7 @@ public class UpdateIdeaRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    private UUID id;
+    private Long id;
 
     @NotNull
     @Size(max = 255)
@@ -41,11 +39,11 @@ public class UpdateIdeaRequest implements Serializable {
     @Size(max = 255)
     private String content;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

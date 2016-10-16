@@ -21,8 +21,6 @@ package com.ideapallo.ideapallo.model;
 
 import java.io.Serializable;
 
-import java.util.UUID;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -47,11 +45,11 @@ public class Idea implements Serializable {
     @Column(name = "content")
     private String content;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

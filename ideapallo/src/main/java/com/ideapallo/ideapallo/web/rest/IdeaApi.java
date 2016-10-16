@@ -53,7 +53,7 @@ public class IdeaApi {
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<ReadIdeaResponse> readIdea(@PathVariable UUID id) {
+    public ResponseEntity<ReadIdeaResponse> readIdea(@PathVariable Long id) {
         log.debug("GET /idea/{}", id);
         final Optional<Idea> result = Optional.ofNullable(ideaRepository.findOne(id));
         if (result.isPresent()) {
@@ -75,7 +75,7 @@ public class IdeaApi {
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<UpdateIdeaResponse> updateIdea(@PathVariable UUID id, @Valid @RequestBody RestUpdateIdeaRequest request) {
+    public ResponseEntity<UpdateIdeaResponse> updateIdea(@PathVariable Long id, @Valid @RequestBody RestUpdateIdeaRequest request) {
         log.debug("PUT /idea/{} {}", id, request);
         final Idea idea = convertToIdea(id, request);
         final Idea result = ideaRepository.save(idea);
@@ -85,7 +85,7 @@ public class IdeaApi {
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<Void> deleteIdea(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteIdea(@PathVariable Long id) {
         log.debug("DELETE /idea/{}", id);
         ideaRepository.delete(id);
         return ResponseEntity.ok().build();

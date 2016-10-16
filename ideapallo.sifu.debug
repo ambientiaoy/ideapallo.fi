@@ -7,12 +7,13 @@ ideapallo project[
             akis
             docker
         )
-        default model type nosql
+        default model type sql
         path /](
         Idea model[
-            type nosql](
-            id uuid[
-                primarykey]
+            type sql](
+            id integer[
+                primarykey
+                max 9223372036854775807]
             title text[
                 max 255]
             content text[
@@ -39,10 +40,12 @@ ideapallo project[
                 request ReadIdeaRequest
                 response ReadIdeaResponse]
             ReadIdeaRequest dto(
-                id uuid
+                id integer[
+                    max 9223372036854775807]
             )
             ReadIdeaResponse dto(
-                id uuid
+                id integer[
+                    max 9223372036854775807]
                 title text[
                     max 255]
                 content text[
@@ -82,7 +85,8 @@ ideapallo project[
                     max 255]
             )
             CreateIdeaResponse dto(
-                id uuid
+                id integer[
+                    max 9223372036854775807]
                 title text[
                     max 255]
                 content text[
@@ -117,14 +121,16 @@ ideapallo project[
                     )]
             )
             UpdateIdeaRequest dto(
-                id uuid
+                id integer[
+                    max 9223372036854775807]
                 title text[
                     max 255]
                 content text[
                     max 255]
             )
             UpdateIdeaResponse dto(
-                id uuid
+                id integer[
+                    max 9223372036854775807]
                 title text[
                     max 255]
                 content text[
@@ -136,7 +142,8 @@ ideapallo project[
                 errors
                 request DeleteIdeaRequest]
             DeleteIdeaRequest dto(
-                id uuid
+                id integer[
+                    max 9223372036854775807]
             )
             ideas find[
                 query Idea.ideas
@@ -149,7 +156,8 @@ ideapallo project[
                 )
                 response list IdeasResponse]
             IdeasResponse dto(
-                id uuid
+                id integer[
+                    max 9223372036854775807]
                 title text[
                     max 255]
                 content text[
@@ -213,7 +221,8 @@ ideapallo project[
             load IdeaApi.ideas
             model[
                 dto ideapallo.IdeaApi.IdeasResponse](
-                id uuid
+                id integer[
+                    max 9223372036854775807]
                 title text[
                     max 255]
                 content text[
@@ -224,10 +233,11 @@ ideapallo project[
                 title
                 content
             )](
-            id uuid[
+            id integer[
                 bind(
                     model . id
-                )]
+                )
+                max 9223372036854775807]
             title text[
                 bind(
                     model . title

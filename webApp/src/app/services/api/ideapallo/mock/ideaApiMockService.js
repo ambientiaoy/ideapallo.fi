@@ -40,7 +40,7 @@
          * request - Unit
          *
          * response - ReadIdeaResponse {
-         *   id: UUID
+         *   id: Int
          *   title: String
          *   content: String
          * }
@@ -61,7 +61,7 @@
          * }
          *
          * response - CreateIdeaResponse {
-         *   id: UUID
+         *   id: Int
          *   title: String
          *   content: String
          * }
@@ -82,7 +82,7 @@
          * }
          *
          * response - UpdateIdeaResponse {
-         *   id: UUID
+         *   id: Int
          *   title: String
          *   content: String
          * }
@@ -98,7 +98,7 @@
 
         /** deleteIdea 
          * request - DeleteIdeaRequest {
-         *   id: UUID
+         *   id: Int
          * }
          *
          * response - Unit
@@ -117,7 +117,7 @@
          *
          * response - List [
          *   IdeasResponse {
-         *     id: UUID
+         *     id: Int
          *     title: String
          *     content: String
          *   }

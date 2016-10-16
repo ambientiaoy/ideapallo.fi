@@ -7,7 +7,7 @@ ideapallo project[
   ideapallo server[
     template java-springboot
     developer (akis)
-    default model type nosql
+    default model type sql
   ](
 
     #MODEL
