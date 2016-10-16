@@ -140,8 +140,16 @@ ideapallo project[
             findByContent find from Idea as Idea where Idea.content == content
             ideas find from Idea as Idea
         )
-        IdeaApi api(
+        IdeaApi api[
+            secured(
+                CLIENT
+                ADMIN
+            )](
             readIdea find[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
                 get /idea/:id
                 query Idea.findById
                 response(
@@ -165,6 +173,10 @@ ideapallo project[
                     max 255]
             )
             createIdea create[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
                 post /idea
                 model Idea
                 query Idea.findById
@@ -206,6 +218,10 @@ ideapallo project[
                     max 255]
             )
             updateIdea update[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
                 put /idea/:id
                 model Idea
                 query Idea.findById
@@ -250,6 +266,10 @@ ideapallo project[
                     max 255]
             )
             deleteIdea delete[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
                 delete /idea/:id
                 query Idea.findById
                 errors
@@ -261,6 +281,10 @@ ideapallo project[
             ideas find[
                 query Idea.ideas
                 get /ideas
+                secured(
+                    CLIENT
+                    ADMIN
+                )
                 errors
                 response(
                     Idea.id
