@@ -98,6 +98,8 @@
                 SIGN_IN_PAGE_SIGN_UP: 'Sign up',
                 SIGN_IN_WITH_FACEBOOK: 'Sign in with facebook',
                 SIGN_UP_PAGE_SIGN_IN: 'Sign in',
+                USERNAME_SIGN_UP_FORM_EMAIL: 'Username',
+                USERNAME_SIGN_UP_FORM_EMAIL_IS_REQUIRED: 'Username is required',
                 VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE: 'Email verification code',
                 VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_IS_REQUIRED: 'Email verification code is required',
                 VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_MAX: 'Email verification code max',

@@ -21,6 +21,7 @@ package com.ideapallo.ideapallo.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ideapallo.ideapallo.model.Account;
+import com.ideapallo.ideapallo.model.write.AccountDescriptor;
 import com.ideapallo.ideapallo.service.AccountService;
 import com.ideapallo.ideapallo.web.rest.dto.ChangePasswordRequest;
 import com.ideapallo.ideapallo.web.rest.dto.ChangePasswordResponse;
@@ -50,7 +51,10 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/api/")
@@ -67,7 +71,7 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<EmailSignUpResponse> emailSignUp(@Valid @RequestBody EmailSignUpRequest request) {
         log.debug("POST /email-sign-up {}", request);
-        final Account account = accountService.emailSignUp(request.getEmail(), request.getPassword());
+        final Account account = accountService.emailSignUp(convertToAccountDescriptor( request ));
         return ResponseEntity.ok().body(convertToEmailSignUpResponse(account));
     }
 
@@ -76,8 +80,23 @@ public class AuthenticationApi {
     @Transactional
     public ResponseEntity<EmailSignInResponse> emailSignIn(@Valid @RequestBody EmailSignInRequest request) {
         log.debug("POST /email-sign-in {}", request);
-        final EmailSignInResponse response = accountService.emailSignIn(request.getEmail(), request.getPassword());
+        final EmailSignInResponse response = accountService.emailSignIn(convertToAccountDescriptor( request ));
         return ResponseEntity.ok().body(response);
+    }
+
+    private AccountDescriptor convertToAccountDescriptor(EmailSignInRequest request) {
+        Map<String, Supplier<String>> mapper = new HashMap<>();
+        mapper.put("email", () -> request.getEmail());
+        mapper.put("password", () -> request.getPassword());
+        return AccountDescriptor.from( mapper );
+    }
+
+    private AccountDescriptor convertToAccountDescriptor(EmailSignUpRequest request) {
+        Map<String, Supplier<String>> mapper = new HashMap<>();
+        mapper.put("username", () -> request.getUsername());
+        mapper.put("email", () -> request.getEmail());
+        mapper.put("password", () -> request.getPassword());
+        return AccountDescriptor.from( mapper );
     }
 
     @RequestMapping(value = "/forgot-password", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

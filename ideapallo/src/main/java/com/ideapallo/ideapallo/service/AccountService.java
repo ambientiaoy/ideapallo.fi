@@ -21,6 +21,8 @@ package com.ideapallo.ideapallo.service;
 
 import java.time.*;
 import java.util.Locale;
+
+import com.ideapallo.ideapallo.model.write.AccountDescriptor;
 import org.apache.commons.lang.RandomStringUtils;
 
 import java.util.Optional;
@@ -75,35 +77,36 @@ public class AccountService {
         return account;
     }
 
-    public Account emailSignUp(String email, String password) {
+    public Account emailSignUp(AccountDescriptor accountDescriptor) {
 
-        log.debug("emailSignUp(email: {})", email);
+        log.debug("emailSignUp(email: {})", accountDescriptor.email);
 
-        final Optional<Account> optionalAccount = accountRepository.findByEmailMandatory(email);
+        final Optional<Account> optionalAccount = accountRepository.findByEmailMandatory(accountDescriptor.email);
         if (optionalAccount.isPresent()) {
-            throw new AccountWithEmailAlreadyExists("Account with email: " + email + " already exists.");
+            throw new AccountWithEmailAlreadyExists("Account with email: " + accountDescriptor.email + " already exists.");
         }
 
         final Account account = new Account();
-        account.setEmail(Optional.ofNullable(email));
+        account.setEmail(Optional.ofNullable(accountDescriptor.email));
+        account.setUsername(accountDescriptor.username);
         account.setRole(AccountTypes.CLIENT);
-        account.setPasswordHash(Optional.of(passwordEncoder.encode(password)));
+        account.setPasswordHash(Optional.of(passwordEncoder.encode(accountDescriptor.password)));
         account.setEmailVerificationCode(Optional.of(RandomStringUtils.randomAlphanumeric(64)));
         account.setEmailVerificationCodeTimestamp(Optional.of(ZonedDateTime.now(ZoneId.of("UTC")).plusDays(1)));
         account.setEmailVerified(Optional.of(false));
         accountRepository.save(account);
 
-        mailService.sendVerificationEmail(email, account.getEmailVerificationCode().get(), Locale.ENGLISH);
+        mailService.sendVerificationEmail(accountDescriptor.email, account.getEmailVerificationCode().get(), Locale.ENGLISH);
 
         return account;
     }
 
-    public EmailSignInResponse emailSignIn(String email, String password) {
+    public EmailSignInResponse emailSignIn(AccountDescriptor accountDescriptor) {
 
-        log.debug("emailSignIn(email: {})", email);
+        log.debug("emailSignIn(email: {})", accountDescriptor.email);
 
-        final Account account = accountRepository.findByEmailMandatory(email).orElseThrow(() -> new AuthenticationError("credentials.invalid", "Credentials are invalid!"));
-        if (!passwordEncoder.matches(password, account.getPasswordHash().get()))
+        final Account account = accountRepository.findByEmailMandatory(accountDescriptor.email).orElseThrow(() -> new AuthenticationError("credentials.invalid", "Credentials are invalid!"));
+        if (!passwordEncoder.matches(accountDescriptor.password, account.getPasswordHash().get()))
             throw new AuthenticationError("credentials.invalid", "Credentials are invalid!");
 
         final EmailSignInResponse response = new EmailSignInResponse();

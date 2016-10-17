@@ -50,7 +50,11 @@
             authenticationApi.emailSignUp($scope.model).then(onSuccess, onError);
 
             function onSuccess(response) {
-                $state.go('signInPage');
+                if( response.status == 200){
+                    $state.go('ideasPage');
+                } else {
+                    $state.go('signInPage');
+                }
                 $scope.errorCode = null;
             }
 

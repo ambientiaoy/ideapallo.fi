@@ -29,6 +29,10 @@ public class EmailSignUpRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
+    @Size(min = 4, max = 128)
+    private String username;
+
+    @NotNull
     @Size(min = 6, max = 128)
     @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$")
     private String email;
@@ -55,33 +59,36 @@ public class EmailSignUpRequest implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final EmailSignUpRequest other = (EmailSignUpRequest) obj;
-        if ((email == null && other.email != null) || !email.equals(other.email))
-            return false;
-        if ((password == null && other.password != null) || !password.equals(other.password))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EmailSignUpRequest that = (EmailSignUpRequest) o;
+
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        return password != null ? password.equals(that.password) : that.password == null;
+
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "EmailSignUpRequest[" + "email=" + email + "]";
+        return "EmailSignUpRequest[" + "username=" + username + " - " + "email=" + email + "]";
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

@@ -35,9 +35,9 @@
         .module('webApp')
         .controller('EmailSignInFormController', EmailSignInFormController);
 
-    EmailSignInFormController.$inject = ['$scope', 'eventBus', 'authenticationApi'];
+    EmailSignInFormController.$inject = ['$scope', '$state', 'eventBus', 'authenticationApi', 'sessionService'];
 
-    function EmailSignInFormController($scope, eventBus, authenticationApi) {
+    function EmailSignInFormController($scope, $state, eventBus, authenticationApi, sessionService) {
 
         $scope.model = {};
         $scope.errorCode = null;
@@ -59,6 +59,11 @@
                     role: response.data.role,
                     email: response.data.email
                 });
+
+                if( response.status == 200){
+                    $state.go('ideasPage');
+                }
+
                 $scope.errorCode = null;
             }
 
@@ -68,6 +73,7 @@
                 } else {
                     $scope.errorCode = 'Unknown error';
                 }
+                $state.go('signInPage');
             }
 
         }

@@ -66,6 +66,7 @@
                 method: 'POST',
                 url: ideapalloApiUrl + '/api/email-sign-up',
                 data: {
+                    username: model.username,
                     email: model.email,
                     password: model.password
                 }
