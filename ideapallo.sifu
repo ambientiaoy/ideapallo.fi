@@ -24,9 +24,9 @@ ideapallo project[
     AccountTypes enum( ADMIN, CLIENT)
 
     #MODEL
-    Account model [unique(username)](
+    Account model (
       findUserWithStuff find from Account join Idealist on Idealist.account where Account.id == id
-      username text[min 4, max 40]
+      username optional text[min 4, max 40]
     )
 
     Idealist model(

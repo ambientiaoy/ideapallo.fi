@@ -151,7 +151,7 @@ public class AuthenticationApi {
     private EmailSignUpResponse convertToEmailSignUpResponse(Account model) {
         final EmailSignUpResponse dto = new EmailSignUpResponse();
         dto.setId(model.getId());
-        dto.setUsername(model.getUsername());
+        dto.setUsername(model.getUsername().orElse(null));
         dto.setRole(model.getRole());
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
@@ -160,7 +160,7 @@ public class AuthenticationApi {
     private VerifyEmailResponse convertToVerifyEmailResponse(Account model) {
         final VerifyEmailResponse dto = new VerifyEmailResponse();
         dto.setId(model.getId());
-        dto.setUsername(model.getUsername());
+        dto.setUsername(model.getUsername().orElse(null));
         dto.setRole(model.getRole());
         dto.setEmail(model.getEmail().orElse(null));
         return dto;
@@ -169,7 +169,7 @@ public class AuthenticationApi {
     private ChangePasswordResponse convertToChangePasswordResponse(Account model) {
         final ChangePasswordResponse dto = new ChangePasswordResponse();
         dto.setId(model.getId());
-        dto.setUsername(model.getUsername());
+        dto.setUsername(model.getUsername().orElse(null));
         dto.setRole(model.getRole());
         dto.setEmail(model.getEmail().orElse(null));
         return dto;

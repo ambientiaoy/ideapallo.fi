@@ -33,9 +33,6 @@ ideapallo project[
             CLIENT CLIENT
         )
         Account model[
-            unique(
-                username
-            )
             type mysql
             unique(
                 email
@@ -53,7 +50,7 @@ ideapallo project[
                 primarykey
                 max 9223372036854775807]
             findUserWithStuff find from Account as Account join Idealist as Idealist on Account with Idealist.account where Account.id == id
-            username text[
+            username optional text[
                 min 4
                 max 40]
             role AccountTypes
@@ -90,6 +87,7 @@ ideapallo project[
             getById get from Account as Account where Account.id == id
             deleteById delete from Account as Account where Account.id == id
             findByUsername find from Account as Account where Account.username == username
+            findByUsernameMandatory find from Account as Account where mandatory Account.username == username
             findByRole find from Account as Account where Account.role == role
             findByEmail find from Account as Account where Account.email == email
             findByEmailMandatory find from Account as Account where mandatory Account.email == email
@@ -342,7 +340,7 @@ ideapallo project[
             EmailSignUpResponse dto(
                 id integer[
                     max 9223372036854775807]
-                username text[
+                username optional text[
                     min 4
                     max 40]
                 role AccountTypes
@@ -381,7 +379,7 @@ ideapallo project[
                     sensitive]
                 id integer[
                     max 9223372036854775807]
-                username text[
+                username optional text[
                     min 4
                     max 40]
                 role AccountTypes
@@ -436,7 +434,7 @@ ideapallo project[
             VerifyEmailResponse dto(
                 id integer[
                     max 9223372036854775807]
-                username text[
+                username optional text[
                     min 4
                     max 40]
                 role AccountTypes
@@ -473,7 +471,7 @@ ideapallo project[
             ChangePasswordResponse dto(
                 id integer[
                     max 9223372036854775807]
-                username text[
+                username optional text[
                     min 4
                     max 40]
                 role AccountTypes
@@ -506,7 +504,7 @@ ideapallo project[
                     sensitive]
                 id integer[
                     max 9223372036854775807]
-                username text[
+                username optional text[
                     min 4
                     max 40]
                 role AccountTypes
@@ -633,7 +631,7 @@ ideapallo project[
                 sensitive]
             id integer[
                 max 9223372036854775807]
-            username text[
+            username optional text[
                 min 4
                 max 40]
             role ideapallo.AccountTypes
