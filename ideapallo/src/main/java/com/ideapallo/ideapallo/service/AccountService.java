@@ -89,7 +89,7 @@ public class AccountService {
 
         final Account account = new Account();
         account.setEmail(Optional.ofNullable(accountDescriptor.email));
-        account.setUsername(accountDescriptor.username);
+        account.setUsername(Optional.of(accountDescriptor.username));
         account.setRole(AccountTypes.CLIENT);
         account.setPasswordHash(Optional.of(passwordEncoder.encode(accountDescriptor.password)));
         account.setEmailVerificationCode(Optional.of(RandomStringUtils.randomAlphanumeric(64)));
