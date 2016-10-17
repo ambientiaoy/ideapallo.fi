@@ -31,6 +31,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Service;
 
 import com.ideapallo.ideapallo.config.CustomProperties;
@@ -179,7 +180,9 @@ public class AccountService {
         log.debug("facebookSignIn(facebookAccessToken: {})", facebookAccessToken);
 
         final Facebook facebook = new FacebookTemplate(facebookAccessToken);
-        final String accountId = facebook.userOperations().getUserProfile().getId();
+        String [] fields = { "id", "email",  "first_name", "last_name" };
+        User userProfile = facebook.fetchObject("me", User.class, fields);
+        final String accountId = userProfile.getId();
 
         Account account = accountRepository.findByFacebookIdMandatory(accountId).orElse(null);
         if (account == null) {

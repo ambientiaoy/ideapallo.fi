@@ -42,7 +42,6 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     @Size(min = 4, max = 40)
     @Column(name = "username")
     private String username;
