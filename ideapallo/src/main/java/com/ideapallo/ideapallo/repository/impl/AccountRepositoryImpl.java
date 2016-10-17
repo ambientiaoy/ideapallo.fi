@@ -57,10 +57,17 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     }
 
     @Override
-    public Optional<Account> findByUsername(String username) {
+    public List<Account> findByUsername(Optional<String> username) {
         log.trace(".findByUsername(username: {})", username);
         final QAccount account = QAccount.account;
-        return Optional.ofNullable(factory.select(account).from(account).where(account.username.eq(username)).fetchOne());
+        return factory.select(account).from(account).where(username.isPresent() ? account.username.eq(username.get()) : null).fetch();
+    }
+
+    @Override
+    public List<Account> findByUsernameMandatory(String username) {
+        log.trace(".findByUsernameMandatory(username: {})", username);
+        final QAccount account = QAccount.account;
+        return factory.select(account).from(account).where(account.username.eq(username)).fetch();
     }
 
     @Override

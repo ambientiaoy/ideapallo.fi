@@ -33,7 +33,6 @@ public class EmailSignUpResponse implements Serializable {
     @NotNull
     private Long id;
 
-    @NotNull
     @Size(min = 4, max = 40)
     private String username;
 

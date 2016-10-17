@@ -41,7 +41,6 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     @Size(min = 4, max = 40)
     @Column(name = "username")
     private String username;
@@ -89,12 +88,12 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public Optional<String> getUsername() {
+        return Optional.ofNullable(username);
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(Optional<String> username) {
+        this.username = username.orElse(null);
     }
 
     public AccountTypes getRole() {

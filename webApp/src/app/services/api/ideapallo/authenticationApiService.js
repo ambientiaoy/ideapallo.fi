@@ -54,7 +54,7 @@
          * response - List [
          *   EmailSignUpResponse {
          *     id: Int
-         *     username: String
+         *     username: Optional[String]
          *     role: AccountTypes
          *     email: Optional[String]
          *   }
@@ -81,7 +81,7 @@
          * response - EmailSignInResponse {
          *   accessToken: String
          *   id: Int
-         *   username: String
+         *   username: Optional[String]
          *   role: AccountTypes
          *   email: Optional[String]
          * }
@@ -144,7 +144,7 @@
          * response - List [
          *   VerifyEmailResponse {
          *     id: Int
-         *     username: String
+         *     username: Optional[String]
          *     role: AccountTypes
          *     email: Optional[String]
          *   }
@@ -170,7 +170,7 @@
          * response - List [
          *   ChangePasswordResponse {
          *     id: Int
-         *     username: String
+         *     username: Optional[String]
          *     role: AccountTypes
          *     email: Optional[String]
          *   }
@@ -199,7 +199,7 @@
          * response - FacebookSignInResponse {
          *   accessToken: String
          *   id: Int
-         *   username: String
+         *   username: Optional[String]
          *   role: AccountTypes
          *   email: Optional[String]
          * }

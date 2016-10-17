@@ -28,7 +28,6 @@ public final class ConstraintMapping {
     private static final Map<String, String> mappings = new HashMap<>();
 
     static {
-        mappings.put("UNQ_ACCO_U_93B38A", "Account.username.unique");
         mappings.put("UNQ_ACCO_E_637A1E", "Account.email.unique");
         mappings.put("UNQ_ACCO_EVC_9F1591", "Account.emailVerificationCode.unique");
         mappings.put("UNQ_ACCO_RPC_402383", "Account.resetPasswordCode.unique");

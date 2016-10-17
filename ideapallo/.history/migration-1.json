@@ -9,7 +9,7 @@
         }, {
             "dslType": "text",
             "name": "username",
-            "wrappers": [],
+            "wrappers": ["OPTIONAL"],
             "minSize": "4",
             "maxSize": "40"
         }, {
@@ -68,15 +68,6 @@
         }],
         "primaryKeySqlName": "PK_ACCO_I_302F25",
         "uniques": [{
-            "properties": [{
-                "dslType": "text",
-                "name": "username",
-                "wrappers": [],
-                "minSize": "4",
-                "maxSize": "40"
-            }],
-            "sqlName": "UNQ_ACCO_U_93B38A"
-        }, {
             "properties": [{
                 "dslType": "text",
                 "name": "email",

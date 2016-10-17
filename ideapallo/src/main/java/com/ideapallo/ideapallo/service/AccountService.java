@@ -110,7 +110,7 @@ public class AccountService {
         final String accessToken = JWTUtils.createToken(account.getId(), account.getRole(), customProperties.getSecretKey());
         response.setAccessToken(accessToken);
         response.setId(account.getId());
-        response.setUsername(account.getUsername());
+        response.setUsername(account.getUsername().orElse(null));
         response.setRole(account.getRole());
         response.setEmail(account.getEmail().orElse(null));
         return response;
@@ -191,7 +191,7 @@ public class AccountService {
 
         response.setAccessToken(accessToken);
         response.setId(account.getId());
-        response.setUsername(account.getUsername());
+        response.setUsername(account.getUsername().orElse(null));
         response.setRole(account.getRole());
         response.setEmail(account.getEmail().orElse(null));
         return Optional.of(response);

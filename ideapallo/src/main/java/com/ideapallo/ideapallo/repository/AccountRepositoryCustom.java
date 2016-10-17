@@ -32,7 +32,9 @@ public interface AccountRepositoryCustom {
 
     List<AccountIdealistTuple> findUserWithStuff(Long id);
 
-    Optional<Account> findByUsername(String username);
+    List<Account> findByUsername(Optional<String> username);
+
+    List<Account> findByUsernameMandatory(String username);
 
     List<Account> findByRole(AccountTypes role);
 
