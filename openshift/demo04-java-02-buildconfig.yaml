@@ -13,7 +13,7 @@ spec:
   resources: {}
   source:
     git:
-      ref: master
+      ref: develop
       uri: ssh://git@bitbucket.ambientia.fi:7999/~akis/ideapallo.fi.git
     secrets: []
     type: Git
