@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: ideapallo
+  name: ideapallo
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: ideapallo.fi:latest
+  postCommit: {}
+  resources: {}
+  source:
+    git:
+      ref: master
+      uri: ssh://git@bitbucket.ambientia.fi:7999/~akis/ideapallo.fi.git
+    secrets: []
+    type: Git
+    contextDir: ideapallo
+    sourceSecret:
+      name: ssh-bitbucket
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: java:8
+        namespace: openshift
+    type: Docker
+  triggers:
+  - type: ConfigChange
+  - imageChange:
+    type: ImageChange

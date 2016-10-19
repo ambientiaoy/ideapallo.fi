@@ -1,0 +1,44 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "items": [
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "ideapallo",
+                "labels": {
+                    "app": "ideapallo"
+                }
+            },
+            "spec": {
+                "selector": {
+                    "app": "ideapallo"
+                },
+                "ports": [
+                    {
+                        "targetPort": 8080,
+                        "port": 80
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "ideapallo",
+                "labels": {
+                    "app": "ideapallo",
+                    "deploymentconfig": "ideapallo-config"
+                }
+            },
+            "spec": {
+                "to": {
+                    "kind": "Service",
+                    "name": "ideapallo"
+                }
+            }
+        }
+    ]
+}

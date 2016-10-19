@@ -1,0 +1,61 @@
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "ideapallo-config",
+                "labels": {
+                    "app": "ideapallo"
+                }
+            },
+            "spec": {
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "demo04-java"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "ideapallo:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "selector": {
+                    "app": "ideapallo",
+                    "deploymentconfig": "ideapallo-config"
+                },
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "app": "ideapallo",
+                            "deploymentconfig": "ideapallo-config"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "ideapallo",
+                                "image": "library/ideapallo.fi:latest",
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1500m",
+                                        "memory": "2048Mi"
+                                    },
+                                    "requests": {
+                                        "cpu": "1500m",
+                                        "memory": "512Mi"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
