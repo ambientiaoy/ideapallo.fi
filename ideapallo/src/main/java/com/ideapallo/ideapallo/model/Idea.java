@@ -21,6 +21,9 @@ package com.ideapallo.ideapallo.model;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -46,9 +49,9 @@ public class Idea implements Serializable {
     private String content;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "idealistId")
-    private Idealist idealist;
+    @ManyToMany
+    @JoinTable(name = "IdeaIdealist", joinColumns = {@JoinColumn(name = "ideaId")}, inverseJoinColumns = {@JoinColumn(name = "idealistId")})
+    private List<Idealist> idealist = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -74,11 +77,11 @@ public class Idea implements Serializable {
         this.content = content;
     }
 
-    public Idealist getIdealist() {
+    public List<Idealist> getIdealist() {
         return idealist;
     }
 
-    public void setIdealist(Idealist idealist) {
+    public void setIdealist(List<Idealist> idealist) {
         this.idealist = idealist;
     }
 

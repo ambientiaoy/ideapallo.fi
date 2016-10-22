@@ -21,6 +21,8 @@ package com.ideapallo.ideapallo.web.rest.dto;
 
 import java.io.Serializable;
 
+import java.util.List;
+
 import javax.validation.constraints.*;
 
 
@@ -40,7 +42,7 @@ public class IdeasResponse implements Serializable {
     private String content;
 
     @NotNull
-    private Long idealistId;
+    private List<Long> idealistId;
 
     public Long getId() {
         return id;
@@ -66,11 +68,11 @@ public class IdeasResponse implements Serializable {
         this.content = content;
     }
 
-    public Long getIdealistId() {
+    public List<Long> getIdealistId() {
         return idealistId;
     }
 
-    public void setIdealistId(Long idealistId) {
+    public void setIdealistId(List<Long> idealistId) {
         this.idealistId = idealistId;
     }
 

@@ -129,8 +129,8 @@ ideapallo project[
                 max 255]
             content text[
                 max 255]
-            idealist Idealist[
-                manyToOne]
+            idealist list Idealist[
+                manyToMany IdeaIdealist]
             findAll find from Idea as Idea
             countAll count from Idea as Idea
             findById find from Idea as Idea where Idea.id == id
@@ -138,7 +138,6 @@ ideapallo project[
             deleteById delete from Idea as Idea where Idea.id == id
             findByTitle find from Idea as Idea where Idea.title == title
             findByContent find from Idea as Idea where Idea.content == content
-            findByIdealist find from Idea as Idea where Idea.idealist.id == idealistId
             ideas find from Idea as Idea
         )
         IdeaApi api[
@@ -301,7 +300,7 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
-                idealistId integer[
+                idealistId list integer[
                     max 9223372036854775807]
             )
         )
@@ -312,6 +311,28 @@ ideapallo project[
         EMAIL_NOT_VERIFIED unauthorized
         EMAIL_VERIFICATION_CODE_EXPIRED badRequest
         EMAIL_RESET_PASSWORD_CODE_EXPIRED badRequest
+        IdeaIdealist model[
+            type mysql
+            unique(
+                idea
+                idealist
+            )](
+            id integer[
+                primarykey
+                max 9223372036854775807]
+            idea Idea[
+                manyToOne]
+            idealist Idealist[
+                manyToOne]
+            findAll find from IdeaIdealist as IdeaIdealist
+            countAll count from IdeaIdealist as IdeaIdealist
+            findById find from IdeaIdealist as IdeaIdealist where IdeaIdealist.id == id
+            getById get from IdeaIdealist as IdeaIdealist where IdeaIdealist.id == id
+            deleteById delete from IdeaIdealist as IdeaIdealist where IdeaIdealist.id == id
+            findByIdea find from IdeaIdealist as IdeaIdealist where IdeaIdealist.idea.id == ideaId
+            findByIdealist find from IdeaIdealist as IdeaIdealist where IdeaIdealist.idealist.id == idealistId
+            findByIdeaIdAndIdealistId find from IdeaIdealist as IdeaIdealist where IdeaIdealist.idea.id == ideaId and IdeaIdealist.idealist.id == idealistId
+        )
         AuthenticationApi api(
             emailSignUp emailsignup[
                 post /email-sign-up
@@ -696,7 +717,7 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
-                idealistId integer[
+                idealistId list integer[
                     max 9223372036854775807]
             )
             visible(
@@ -720,7 +741,7 @@ ideapallo project[
                     model . content
                 )
                 max 255]
-            idealistId integer[
+            idealistId list integer[
                 bind(
                     model . idealistId
                 )
