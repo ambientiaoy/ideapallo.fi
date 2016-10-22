@@ -51,35 +51,6 @@
 
     angular
         .module('webApp')
-        .provider('idealistApi', idealistApi)
-        .config(idealistApiProvider);
-
-    function idealistApi() {
-        var isMocked = false;
-
-        var $get = ['idealistApiService', 'idealistApiMockService', 'clientConfigurationValues', function(idealistApiService, idealistApiMockService, clientConfigurationValues) {
-            if (this.isMocked) {
-                return idealistApiMockService;
-            } else {
-                if (clientConfigurationValues.remoteIdeapalloUrl) {
-                    idealistApiService.init(clientConfigurationValues.remoteIdeapalloUrl);
-                }
-                return idealistApiService;
-            }
-        }];
-
-        return {
-            isMocked: isMocked,
-            $get: $get
-        };
-    }
-
-    function idealistApiProvider(clientConfigurationValues, idealistApiProvider) {
-        idealistApiProvider.isMocked = clientConfigurationValues.useServerMock;
-    }
-
-    angular
-        .module('webApp')
         .provider('ideaApi', ideaApi)
         .config(ideaApiProvider);
 
