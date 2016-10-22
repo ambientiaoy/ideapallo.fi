@@ -51,6 +51,35 @@
 
     angular
         .module('webApp')
+        .provider('addIdealistToAccountApi', addIdealistToAccountApi)
+        .config(addIdealistToAccountApiProvider);
+
+    function addIdealistToAccountApi() {
+        var isMocked = false;
+
+        var $get = ['addIdealistToAccountApiService', 'addIdealistToAccountApiMockService', 'clientConfigurationValues', function(addIdealistToAccountApiService, addIdealistToAccountApiMockService, clientConfigurationValues) {
+            if (this.isMocked) {
+                return addIdealistToAccountApiMockService;
+            } else {
+                if (clientConfigurationValues.remoteIdeapalloUrl) {
+                    addIdealistToAccountApiService.init(clientConfigurationValues.remoteIdeapalloUrl);
+                }
+                return addIdealistToAccountApiService;
+            }
+        }];
+
+        return {
+            isMocked: isMocked,
+            $get: $get
+        };
+    }
+
+    function addIdealistToAccountApiProvider(clientConfigurationValues, addIdealistToAccountApiProvider) {
+        addIdealistToAccountApiProvider.isMocked = clientConfigurationValues.useServerMock;
+    }
+
+    angular
+        .module('webApp')
         .provider('ideaApi', ideaApi)
         .config(ideaApiProvider);
 
