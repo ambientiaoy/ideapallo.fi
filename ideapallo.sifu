@@ -36,11 +36,13 @@ ideapallo project[
     Idea model(
       title text
       content text
+      idealist Idealist
     )
 
     #API
     IdeaApi api[ secured (CLIENT, ADMIN)](
-      idea crud[model Idea, rest]
+      idea crud[model Idea, rest](
+      )
       ideas find[from Idea, rest]
     )
   )

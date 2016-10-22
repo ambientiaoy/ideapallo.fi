@@ -30,6 +30,8 @@ public interface IdeaRepositoryCustom {
 
     List<Idea> findByContent(String content);
 
+    List<Idea> findByIdealist(Long idealistId);
+
     List<Idea> ideas();
 
 }

@@ -55,6 +55,13 @@ public class IdeaRepositoryImpl implements IdeaRepositoryCustom {
     }
 
     @Override
+    public List<Idea> findByIdealist(Long idealistId) {
+        log.trace(".findByIdealist(idealistId: {})", idealistId);
+        final QIdea idea = QIdea.idea;
+        return factory.select(idea).from(idea).where(idea.idealist.id.eq(idealistId)).fetch();
+    }
+
+    @Override
     public List<Idea> ideas() {
         log.trace(".ideas()");
         final QIdea idea = QIdea.idea;
