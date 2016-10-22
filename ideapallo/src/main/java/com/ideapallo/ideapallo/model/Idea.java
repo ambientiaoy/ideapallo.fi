@@ -121,4 +121,10 @@ public class Idea implements Serializable {
         return "Idea[" + "id=" + id + ", title=" + title + ", content=" + content + ", idealist=" + idealist + "]";
     }
 
+    public void addIdealist(Idealist idealist) {
+        if (this.idealist == null){
+            this.idealist = new ArrayList<>();
+        }
+        this.idealist.add( idealist );
+    }
 }

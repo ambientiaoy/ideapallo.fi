@@ -55,6 +55,9 @@ public class IdeaApi {
     @Inject
     private IdeaRepository ideaRepository;
 
+    @Inject
+    private IdealistRepository idealistRepository;
+
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
@@ -78,6 +81,7 @@ public class IdeaApi {
         Idealist idealist = idealistRepository.findOne( userId );
         log.debug("POST /idea {}", request);
         final Idea idea = convertToIdea(request);
+        idea.addIdealist( idealist );
         // TODO AkS: Add idealist here!
         final Idea result = ideaRepository.save(idea);
         return ResponseEntity.created(new URI("/idea/" + result.getId())).body(convertToCreateIdeaResponse(result));
@@ -158,7 +162,6 @@ public class IdeaApi {
         dto.setId(model.getId());
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());
-        dto.setIdealistId(model.getIdealist().getId());
         return dto;
     }
 }
