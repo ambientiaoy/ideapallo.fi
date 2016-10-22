@@ -42,6 +42,8 @@ ideapallo project[
     #API
     IdeaApi api[ secured (CLIENT, ADMIN)](
       idea crud[model Idea, rest](
+        title
+        content
       )
       ideas find[from Idea, rest]
     )

@@ -50,7 +50,6 @@
          *   id: Int
          *   title: String
          *   content: String
-         *   idealistId: Int
          * }
          *
          */
@@ -68,14 +67,12 @@
          * request - CreateIdeaRequest {
          *   title: String
          *   content: String
-         *   idealistId: Int
          * }
          *
          * response - CreateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
-         *   idealistId: Int
          * }
          *
          */
@@ -85,8 +82,7 @@
                 url: ideapalloApiUrl + '/api/idea',
                 data: {
                     title: model.title,
-                    content: model.content,
-                    idealistId: model.idealistId
+                    content: model.content
                 },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken
@@ -98,14 +94,12 @@
          * request - RestUpdateIdeaRequest {
          *   title: String
          *   content: String
-         *   idealistId: Int
          * }
          *
          * response - UpdateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
-         *   idealistId: Int
          * }
          *
          */
@@ -115,8 +109,7 @@
                 url: ideapalloApiUrl + '/api/idea/' + model.id + '',
                 data: {
                     title: model.title,
-                    content: model.content,
-                    idealistId: model.idealistId
+                    content: model.content
                 },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken

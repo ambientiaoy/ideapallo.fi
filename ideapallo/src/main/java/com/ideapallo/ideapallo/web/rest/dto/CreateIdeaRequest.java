@@ -36,9 +36,6 @@ public class CreateIdeaRequest implements Serializable {
     @Size(max = 255)
     private String content;
 
-    @NotNull
-    private Long idealistId;
-
     public String getTitle() {
         return title;
     }
@@ -55,14 +52,6 @@ public class CreateIdeaRequest implements Serializable {
         this.content = content;
     }
 
-    public Long getIdealistId() {
-        return idealistId;
-    }
-
-    public void setIdealistId(Long idealistId) {
-        this.idealistId = idealistId;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -76,8 +65,6 @@ public class CreateIdeaRequest implements Serializable {
             return false;
         if ((content == null && other.content != null) || !content.equals(other.content))
             return false;
-        if ((idealistId == null && other.idealistId != null) || !idealistId.equals(other.idealistId))
-            return false;
         return true;
     }
 
@@ -87,13 +74,12 @@ public class CreateIdeaRequest implements Serializable {
         int result = 1;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((content == null) ? 0 : content.hashCode());
-        result = prime * result + ((idealistId == null) ? 0 : idealistId.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "CreateIdeaRequest[" + "title=" + title + ", content=" + content + ", idealistId=" + idealistId + "]";
+        return "CreateIdeaRequest[" + "title=" + title + ", content=" + content + "]";
     }
 
 }
