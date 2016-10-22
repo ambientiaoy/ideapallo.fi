@@ -27,10 +27,14 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import com.ideapallo.ideapallo.security.JWTFilter;
+import com.ideapallo.ideapallo.security.JWTUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,8 +73,12 @@ public class IdeaApi {
     @Transactional
     @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<CreateIdeaResponse> createIdea(@Valid @RequestBody CreateIdeaRequest request) throws URISyntaxException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = (Long) authentication.getPrincipal();
+        Idealist idealist = idealistRepository.findOne( userId );
         log.debug("POST /idea {}", request);
         final Idea idea = convertToIdea(request);
+        // TODO AkS: Add idealist here!
         final Idea result = ideaRepository.save(idea);
         return ResponseEntity.created(new URI("/idea/" + result.getId())).body(convertToCreateIdeaResponse(result));
     }
