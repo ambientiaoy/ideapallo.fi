@@ -47,6 +47,12 @@ ideapallo project[
       )
       ideas find[from Idea, rest]
     )
+
+    IdealistApi api[ secured( CLIENT, ADMIN)](
+      idealist crud[ model Idealist, rest](
+
+      )
+    )
   )
 
   #CLIENT
