@@ -17,13 +17,6 @@
                     <div ng-message="maxlength" ng-if="!createNewIdea.content.$pristine">{{'CREATE_NEW_IDEA_CONTENT_MAX' | translate:'{ max: 255 }'}}</div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="idealistId">{{'CREATE_NEW_IDEA_IDEALIST_ID' | translate}}</label>
-                <input type="number" id="idealistId" name="idealistId" class="form-control" ng-model="model.idealistId" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }" required>
-                <div ng-messages="createNewIdea.idealistId.$error" ng-if="createNewIdea.$submitted || !createNewIdea.idealistId.$pristine">
-                    <div ng-message="required">{{'CREATE_NEW_IDEA_IDEALIST_ID_IS_REQUIRED' | translate}}</div>
-                </div>
-            </div>
             <button type="submit" class="btn btn-primary">
                 {{'CREATE_NEW_IDEA_SUBMIT' | translate}}
             </button>

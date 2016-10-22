@@ -42,8 +42,6 @@
                 CREATE_NEW_IDEA_CONTENT: 'Content',
                 CREATE_NEW_IDEA_CONTENT_IS_REQUIRED: 'Content is required',
                 CREATE_NEW_IDEA_CONTENT_MAX: 'Content max',
-                CREATE_NEW_IDEA_IDEALIST_ID: 'Idealist id',
-                CREATE_NEW_IDEA_IDEALIST_ID_IS_REQUIRED: 'Idealist id is required',
                 CREATE_NEW_IDEA_SUBMIT: 'Submit',
                 CREATE_NEW_IDEA_TITLE: 'Title',
                 CREATE_NEW_IDEA_TITLE_IS_REQUIRED: 'Title is required',
