@@ -32,6 +32,7 @@ public final class ConstraintMapping {
         mappings.put("UNQ_ACCO_EVC_9F1591", "Account.emailVerificationCode.unique");
         mappings.put("UNQ_ACCO_RPC_402383", "Account.resetPasswordCode.unique");
         mappings.put("UNQ_ACCO_FI_16E314", "Account.facebookId.unique");
+        mappings.put("UNQ_IDEA_II_II_5EC54F", "IdeaIdealist.ideaId-idealistId.unique");
     }
 
     private ConstraintMapping() {

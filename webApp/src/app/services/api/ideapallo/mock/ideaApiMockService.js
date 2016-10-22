@@ -120,7 +120,7 @@
          *     id: Int
          *     title: String
          *     content: String
-         *     idealistId: Int
+         *     idealistId: List[Int]
          *   }
          * ]
          *

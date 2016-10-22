@@ -36,7 +36,7 @@ ideapallo project[
     Idea model(
       title text
       content text
-      idealist Idealist
+      idealist list Idealist[manyToMany]
     )
 
     #API

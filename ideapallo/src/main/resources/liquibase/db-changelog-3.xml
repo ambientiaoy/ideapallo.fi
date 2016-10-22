@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="generator" id="3">
+        <!--DROP FOREIGN KEYS CONSTRAINTS-->
+        <dropForeignKeyConstraint baseTableName="Idea" constraintName="FK_IDEA.II_IDEA.I_BDD6BE"/>
+        <!--DROP COLUMNS-->
+        <dropColumn columnName="idealistId" tableName="Idea"/>
+        <!--CREATE TABLES-->
+        <createTable tableName="IdeaIdealist">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ideaId" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="idealistId" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <!--ADD FOREIGN KEYS-->
+        <addForeignKeyConstraint baseColumnNames="ideaId" baseTableName="IdeaIdealist" constraintName="FK_IDEA.II_IDEA.I_81328F" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Idea"/>
+        <addForeignKeyConstraint baseColumnNames="idealistId" baseTableName="IdeaIdealist" constraintName="FK_IDEA.II_IDEA.I_7C6CE1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Idealist"/>
+        <!--ADD UNIQUE CONSTRAINTS-->
+        <addUniqueConstraint columnNames="ideaId, idealistId" constraintName="UNQ_IDEA_II_II_5EC54F" tableName="IdeaIdealist"/>
+    </changeSet>
+</databaseChangeLog>
