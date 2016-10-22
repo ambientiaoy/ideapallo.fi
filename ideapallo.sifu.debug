@@ -304,6 +304,122 @@ ideapallo project[
                     max 9223372036854775807]
             )
         )
+        IdealistApi api[
+            secured(
+                CLIENT
+                ADMIN
+            )](
+            readIdealist find[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
+                get /idealist/:id
+                query Idealist.findById
+                response(
+                    Idealist.id
+                    Idealist.account.id
+                )
+                errors
+                request ReadIdealistRequest
+                response ReadIdealistResponse]
+            ReadIdealistRequest dto(
+                id integer[
+                    max 9223372036854775807]
+            )
+            ReadIdealistResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                accountId integer[
+                    max 9223372036854775807]
+            )
+            createIdealist create[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
+                post /idealist
+                model Idealist
+                query Idealist.findById
+                response(
+                    Idealist.id
+                    Idealist.account.id
+                )
+                errors
+                request CreateIdealistRequest
+                response CreateIdealistResponse](
+                id id[
+                    visible(
+                        read
+                    )]
+                accountId account.id[
+                    visible(
+                        create
+                        read
+                    )]
+            )
+            CreateIdealistRequest dto(
+                accountId integer[
+                    max 9223372036854775807]
+            )
+            CreateIdealistResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                accountId integer[
+                    max 9223372036854775807]
+            )
+            updateIdealist update[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
+                put /idealist/:id
+                model Idealist
+                query Idealist.findById
+                response(
+                    Idealist.id
+                    Idealist.account.id
+                )
+                errors
+                request UpdateIdealistRequest
+                response UpdateIdealistResponse](
+                id id[
+                    visible(
+                        read
+                        update
+                    )]
+                accountId account.id[
+                    visible(
+                        read
+                        update
+                    )]
+            )
+            UpdateIdealistRequest dto(
+                id integer[
+                    max 9223372036854775807]
+                accountId integer[
+                    max 9223372036854775807]
+            )
+            UpdateIdealistResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                accountId integer[
+                    max 9223372036854775807]
+            )
+            deleteIdealist delete[
+                secured(
+                    CLIENT
+                    ADMIN
+                )
+                delete /idealist/:id
+                query Idealist.findById
+                errors
+                request DeleteIdealistRequest]
+            DeleteIdealistRequest dto(
+                id integer[
+                    max 9223372036854775807]
+            )
+        )
         CREDENTIALS_ARE_INVALID unauthorized
         ACCESS_TOKEN_IS_EXPIRED unauthorized
         USER_ALREADY_EXIST dataConstraint
@@ -550,6 +666,10 @@ ideapallo project[
             ideapallo.IdeaApi.updateIdea
             ideapallo.IdeaApi.deleteIdea
             ideapallo.IdeaApi.ideas
+            ideapallo.IdealistApi.readIdealist
+            ideapallo.IdealistApi.createIdealist
+            ideapallo.IdealistApi.updateIdealist
+            ideapallo.IdealistApi.deleteIdealist
             ideapallo.AuthenticationApi.emailSignUp
             ideapallo.AuthenticationApi.emailSignIn
             ideapallo.AuthenticationApi.forgotPassword
