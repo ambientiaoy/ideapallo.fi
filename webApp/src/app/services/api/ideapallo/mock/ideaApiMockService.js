@@ -43,6 +43,7 @@
          *   id: Int
          *   title: String
          *   content: String
+         *   idealistId: Int
          * }
          *
          */
@@ -58,12 +59,14 @@
          * request - CreateIdeaRequest {
          *   title: String
          *   content: String
+         *   idealistId: Int
          * }
          *
          * response - CreateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
+         *   idealistId: Int
          * }
          *
          */
@@ -79,12 +82,14 @@
          * request - RestUpdateIdeaRequest {
          *   title: String
          *   content: String
+         *   idealistId: Int
          * }
          *
          * response - UpdateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
+         *   idealistId: Int
          * }
          *
          */
@@ -120,6 +125,7 @@
          *     id: Int
          *     title: String
          *     content: String
+         *     idealistId: Int
          *   }
          * ]
          *

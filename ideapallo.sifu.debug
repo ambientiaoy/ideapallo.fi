@@ -129,6 +129,8 @@ ideapallo project[
                 max 255]
             content text[
                 max 255]
+            idealist Idealist[
+                manyToOne]
             findAll find from Idea as Idea
             countAll count from Idea as Idea
             findById find from Idea as Idea where Idea.id == id
@@ -136,6 +138,7 @@ ideapallo project[
             deleteById delete from Idea as Idea where Idea.id == id
             findByTitle find from Idea as Idea where Idea.title == title
             findByContent find from Idea as Idea where Idea.content == content
+            findByIdealist find from Idea as Idea where Idea.idealist.id == idealistId
             ideas find from Idea as Idea
         )
         IdeaApi api[
@@ -154,6 +157,7 @@ ideapallo project[
                     Idea.id
                     Idea.title
                     Idea.content
+                    Idea.idealist.id
                 )
                 errors
                 request ReadIdeaRequest
@@ -169,6 +173,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
             createIdea create[
                 secured(
@@ -182,6 +188,7 @@ ideapallo project[
                     Idea.id
                     Idea.title
                     Idea.content
+                    Idea.idealist.id
                 )
                 errors
                 request CreateIdeaRequest
@@ -200,12 +207,19 @@ ideapallo project[
                         create
                         read
                     )]
+                idealistId idealist.id[
+                    visible(
+                        create
+                        read
+                    )]
             )
             CreateIdeaRequest dto(
                 title text[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
             CreateIdeaResponse dto(
                 id integer[
@@ -214,6 +228,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
             updateIdea update[
                 secured(
@@ -227,6 +243,7 @@ ideapallo project[
                     Idea.id
                     Idea.title
                     Idea.content
+                    Idea.idealist.id
                 )
                 errors
                 request UpdateIdeaRequest
@@ -246,6 +263,11 @@ ideapallo project[
                         read
                         update
                     )]
+                idealistId idealist.id[
+                    visible(
+                        read
+                        update
+                    )]
             )
             UpdateIdeaRequest dto(
                 id integer[
@@ -254,6 +276,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
             UpdateIdeaResponse dto(
                 id integer[
@@ -262,6 +286,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
             deleteIdea delete[
                 secured(
@@ -288,6 +314,7 @@ ideapallo project[
                     Idea.id
                     Idea.title
                     Idea.content
+                    Idea.idealist.id
                 )
                 response list IdeasResponse]
             IdeasResponse dto(
@@ -297,6 +324,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
         )
         CREDENTIALS_ARE_INVALID unauthorized
@@ -553,10 +582,13 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
             visible(
                 title
                 content
+                idealistId
             )](
             title text[
                 bind(
@@ -568,6 +600,11 @@ ideapallo project[
                     model . content
                 )
                 max 255]
+            idealistId integer[
+                bind(
+                    model . idealistId
+                )
+                max 9223372036854775807]
             submit button
         ){
             on success(
@@ -690,11 +727,14 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                idealistId integer[
+                    max 9223372036854775807]
             )
             visible(
                 id
                 title
                 content
+                idealistId
             )](
             id integer[
                 bind(
@@ -711,6 +751,11 @@ ideapallo project[
                     model . content
                 )
                 max 255]
+            idealistId integer[
+                bind(
+                    model . idealistId
+                )
+                max 9223372036854775807]
         ){
             on IdeaUpdated(
                 reload
