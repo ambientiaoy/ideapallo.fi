@@ -140,6 +140,149 @@ ideapallo project[
             findByContent find from Idea as Idea where Idea.content == content
             ideas find from Idea as Idea
         )
+        AddIdealistToAccountApi api[
+            secured(
+                CLIENT
+                ADMIN
+            )](
+            create create[
+                model Account
+                post /create
+                response(
+                    Account.id
+                    Account.username
+                    Account.role
+                    Account.email
+                    Account.passwordHash
+                    Account.emailVerificationCode
+                    Account.emailVerificationCodeTimestamp
+                    Account.emailVerified
+                    Account.resetPasswordCode
+                    Account.resetPasswordCodeTimestamp
+                    Account.facebookId
+                )
+                query Account.findById
+                secured(
+                    CLIENT
+                    ADMIN
+                )
+                errors
+                request CreateRequest
+                response CreateResponse](
+                id id[
+                    visible(
+                        read
+                    )]
+                username username[
+                    visible(
+                        read
+                        create
+                    )]
+                role role[
+                    visible(
+                        read
+                        create
+                    )]
+                email email[
+                    visible(
+                        read
+                        create
+                    )]
+                passwordHash passwordHash[
+                    visible(
+                        read
+                        create
+                    )]
+                emailVerificationCode emailVerificationCode[
+                    visible(
+                        read
+                        create
+                    )]
+                emailVerificationCodeTimestamp emailVerificationCodeTimestamp[
+                    visible(
+                        read
+                        create
+                    )]
+                emailVerified emailVerified[
+                    visible(
+                        read
+                        create
+                    )]
+                resetPasswordCode resetPasswordCode[
+                    visible(
+                        read
+                        create
+                    )]
+                resetPasswordCodeTimestamp resetPasswordCodeTimestamp[
+                    visible(
+                        read
+                        create
+                    )]
+                facebookId facebookId[
+                    visible(
+                        read
+                        create
+                    )]
+            )
+            CreateRequest dto(
+                username optional text[
+                    min 4
+                    max 40]
+                role AccountTypes
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+                passwordHash optional text[
+                    min 6
+                    max 128
+                    sensitive]
+                emailVerificationCode optional text[
+                    min 64
+                    max 64
+                    sensitive]
+                emailVerificationCodeTimestamp optional datetime
+                emailVerified optional boolean
+                resetPasswordCode optional text[
+                    min 64
+                    max 64
+                    sensitive]
+                resetPasswordCodeTimestamp optional datetime
+                facebookId optional text[
+                    min 6
+                    max 255]
+            )
+            CreateResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                username optional text[
+                    min 4
+                    max 40]
+                role AccountTypes
+                email optional text[
+                    min 6
+                    max 128
+                    regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
+                passwordHash optional text[
+                    min 6
+                    max 128
+                    sensitive]
+                emailVerificationCode optional text[
+                    min 64
+                    max 64
+                    sensitive]
+                emailVerificationCodeTimestamp optional datetime
+                emailVerified optional boolean
+                resetPasswordCode optional text[
+                    min 64
+                    max 64
+                    sensitive]
+                resetPasswordCodeTimestamp optional datetime
+                facebookId optional text[
+                    min 6
+                    max 255]
+            )
+        )
         IdeaApi api[
             secured(
                 CLIENT
@@ -545,6 +688,7 @@ ideapallo project[
     webApp client[
         template js-angular
         connectedTo(
+            ideapallo.AddIdealistToAccountApi.create
             ideapallo.IdeaApi.readIdea
             ideapallo.IdeaApi.createIdea
             ideapallo.IdeaApi.updateIdea

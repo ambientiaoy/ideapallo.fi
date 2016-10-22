@@ -40,6 +40,13 @@ ideapallo project[
     )
 
     #API
+    AddIdealistToAccountApi api[ secured(CLIENT, ADMIN)](
+      create create[model Account, rest](
+
+      )
+
+    )
+
     IdeaApi api[ secured (CLIENT, ADMIN)](
       idea crud[model Idea, rest](
         title
