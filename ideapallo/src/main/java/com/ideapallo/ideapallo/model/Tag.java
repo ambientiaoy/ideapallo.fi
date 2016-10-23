@@ -21,6 +21,9 @@ package com.ideapallo.ideapallo.model;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -41,9 +44,8 @@ public class Tag implements Serializable {
     private String name;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "relatedId")
-    private Tag related;
+    @OneToMany(mappedBy = "id")
+    private List<Tag> related = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -61,11 +63,11 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
-    public Tag getRelated() {
+    public List<Tag> getRelated() {
         return related;
     }
 
-    public void setRelated(Tag related) {
+    public void setRelated(List<Tag> related) {
         this.related = related;
     }
 
