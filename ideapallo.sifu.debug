@@ -39,15 +39,14 @@ ideapallo project[
                 max 9223372036854775807]
             name text[
                 max 255]
-            related Tag[
-                manyToOne]
+            related list Tag[
+                oneToMany]
             findAll find from Tag as Tag
             countAll count from Tag as Tag
             findById find from Tag as Tag where Tag.id == id
             getById get from Tag as Tag where Tag.id == id
             deleteById delete from Tag as Tag where Tag.id == id
             findByName find from Tag as Tag where Tag.name == name
-            findByRelated find from Tag as Tag where Tag.related.id == relatedId
         )
         Account model[
             type mysql

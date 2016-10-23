@@ -28,6 +28,4 @@ public interface TagRepositoryCustom {
 
     List<Tag> findByName(String name);
 
-    List<Tag> findByRelated(Long relatedId);
-
 }

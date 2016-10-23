@@ -47,11 +47,4 @@ public class TagRepositoryImpl implements TagRepositoryCustom {
         return factory.select(tag).from(tag).where(tag.name.eq(name)).fetch();
     }
 
-    @Override
-    public List<Tag> findByRelated(Long relatedId) {
-        log.trace(".findByRelated(relatedId: {})", relatedId);
-        final QTag tag = QTag.tag;
-        return factory.select(tag).from(tag).where(tag.related.id.eq(relatedId)).fetch();
-    }
-
 }
