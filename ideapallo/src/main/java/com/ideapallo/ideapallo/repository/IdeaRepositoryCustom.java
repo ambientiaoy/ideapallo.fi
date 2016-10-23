@@ -20,6 +20,7 @@
 package com.ideapallo.ideapallo.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ideapallo.ideapallo.model.*;
 
@@ -27,6 +28,8 @@ import com.ideapallo.ideapallo.repository.tuple.*;
 
 
 public interface IdeaRepositoryCustom {
+
+    Optional<Idea> byId(Long id);
 
     List<IdeaIdealistTuple> findByIdealist();
 

@@ -32,10 +32,20 @@
 
     function appConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
+            .state('homePage', {
+                url: '/home/home',
+                templateUrl: 'src/app/components/pages/homePage.html',
+                controller: 'HomePageController'
+            })
             .state('ideasPage', {
                 url: '/home/ideas',
                 templateUrl: 'src/app/components/pages/ideasPage.html',
                 controller: 'IdeasPageController'
+            })
+            .state('ideaPage', {
+                url: '/home/idea/{id}',
+                templateUrl: 'src/app/components/pages/ideaPage.html',
+                controller: 'IdeaPageController'
             })
             .state('signInPage', {
                 url: '/home/sign-in',
@@ -63,7 +73,7 @@
                 controller: 'ResetPasswordPageController'
             });
 
-        $urlRouterProvider.otherwise('/home/ideas');
+        $urlRouterProvider.otherwise('/home/home');
     }
 
     facebookApiConfig.$inject = ['$authProvider', 'clientConfigurationValues'];

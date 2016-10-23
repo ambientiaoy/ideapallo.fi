@@ -36,7 +36,6 @@
         .controller('EmailSignInFormController', EmailSignInFormController);
 
     EmailSignInFormController.$inject = ['$scope', '$state', 'eventBus', 'authenticationApi', 'sessionService'];
-
     function EmailSignInFormController($scope, $state, eventBus, authenticationApi, sessionService) {
 
         $scope.model = {};
@@ -60,10 +59,7 @@
                     email: response.data.email
                 });
 
-                if( response.status == 200){
-                    $state.go('ideasPage');
-                }
-
+                $state.go('ideasPage');
                 $scope.errorCode = null;
             }
 

@@ -150,6 +150,7 @@ ideapallo project[
                 manyToMany IdeaIdealist]
             tags list Tag[
                 manyToMany IdeaTag]
+            byId find from Idea as Idea where Idea.id == id
             findByIdealist find from Idea as Idea join Idealist as Idealist on Idea with Idea.idealist
             findAll find from Idea as Idea
             countAll count from Idea as Idea
@@ -469,6 +470,39 @@ ideapallo project[
                 tagsId list integer[
                     max 9223372036854775807]
             )
+            findById find[
+                query Idea.byId
+                get /find-by-id
+                secured(
+                    CLIENT
+                    ADMIN
+                )
+                errors
+                request FindByIdRequest
+                response(
+                    Idea.id
+                    Idea.title
+                    Idea.content
+                    Idea.idealist.id
+                    Idea.tags.id
+                )
+                response FindByIdResponse]
+            FindByIdRequest dto(
+                id integer[
+                    max 9223372036854775807]
+            )
+            FindByIdResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+                idealistId list integer[
+                    max 9223372036854775807]
+                tagsId list integer[
+                    max 9223372036854775807]
+            )
         )
         CREDENTIALS_ARE_INVALID unauthorized
         ACCESS_TOKEN_IS_EXPIRED unauthorized
@@ -739,6 +773,7 @@ ideapallo project[
             ideapallo.IdeaApi.updateIdea
             ideapallo.IdeaApi.deleteIdea
             ideapallo.IdeaApi.ideas
+            ideapallo.IdeaApi.findById
             ideapallo.AuthenticationApi.emailSignUp
             ideapallo.AuthenticationApi.emailSignIn
             ideapallo.AuthenticationApi.forgotPassword
@@ -748,13 +783,25 @@ ideapallo project[
             ideapallo.AuthenticationApi.facebookSignIn
         )
         path /home
-        home ideasPage
+        home homePage
         i18n(
             en
-        )](
+        )
+        loggedin ideasPage](
+        homePage page[
+            path /home](
+            seeIdeas link{
+                on click(
+                    goto ideasPage
+                )}
+        )
         IdeaUpdated event
         ideasPage page[
-            path /ideas](
+            path /ideas
+            secured(
+                ADMIN
+                CLIENT
+            )](
             addNote button{
                 on click(
                     open createNewIdea
@@ -790,6 +837,13 @@ ideapallo project[
                 close
                 fire IdeaUpdated
             )}
+        ideaPage page[
+            path /idea/:id
+            params(
+                id text
+            )](
+            idea idea
+        )
         signInPage page[
             path /sign-in](
             emailSignInForm emailSignInForm
@@ -947,6 +1001,59 @@ ideapallo project[
             on IdeaUpdated(
                 reload
             )}
+        idea view[
+            load IdeaApi.findById
+            params[
+                dto ideapallo.IdeaApi.FindByIdRequest](
+                id integer[
+                    max 9223372036854775807]
+            )
+            model[
+                dto ideapallo.IdeaApi.FindByIdResponse](
+                id integer[
+                    max 9223372036854775807]
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+                idealistId list integer[
+                    max 9223372036854775807]
+                tagsId list integer[
+                    max 9223372036854775807]
+            )
+            visible(
+                id
+                title
+                content
+                idealistId
+                tagsId
+            )](
+            id integer[
+                bind(
+                    model . id
+                )
+                max 9223372036854775807]
+            title text[
+                bind(
+                    model . title
+                )
+                max 255]
+            content text[
+                bind(
+                    model . content
+                )
+                max 255]
+            idealistId list integer[
+                bind(
+                    model . idealistId
+                )
+                max 9223372036854775807]
+            tagsId list integer[
+                bind(
+                    model . tagsId
+                )
+                max 9223372036854775807]
+        )
         emailSignInForm form[
             submit ideapallo.AuthenticationApi.emailSignIn
             model[
@@ -990,6 +1097,7 @@ ideapallo project[
                     success . role
                     success . email
                 )
+                goto ideasPage
             )}
         facebookSignInForm form[
             submit ideapallo.AuthenticationApi.facebookSignIn
@@ -1018,6 +1126,7 @@ ideapallo project[
                     success . role
                     success . email
                 )
+                goto ideasPage
             )}
         emailSignUpForm form[
             submit ideapallo.AuthenticationApi.emailSignUp

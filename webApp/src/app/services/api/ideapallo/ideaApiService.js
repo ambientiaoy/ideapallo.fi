@@ -36,7 +36,8 @@
             createIdea: createIdea,
             updateIdea: updateIdea,
             deleteIdea: deleteIdea,
-            ideas: ideas
+            ideas: ideas,
+            findById: findById
         };
 
         function init(ideapalloUrl) {
@@ -156,6 +157,31 @@
             return $http({
                 method: 'GET',
                 url: ideapalloApiUrl + '/api/ideas',
+                headers: {
+                    'Authorization': "Bearer " + sessionService.getSessionData().accessToken
+                }
+            });
+        }
+
+        /** findById (secured)
+         * request - Unit
+         *
+         * response - FindByIdResponse {
+         *   id: Int
+         *   title: String
+         *   content: String
+         *   idealistId: List[Int]
+         *   tagsId: List[Int]
+         * }
+         *
+         */
+        function findById(model) {
+            return $http({
+                method: 'GET',
+                url: ideapalloApiUrl + '/api/find-by-id',
+                params: {
+                    id: model.id
+                },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken
                 }

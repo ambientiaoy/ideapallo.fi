@@ -33,7 +33,8 @@
             createIdea: createIdea,
             updateIdea: updateIdea,
             deleteIdea: deleteIdea,
-            ideas: ideas
+            ideas: ideas,
+            findById: findById
         };
 
         /** readIdea (secured)
@@ -127,6 +128,26 @@
          *
          */
         function ideas() {
+            $timeout(function() {
+                successCallback({
+                    //TODO fill up mocked data values
+                }, 500);
+            });
+        }
+
+        /** findById (secured)
+         * request - Unit
+         *
+         * response - FindByIdResponse {
+         *   id: Int
+         *   title: String
+         *   content: String
+         *   idealistId: List[Int]
+         *   tagsId: List[Int]
+         * }
+         *
+         */
+        function findById(model) {
             $timeout(function() {
                 successCallback({
                     //TODO fill up mocked data values
