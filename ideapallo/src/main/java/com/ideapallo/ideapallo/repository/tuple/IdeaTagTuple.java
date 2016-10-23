@@ -17,19 +17,27 @@
 * You should have received a copy of the GNU General Public License
 * along with ideapallo. If not, see <http://www.gnu.org/licenses/>.*
 **/
-package com.ideapallo.ideapallo.repository;
-
-import java.util.List;
+package com.ideapallo.ideapallo.repository.tuple;
 
 import com.ideapallo.ideapallo.model.*;
 
-import com.ideapallo.ideapallo.repository.tuple.*;
 
+public class IdeaTagTuple {
 
-public interface TagRepositoryCustom {
+    private final Idea idea;
+    private final Tag tag;
 
-    List<IdeaTagTuple> findIdeaBytag();
+    public IdeaTagTuple(Idea idea, Tag tag) {
+        this.idea = idea;
+        this.tag = tag;
+    }
 
-    List<Tag> findByName(String name);
+    public Idea getIdea() {
+        return idea;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
 
 }
