@@ -19,13 +19,13 @@
 **/
 package com.ideapallo.ideapallo.repository;
 
-import java.util.List;
+import com.ideapallo.ideapallo.model.Idealist;
 
-import com.ideapallo.ideapallo.model.*;
+import java.util.Optional;
 
 
 public interface IdealistRepositoryCustom {
 
-    List<Idealist> findByAccount(Long accountId);
+    Optional<Idealist> findByAccount(Long accountId);
 
 }

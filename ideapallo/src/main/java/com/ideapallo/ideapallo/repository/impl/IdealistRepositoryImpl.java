@@ -20,11 +20,13 @@
 package com.ideapallo.ideapallo.repository.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.swing.text.html.Option;
 
 import com.ideapallo.ideapallo.model.*;
 
@@ -41,10 +43,10 @@ public class IdealistRepositoryImpl implements IdealistRepositoryCustom {
     private JPQLQueryFactory factory;
 
     @Override
-    public List<Idealist> findByAccount(Long accountId) {
+    public Optional<Idealist> findByAccount(Long accountId) {
         log.trace(".findByAccount(accountId: {})", accountId);
         final QIdealist idealist = QIdealist.idealist;
-        return factory.select(idealist).from(idealist).where(idealist.account.id.eq(accountId)).fetch();
+        return Optional.ofNullable(factory.select(idealist).from(idealist).where(idealist.account.id.eq(accountId)).fetchOne());
     }
 
 }

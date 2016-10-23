@@ -62,6 +62,9 @@ public class AccountService {
     @Inject
     private AccountRepository accountRepository;
 
+    @Inject
+    private IdealistRepository idealistRepository;
+
     public Account changePassword(Long accountId, String oldPassword, String newPassword) {
 
         log.debug("changePassword(accountId: {})", accountId);
@@ -86,7 +89,6 @@ public class AccountService {
         if (optionalAccount.isPresent()) {
             throw new AccountWithEmailAlreadyExists("Account with email: " + accountDescriptor.email + " already exists.");
         }
-
         final Account account = new Account();
         account.setEmail(Optional.ofNullable(accountDescriptor.email));
         account.setUsername(Optional.of(accountDescriptor.username));
@@ -96,6 +98,10 @@ public class AccountService {
         account.setEmailVerificationCodeTimestamp(Optional.of(ZonedDateTime.now(ZoneId.of("UTC")).plusDays(1)));
         account.setEmailVerified(Optional.of(false));
         accountRepository.save(account);
+
+        final Idealist idealist = new Idealist();
+        idealist.setAccount( account );
+        idealistRepository.save( idealist );
 
         mailService.sendVerificationEmail(accountDescriptor.email, account.getEmailVerificationCode().get(), Locale.ENGLISH);
 
@@ -194,6 +200,13 @@ public class AccountService {
 
         final FacebookSignInResponse response = new FacebookSignInResponse();
         final String accessToken = JWTUtils.createToken(account.getId(), account.getRole(), customProperties.getSecretKey());
+
+        Optional<Idealist> byAccount = idealistRepository.findByAccount(account.getId());
+        if(!byAccount.isPresent()){
+            final Idealist idealist = new Idealist();
+            idealist.setAccount( account );
+            idealistRepository.save( idealist );
+        }
 
         response.setAccessToken(accessToken);
         response.setId(account.getId());
