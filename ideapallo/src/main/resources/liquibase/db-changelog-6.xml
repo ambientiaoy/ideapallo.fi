@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="generator" id="6">
+        <!--CREATE TABLES-->
+        <createTable tableName="IdeaTag">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ideaId" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tagId" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <!--ADD FOREIGN KEYS-->
+        <addForeignKeyConstraint baseColumnNames="ideaId" baseTableName="IdeaTag" constraintName="FK_IDEA.II_IDEA.I_1B3653" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Idea"/>
+        <addForeignKeyConstraint baseColumnNames="tagId" baseTableName="IdeaTag" constraintName="FK_IDEA.TI_TAG.I_79E7FC" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Tag"/>
+        <!--ADD UNIQUE CONSTRAINTS-->
+        <addUniqueConstraint columnNames="ideaId, tagId" constraintName="UNQ_IDEA_II_TI_06F058" tableName="IdeaTag"/>
+    </changeSet>
+</databaseChangeLog>

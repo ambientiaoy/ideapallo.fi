@@ -147,6 +147,7 @@
          *     title: String
          *     content: String
          *     idealistId: List[Int]
+         *     tagsId: List[Int]
          *   }
          * ]
          *

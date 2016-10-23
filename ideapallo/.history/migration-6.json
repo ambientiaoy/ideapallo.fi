@@ -1,0 +1,291 @@
+{
+    "name": "ideapallo",
+    "models": [{
+        "name": "Tag",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "text",
+            "name": "name",
+            "wrappers": [],
+            "maxSize": "255"
+        }],
+        "references": [],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_TAG_I_904FAF",
+        "uniques": [],
+        "indices": []
+    }, {
+        "name": "Account",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "text",
+            "name": "username",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "4",
+            "maxSize": "40"
+        }, {
+            "dslType": "enum",
+            "name": "role",
+            "wrappers": []
+        }, {
+            "dslType": "text",
+            "name": "email",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "6",
+            "maxSize": "128"
+        }, {
+            "dslType": "text",
+            "name": "passwordHash",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "6",
+            "maxSize": "128"
+        }, {
+            "dslType": "text",
+            "name": "emailVerificationCode",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "64",
+            "maxSize": "64"
+        }, {
+            "dslType": "datetime",
+            "name": "emailVerificationCodeTimestamp",
+            "wrappers": ["OPTIONAL"]
+        }, {
+            "dslType": "boolean",
+            "name": "emailVerified",
+            "wrappers": ["OPTIONAL"],
+            "default": "false"
+        }, {
+            "dslType": "text",
+            "name": "resetPasswordCode",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "64",
+            "maxSize": "64"
+        }, {
+            "dslType": "datetime",
+            "name": "resetPasswordCodeTimestamp",
+            "wrappers": ["OPTIONAL"]
+        }, {
+            "dslType": "text",
+            "name": "facebookId",
+            "wrappers": ["OPTIONAL"],
+            "minSize": "6",
+            "maxSize": "255"
+        }],
+        "references": [],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_ACCO_I_302F25",
+        "uniques": [{
+            "properties": [{
+                "dslType": "text",
+                "name": "email",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "6",
+                "maxSize": "128"
+            }],
+            "sqlName": "UNQ_ACCO_E_637A1E"
+        }, {
+            "properties": [{
+                "dslType": "text",
+                "name": "emailVerificationCode",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "64",
+                "maxSize": "64"
+            }],
+            "sqlName": "UNQ_ACCO_EVC_9F1591"
+        }, {
+            "properties": [{
+                "dslType": "text",
+                "name": "resetPasswordCode",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "64",
+                "maxSize": "64"
+            }],
+            "sqlName": "UNQ_ACCO_RPC_402383"
+        }, {
+            "properties": [{
+                "dslType": "text",
+                "name": "facebookId",
+                "wrappers": ["OPTIONAL"],
+                "minSize": "6",
+                "maxSize": "255"
+            }],
+            "sqlName": "UNQ_ACCO_FI_16E314"
+        }],
+        "indices": []
+    }, {
+        "name": "Idealist",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "long",
+            "name": "accountId",
+            "wrappers": []
+        }],
+        "references": [{
+            "name": "account",
+            "model": "Account",
+            "properties": [{
+                "dslType": "long",
+                "name": "accountId",
+                "wrappers": []
+            }],
+            "sqlName": "FK_IDEA.AI_ACCO.I_4F4134"
+        }],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_IDEA_I_FEA67D",
+        "uniques": [],
+        "indices": []
+    }, {
+        "name": "Idea",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "text",
+            "name": "title",
+            "wrappers": [],
+            "maxSize": "255"
+        }, {
+            "dslType": "text",
+            "name": "content",
+            "wrappers": [],
+            "maxSize": "255"
+        }],
+        "references": [],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_IDEA_I_6F45FD",
+        "uniques": [],
+        "indices": []
+    }, {
+        "name": "IdeaIdealist",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "long",
+            "name": "ideaId",
+            "wrappers": []
+        }, {
+            "dslType": "long",
+            "name": "idealistId",
+            "wrappers": []
+        }],
+        "references": [{
+            "name": "idea",
+            "model": "Idea",
+            "properties": [{
+                "dslType": "long",
+                "name": "ideaId",
+                "wrappers": []
+            }],
+            "sqlName": "FK_IDEA.II_IDEA.I_81328F"
+        }, {
+            "name": "idealist",
+            "model": "Idealist",
+            "properties": [{
+                "dslType": "long",
+                "name": "idealistId",
+                "wrappers": []
+            }],
+            "sqlName": "FK_IDEA.II_IDEA.I_7C6CE1"
+        }],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_IDEA_I_1D246A",
+        "uniques": [{
+            "properties": [{
+                "dslType": "long",
+                "name": "ideaId",
+                "wrappers": []
+            }, {
+                "dslType": "long",
+                "name": "idealistId",
+                "wrappers": []
+            }],
+            "sqlName": "UNQ_IDEA_II_II_5EC54F"
+        }],
+        "indices": []
+    }, {
+        "name": "IdeaTag",
+        "properties": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }, {
+            "dslType": "long",
+            "name": "ideaId",
+            "wrappers": []
+        }, {
+            "dslType": "long",
+            "name": "tagId",
+            "wrappers": []
+        }],
+        "references": [{
+            "name": "idea",
+            "model": "Idea",
+            "properties": [{
+                "dslType": "long",
+                "name": "ideaId",
+                "wrappers": []
+            }],
+            "sqlName": "FK_IDEA.II_IDEA.I_1B3653"
+        }, {
+            "name": "tag",
+            "model": "Tag",
+            "properties": [{
+                "dslType": "long",
+                "name": "tagId",
+                "wrappers": []
+            }],
+            "sqlName": "FK_IDEA.TI_TAG.I_79E7FC"
+        }],
+        "primaryKeys": [{
+            "dslType": "long",
+            "name": "id",
+            "wrappers": []
+        }],
+        "primaryKeySqlName": "PK_IDEA_I_9DD6C5",
+        "uniques": [{
+            "properties": [{
+                "dslType": "long",
+                "name": "ideaId",
+                "wrappers": []
+            }, {
+                "dslType": "long",
+                "name": "tagId",
+                "wrappers": []
+            }],
+            "sqlName": "UNQ_IDEA_II_TI_06F058"
+        }],
+        "indices": []
+    }]
+}

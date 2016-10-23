@@ -53,6 +53,11 @@ public class Idea implements Serializable {
     @JoinTable(name = "IdeaIdealist", joinColumns = {@JoinColumn(name = "ideaId")}, inverseJoinColumns = {@JoinColumn(name = "idealistId")})
     private List<Idealist> idealist = new ArrayList<>();
 
+    @NotNull
+    @ManyToMany
+    @JoinTable(name = "IdeaTag", joinColumns = {@JoinColumn(name = "ideaId")}, inverseJoinColumns = {@JoinColumn(name = "tagId")})
+    private List<Tag> tags = new ArrayList<>();
+
     public Long getId() {
         return id;
     }
@@ -85,6 +90,14 @@ public class Idea implements Serializable {
         this.idealist = idealist;
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -102,6 +115,8 @@ public class Idea implements Serializable {
             return false;
         if ((idealist == null && other.idealist != null) || !idealist.equals(other.idealist))
             return false;
+        if ((tags == null && other.tags != null) || !tags.equals(other.tags))
+            return false;
         return true;
     }
 
@@ -113,12 +128,13 @@ public class Idea implements Serializable {
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((content == null) ? 0 : content.hashCode());
         result = prime * result + ((idealist == null) ? 0 : idealist.hashCode());
+        result = prime * result + ((tags == null) ? 0 : tags.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "Idea[" + "id=" + id + ", title=" + title + ", content=" + content + ", idealist=" + idealist + "]";
+        return "Idea[" + "id=" + id + ", title=" + title + ", content=" + content + ", idealist=" + idealist + ", tags=" + tags + "]";
     }
 
     public void addIdealist(Idealist idealist) {

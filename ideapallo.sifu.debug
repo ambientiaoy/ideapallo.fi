@@ -147,6 +147,9 @@ ideapallo project[
                 max 255]
             idealist list Idealist[
                 manyToMany IdeaIdealist]
+            tags list Tag[
+                manyToMany IdeaTag]
+            findByIdealist find from Idea as Idea join Idealist as Idealist on Idea with Idea.idealist
             findAll find from Idea as Idea
             countAll count from Idea as Idea
             findById find from Idea as Idea where Idea.id == id
@@ -450,6 +453,7 @@ ideapallo project[
                     Idea.title
                     Idea.content
                     Idea.idealist.id
+                    Idea.tags.id
                 )
                 response list IdeasResponse]
             IdeasResponse dto(
@@ -460,6 +464,8 @@ ideapallo project[
                 content text[
                     max 255]
                 idealistId list integer[
+                    max 9223372036854775807]
+                tagsId list integer[
                     max 9223372036854775807]
             )
         )
@@ -491,6 +497,28 @@ ideapallo project[
             findByIdea find from IdeaIdealist as IdeaIdealist where IdeaIdealist.idea.id == ideaId
             findByIdealist find from IdeaIdealist as IdeaIdealist where IdeaIdealist.idealist.id == idealistId
             findByIdeaIdAndIdealistId find from IdeaIdealist as IdeaIdealist where IdeaIdealist.idea.id == ideaId and IdeaIdealist.idealist.id == idealistId
+        )
+        IdeaTag model[
+            type mysql
+            unique(
+                idea
+                tag
+            )](
+            id integer[
+                primarykey
+                max 9223372036854775807]
+            idea Idea[
+                manyToOne]
+            tag Tag[
+                manyToOne]
+            findAll find from IdeaTag as IdeaTag
+            countAll count from IdeaTag as IdeaTag
+            findById find from IdeaTag as IdeaTag where IdeaTag.id == id
+            getById get from IdeaTag as IdeaTag where IdeaTag.id == id
+            deleteById delete from IdeaTag as IdeaTag where IdeaTag.id == id
+            findByIdea find from IdeaTag as IdeaTag where IdeaTag.idea.id == ideaId
+            findByTag find from IdeaTag as IdeaTag where IdeaTag.tag.id == tagId
+            findByIdeaIdAndTagId find from IdeaTag as IdeaTag where IdeaTag.idea.id == ideaId and IdeaTag.tag.id == tagId
         )
         AuthenticationApi api(
             emailSignUp emailsignup[
@@ -879,12 +907,15 @@ ideapallo project[
                     max 255]
                 idealistId list integer[
                     max 9223372036854775807]
+                tagsId list integer[
+                    max 9223372036854775807]
             )
             visible(
                 id
                 title
                 content
                 idealistId
+                tagsId
             )](
             id integer[
                 bind(
@@ -904,6 +935,11 @@ ideapallo project[
             idealistId list integer[
                 bind(
                     model . idealistId
+                )
+                max 9223372036854775807]
+            tagsId list integer[
+                bind(
+                    model . tagsId
                 )
                 max 9223372036854775807]
         ){

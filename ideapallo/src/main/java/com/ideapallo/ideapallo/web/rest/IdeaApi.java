@@ -158,6 +158,7 @@ public class IdeaApi {
     }
 
     private IdeasResponse convertToIdeasResponse(Idea model) {
+        // TODO AkS: here was a merge conflict.
         final IdeasResponse dto = new IdeasResponse();
         dto.setId(model.getId());
         dto.setTitle(model.getTitle());
