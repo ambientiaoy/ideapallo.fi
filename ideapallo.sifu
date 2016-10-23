@@ -63,6 +63,7 @@ ideapallo project[
       idea crud[model Idea, rest](
         title
         content
+        tags
       )
       ideas find[from Idea, rest]
       findById find[query Idea.byId , rest ]
