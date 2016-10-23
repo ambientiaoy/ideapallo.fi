@@ -46,6 +46,7 @@ ideapallo project[
       idealist list Idealist[manyToMany]
       tags list Tag [manyToMany]
 
+      byId find from Idea where Idea.id == id
       findByIdealist find from Idea 
         join Idealist on Idea.idealist 
     )
@@ -64,6 +65,7 @@ ideapallo project[
         content
       )
       ideas find[from Idea, rest]
+      findById find[query Idea.byId , rest ]
     )
 
   )
@@ -73,19 +75,29 @@ ideapallo project[
     template js-angular
     connectedTo ideapallo
     path /home
-    home ideasPage
+    home homePage
   ](
+    homePage page[path /home](
+      seeIdeas link{on click goto ideasPage}
+      
+    )
+    
     IdeaUpdated event
 
-    ideasPage page[path /ideas](
+    ideasPage page[path /ideas, secured(ADMIN, CLIENT)](
       addNote button{on click open createNewIdea}
       ideas table[load IdeaApi.ideas]{
         on IdeaUpdated reload
       }
     )
-
+   
+  
     createNewIdea form[submit IdeaApi.createIdea]{
       on success (close, fire IdeaUpdated)
     }
+
+    ideaPage page[path /idea/:id, params(id text)](
+      idea view[ load IdeaApi.findById ]
+    )
   )
 )

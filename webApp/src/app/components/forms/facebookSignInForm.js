@@ -35,9 +35,9 @@
         .module('webApp')
         .controller('FacebookSignInFormController', FacebookSignInFormController);
 
-    FacebookSignInFormController.$inject = ['$scope', 'eventBus', 'authenticationApi', '$auth', 'sessionService'];
+    FacebookSignInFormController.$inject = ['$scope', '$state', 'eventBus', 'authenticationApi', '$auth', 'sessionService'];
 
-    function FacebookSignInFormController($scope, eventBus, authenticationApi, $auth, sessionService) {
+    function FacebookSignInFormController($scope, $state, eventBus, authenticationApi, $auth, sessionService) {
 
         $scope.model = {};
         $scope.errorCode = null;
@@ -72,6 +72,7 @@
                     role: response.data.role,
                     email: response.data.email
                 });
+                $state.go('ideasPage');
                 $scope.errorCode = null;
             }
 

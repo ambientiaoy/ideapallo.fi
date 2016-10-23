@@ -28,12 +28,18 @@
 
         /* jshint ignore:start */
         var publicStates = [];
-        publicStates['ideasPage'] = true;
+        publicStates['homePage'] = true;
+        publicStates['ideaPage'] = true;
         publicStates['signInPage'] = true;
         publicStates['signUpPage'] = true;
         publicStates['verifyEmailPage'] = true;
         publicStates['forgotPasswordPage'] = true;
         publicStates['resetPasswordPage'] = true;
+
+        var stateAccessRights = [];
+        stateAccessRights['ideasPage'] = [];
+        stateAccessRights['ideasPage']['ADMIN'] = true;
+        stateAccessRights['ideasPage']['CLIENT'] = true;
 
         /* jshint ignore:end */
 

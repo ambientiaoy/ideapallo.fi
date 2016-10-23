@@ -106,6 +106,19 @@ public class IdeaApi {
         return ResponseEntity.ok().body(result.stream().map(this::convertToIdeasResponse).collect(Collectors.toList()));
     }
 
+    @RequestMapping(value = "/find-by-id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
+    public ResponseEntity<FindByIdResponse> findById(@RequestParam("id") Long id) {
+        log.debug("GET /find-by-id");
+        final Optional<Idea> result = ideaRepository.byId(id);
+        if (result.isPresent()) {
+            return ResponseEntity.ok().body(convertToFindByIdResponse(result.get()));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     private ReadIdeaResponse convertToReadIdeaResponse(Idea model) {
         final ReadIdeaResponse dto = new ReadIdeaResponse();
         dto.setId(model.getId());
@@ -147,6 +160,16 @@ public class IdeaApi {
 
     private IdeasResponse convertToIdeasResponse(Idea model) {
         final IdeasResponse dto = new IdeasResponse();
+        dto.setId(model.getId());
+        dto.setTitle(model.getTitle());
+        dto.setContent(model.getContent());
+        dto.setIdealistId(model.getIdealist().getId());
+        dto.setTagsId(model.getTags().getId());
+        return dto;
+    }
+
+    private FindByIdResponse convertToFindByIdResponse(Idea model) {
+        final FindByIdResponse dto = new FindByIdResponse();
         dto.setId(model.getId());
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());

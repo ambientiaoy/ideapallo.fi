@@ -20,7 +20,7 @@
 package com.ideapallo.ideapallo.repository.impl;
 
 import java.util.List;
-
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -42,6 +42,13 @@ public class IdeaRepositoryImpl implements IdeaRepositoryCustom {
 
     @Inject
     private JPQLQueryFactory factory;
+
+    @Override
+    public Optional<Idea> byId(Long id) {
+        log.trace(".byId(id: {})", id);
+        final QIdea idea = QIdea.idea;
+        return Optional.ofNullable(factory.select(idea).from(idea).where(idea.id.eq(id)).fetchOne());
+    }
 
     @Override
     public List<IdeaIdealistTuple> findByIdealist() {

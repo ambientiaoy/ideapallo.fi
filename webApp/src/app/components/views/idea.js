@@ -22,45 +22,38 @@
 
     angular
         .module('webApp')
-        .directive('emailSignInForm', function() {
+        .directive('idea', function() {
             return {
                 restrict: 'E',
-                scope: {},
-                templateUrl: 'src/app/components/forms/emailSignInForm.html',
-                controller: 'EmailSignInFormController'
+                scope: {
+                    id: '='
+                },
+                templateUrl: 'src/app/components/views/idea.html',
+                controller: 'IdeaController'
             };
         });
 
     angular
         .module('webApp')
-        .controller('EmailSignInFormController', EmailSignInFormController);
+        .controller('IdeaController', IdeaController);
 
-    EmailSignInFormController.$inject = ['$scope', '$state', 'eventBus', 'authenticationApi'];
+    IdeaController.$inject = ['$scope', 'ideaApi'];
 
-    function EmailSignInFormController($scope, $state, eventBus, authenticationApi) {
+    function IdeaController($scope, ideaApi) {
 
         $scope.model = {};
         $scope.errorCode = null;
-        $scope.submit = submit;
 
-        function submit(form) {
-            if (form !== undefined && form.$submitted && form.$invalid) {
-                return false;
-            }
-            authenticationApi.emailSignIn($scope.model).then(onSuccess, onError);
+        if ($scope.id) load($scope.id);
+
+        function load(id) {
+            var request = {
+                id: id
+            };
+            ideaApi.findById(request).then(onSuccess, onError);
 
             function onSuccess(response) {
-
-                sessionService.save(response.data);
-                eventBus.emitEvent('UserSignedIn', {
-                    accessToken: response.data.accessToken,
-                    id: response.data.id,
-                    username: response.data.username,
-                    role: response.data.role,
-                    email: response.data.email
-                });
-                $state.go('ideasPage');
-                $scope.errorCode = null;
+                $scope.model = response.data;
             }
 
             function onError(response) {
@@ -74,5 +67,4 @@
         }
 
     }
-
 })();
