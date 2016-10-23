@@ -21,6 +21,8 @@ package com.ideapallo.ideapallo.repository.impl;
 
 import java.util.List;
 
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import javax.inject.Inject;
 import com.ideapallo.ideapallo.model.*;
 
 import com.ideapallo.ideapallo.repository.IdeaRepositoryCustom;
+import com.ideapallo.ideapallo.repository.tuple.*;
 
 import com.querydsl.jpa.JPQLQueryFactory;
 
@@ -39,6 +42,14 @@ public class IdeaRepositoryImpl implements IdeaRepositoryCustom {
 
     @Inject
     private JPQLQueryFactory factory;
+
+    @Override
+    public List<IdeaIdealistTuple> findByIdealist() {
+        log.trace(".findByIdealist()");
+        final QIdealist idealist = QIdealist.idealist;
+        final QIdea idea = QIdea.idea;
+        return factory.select(idealist, idea).from(idea).innerJoin(idea.idealist, idealist).fetch().stream().map(t -> new IdeaIdealistTuple(t.get(idea), t.get(idealist))).collect(Collectors.toList());
+    }
 
     @Override
     public List<Idea> findByTitle(String title) {

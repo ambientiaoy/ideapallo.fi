@@ -8,6 +8,7 @@
                         <th>{{'IDEAS_TITLE' | translate}}</th>
                         <th>{{'IDEAS_CONTENT' | translate}}</th>
                         <th>{{'IDEAS_IDEALIST_ID' | translate}}</th>
+                        <th>{{'IDEAS_TAGS_ID' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -16,6 +17,7 @@
                         <td>{{item.title}}</td>
                         <td>{{item.content}}</td>
                         <td>{{item.idealistId}}</td>
+                        <td>{{item.tagsId}}</td>
                     </tr>
                 </tbody>
                 <tfoot data-ng-if="model.length == 0">

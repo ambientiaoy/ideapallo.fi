@@ -151,6 +151,7 @@ public class IdeaApi {
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());
         dto.setIdealistId(model.getIdealist().getId());
+        dto.setTagsId(model.getTags().getId());
         return dto;
     }
 }

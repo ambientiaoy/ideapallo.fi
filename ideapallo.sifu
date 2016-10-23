@@ -26,6 +26,7 @@ ideapallo project[
     Tag model(
       name text
       related list Tag
+#      findIdeaBytag find from Tag left join Idea on tag.id
     )
 
     #MODEL
@@ -42,6 +43,10 @@ ideapallo project[
       title text
       content text
       idealist list Idealist[manyToMany]
+      tags list Tag [manyToMany]
+
+      findByIdealist find from Idea 
+        join Idealist on Idea.idealist 
     )
 
     #API
