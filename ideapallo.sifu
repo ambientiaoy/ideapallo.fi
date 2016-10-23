@@ -23,6 +23,11 @@ ideapallo project[
     #ENUMS
     AccountTypes enum( ADMIN, CLIENT)
 
+    Tag model(
+      name text
+      related Tag
+    )
+
     #MODEL
     Account model (
       findUserWithStuff find from Account join Idealist on Idealist.account where Account.id == id
