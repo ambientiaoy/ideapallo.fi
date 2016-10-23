@@ -21,6 +21,8 @@ package com.ideapallo.ideapallo.repository.impl;
 
 import java.util.List;
 
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import javax.inject.Inject;
 import com.ideapallo.ideapallo.model.*;
 
 import com.ideapallo.ideapallo.repository.TagRepositoryCustom;
+import com.ideapallo.ideapallo.repository.tuple.*;
 
 import com.querydsl.jpa.JPQLQueryFactory;
 
@@ -39,6 +42,14 @@ public class TagRepositoryImpl implements TagRepositoryCustom {
 
     @Inject
     private JPQLQueryFactory factory;
+
+    @Override
+    public List<IdeaTagTuple> findIdeaBytag() {
+        log.trace(".findIdeaBytag()");
+        final QIdea idea = QIdea.idea;
+        final QTag tag = QTag.tag;
+        return factory.select(idea, tag).from(idea).leftJoin(idea.tags, tag).fetch().stream().map(t -> new IdeaTagTuple(t.get(idea), t.get(tag))).collect(Collectors.toList());
+    }
 
     @Override
     public List<Tag> findByName(String name) {

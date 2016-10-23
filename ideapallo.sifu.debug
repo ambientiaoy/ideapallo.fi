@@ -41,6 +41,7 @@ ideapallo project[
                 max 255]
             related list Tag[
                 oneToMany]
+            findIdeaBytag find from Idea as Idea left join Tag as Tag on Idea with Idea.tags
             findAll find from Tag as Tag
             countAll count from Tag as Tag
             findById find from Tag as Tag where Tag.id == id

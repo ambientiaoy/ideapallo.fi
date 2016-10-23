@@ -26,7 +26,8 @@ ideapallo project[
     Tag model(
       name text
       related list Tag
-#      findIdeaBytag find from Tag left join Idea on tag.id
+      findIdeaBytag find from Idea 
+        left join Tag  on Idea.tags
     )
 
     #MODEL
