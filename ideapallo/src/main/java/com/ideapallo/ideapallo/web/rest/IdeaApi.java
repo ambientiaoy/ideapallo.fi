@@ -184,8 +184,8 @@ public class IdeaApi {
         dto.setId(model.getId());
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());
-        dto.setIdealistId(model.getIdealist().getId());
-        dto.setTagsId(model.getTags().getId());
+        dto.setIdealistId(model.getIdealist().stream().map(idealist -> idealist.getId()).collect(Collectors.toList()));
+        dto.setTagsId(model.getTags().stream().map(Tag::getId).collect(Collectors.toList()));
         return dto;
     }
 }
