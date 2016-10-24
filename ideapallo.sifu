@@ -96,10 +96,13 @@ ideapallo project[
     
     IdeaUpdated event
     ViewTags event(name text)
+    ViewIdea event(id integer)
 
     ideasPage page[path /ideas, secured(ADMIN, CLIENT)](
       addNote button{on click open createNewIdea}
-      ideas table[load IdeaApi.ideas]{
+      ideas table[load IdeaApi.ideas](
+        viewIdea link{on click fire ViewIdea(item.id)}
+      ){
         on IdeaUpdated reload
       }
     )
@@ -110,16 +113,17 @@ ideapallo project[
     }
 
     ideaPage page[path /idea/:id, params(id text)](
-      idea view[ load IdeaApi.findById ]
+      idea view[ load IdeaApi.findById ]{
+        on ViewIdea (show,  reload(event.id))
+      }
     )
 
     findByTags page[path /tags, secured(ADMIN, CLIENT)](
+      findByTag form
       
       tags table[load TagApi.tags](
         viewTags link{on click fire ViewTags(item.name)}
       )
-
-
     )
   )
 )

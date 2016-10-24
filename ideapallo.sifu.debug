@@ -863,6 +863,9 @@ ideapallo project[
         ViewTags event(
             name text
         )
+        ViewIdea event(
+            id integer
+        )
         ideasPage page[
             path /ideas
             secured(
@@ -917,6 +920,7 @@ ideapallo project[
                 ADMIN
                 CLIENT
             )](
+            findByTag findByTag
             tags tags
         )
         signInPage page[
@@ -1072,6 +1076,12 @@ ideapallo project[
                     model . tagsId
                 )
                 max 9223372036854775807]
+            viewIdea link{
+                on click(
+                    fire ViewIdea(
+                        item . id
+                    )
+                )}
         ){
             on IdeaUpdated(
                 reload
@@ -1128,7 +1138,14 @@ ideapallo project[
                     model . tagsId
                 )
                 max 9223372036854775807]
-        )
+        ){
+            on ViewIdea(
+                show
+                reload(
+                    event . id
+                )
+            )}
+        findByTag form
         tags table[
             load TagApi.tags
             model[

@@ -43,6 +43,7 @@
         $scope.model = [];
         $scope.errorCode = null;
         $scope.onIdeaUpdated = eventBus.onEvent('IdeaUpdated', onIdeaUpdated);
+        $scope.onClickViewIdea = onClickViewIdea;
 
         $scope.onClickSearchTags = onClickSearchTags;
         function onClickSearchTags( tag ) {
@@ -71,6 +72,12 @@
 
         function onIdeaUpdated(event, payload) {
             load();
+        }
+
+        function onClickViewIdea(item) {
+            eventBus.emitEvent('ViewIdea', {
+                id: item.id
+            });
         }
 
     }
