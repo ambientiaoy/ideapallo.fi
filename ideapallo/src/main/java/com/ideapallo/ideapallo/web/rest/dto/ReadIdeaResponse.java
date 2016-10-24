@@ -21,6 +21,8 @@ package com.ideapallo.ideapallo.web.rest.dto;
 
 import java.io.Serializable;
 
+import java.util.List;
+
 import javax.validation.constraints.*;
 
 
@@ -38,6 +40,9 @@ public class ReadIdeaResponse implements Serializable {
     @NotNull
     @Size(max = 255)
     private String content;
+
+    @NotNull
+    private List<Long> tagsId;
 
     public Long getId() {
         return id;
@@ -63,6 +68,14 @@ public class ReadIdeaResponse implements Serializable {
         this.content = content;
     }
 
+    public List<Long> getTagsId() {
+        return tagsId;
+    }
+
+    public void setTagsId(List<Long> tagsId) {
+        this.tagsId = tagsId;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -78,6 +91,8 @@ public class ReadIdeaResponse implements Serializable {
             return false;
         if ((content == null && other.content != null) || !content.equals(other.content))
             return false;
+        if ((tagsId == null && other.tagsId != null) || !tagsId.equals(other.tagsId))
+            return false;
         return true;
     }
 
@@ -88,12 +103,13 @@ public class ReadIdeaResponse implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((content == null) ? 0 : content.hashCode());
+        result = prime * result + ((tagsId == null) ? 0 : tagsId.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "ReadIdeaResponse[" + "id=" + id + ", title=" + title + ", content=" + content + "]";
+        return "ReadIdeaResponse[" + "id=" + id + ", title=" + title + ", content=" + content + ", tagsId=" + tagsId + "]";
     }
 
 }
