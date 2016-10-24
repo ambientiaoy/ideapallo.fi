@@ -32,7 +32,8 @@
 
         return {
             init: init,
-            tags: tags
+            tags: tags,
+            byName: byName
         };
 
         function init(ideapalloUrl) {
@@ -54,6 +55,27 @@
             return $http({
                 method: 'GET',
                 url: ideapalloApiUrl + '/api/tags'
+            });
+        }
+
+        /** byName 
+         * request - Unit
+         *
+         * response - List [
+         *   ByNameResponse {
+         *     id: Int
+         *     name: String
+         *   }
+         * ]
+         *
+         */
+        function byName(model) {
+            return $http({
+                method: 'GET',
+                url: ideapalloApiUrl + '/api/by-name',
+                params: {
+                    name: model.name
+                }
             });
         }
 

@@ -57,8 +57,24 @@ public class TagApi {
         return ResponseEntity.ok().body(result.stream().map(this::convertToTagsResponse).collect(Collectors.toList()));
     }
 
+    @RequestMapping(value = "/by-name", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<ByNameResponse>> byName(@RequestParam("name") String name) {
+        log.debug("GET /by-name");
+        final List<Tag> result = tagRepository.byName(name);
+        return ResponseEntity.ok().body(result.stream().map(this::convertToByNameResponse).collect(Collectors.toList()));
+    }
+
     private TagsResponse convertToTagsResponse(Tag model) {
         final TagsResponse dto = new TagsResponse();
+        dto.setId(model.getId());
+        dto.setName(model.getName());
+        return dto;
+    }
+
+    private ByNameResponse convertToByNameResponse(Tag model) {
+        final ByNameResponse dto = new ByNameResponse();
         dto.setId(model.getId());
         dto.setName(model.getName());
         return dto;

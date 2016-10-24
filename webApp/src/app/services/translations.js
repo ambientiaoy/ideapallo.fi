@@ -78,6 +78,8 @@
                 FORGOT_PASSWORD_FORM_EMAIL_PATTERN: 'Email pattern',
                 FORGOT_PASSWORD_FORM_SUBMIT: 'Submit',
                 HOME_PAGE_SEE_IDEAS: 'See ideas',
+                IDEAS_BY_TAGS_ID: 'Id',
+                IDEAS_BY_TAGS_NAME: 'Name',
                 IDEAS_CONTENT: 'Content',
                 IDEAS_ID: 'Id',
                 IDEAS_IDEALIST_ID: 'Idealist id',

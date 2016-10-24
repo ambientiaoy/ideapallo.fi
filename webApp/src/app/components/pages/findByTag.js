@@ -22,11 +22,12 @@
 
     angular
         .module('webApp')
-        .controller('FindByTagsController', FindByTagsController);
+        .controller('FindByTagController', FindByTagController);
 
-    FindByTagsController.$inject = [];
+    FindByTagController.$inject = ['$scope', '$stateParams'];
 
-    function FindByTagsController() {
+    function FindByTagController($scope, $stateParams) {
+        $scope.name = $stateParams.name;
 
     }
 })();

@@ -65,4 +65,11 @@ public class TagRepositoryImpl implements TagRepositoryCustom {
         return factory.select(tag).from(tag).fetch();
     }
 
+    @Override
+    public List<Tag> byName(String name) {
+        log.trace(".byName(name: {})", name);
+        final QTag tag = QTag.tag;
+        return factory.select(tag).from(tag).where(tag.name.eq(name)).fetch();
+    }
+
 }

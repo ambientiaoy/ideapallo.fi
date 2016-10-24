@@ -31,6 +31,7 @@
         publicStates['appPage'] = true;
         publicStates['appPage.homePage'] = true;
         publicStates['ideaPage'] = true;
+        publicStates['findByTag'] = true;
         publicStates['signInPage'] = true;
         publicStates['signUpPage'] = true;
         publicStates['verifyEmailPage'] = true;
@@ -42,9 +43,9 @@
         stateAccessRights['appPage.ideasPage']['ADMIN'] = true;
         stateAccessRights['appPage.ideasPage']['CLIENT'] = true;
 
-        stateAccessRights['findByTags'] = [];
-        stateAccessRights['findByTags']['ADMIN'] = true;
-        stateAccessRights['findByTags']['CLIENT'] = true;
+        stateAccessRights['allTags'] = [];
+        stateAccessRights['allTags']['ADMIN'] = true;
+        stateAccessRights['allTags']['CLIENT'] = true;
 
         /* jshint ignore:end */
 

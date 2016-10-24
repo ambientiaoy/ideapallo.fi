@@ -48,6 +48,7 @@ ideapallo project[
             deleteById delete from Tag as Tag where Tag.id == id
             findByName find from Tag as Tag where Tag.name == name
             tags find from Tag as Tag
+            byName find from Tag as Tag where Tag.name == name
         )
         Account model[
             type mysql
@@ -315,6 +316,26 @@ ideapallo project[
                 )
                 response list TagsResponse]
             TagsResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                name text[
+                    max 255]
+            )
+            byName find[
+                query Tag.byName
+                get /by-name
+                errors
+                request ByNameRequest
+                response(
+                    Tag.id
+                    Tag.name
+                )
+                response list ByNameResponse]
+            ByNameRequest dto(
+                name text[
+                    max 255]
+            )
+            ByNameResponse dto(
                 id integer[
                     max 9223372036854775807]
                 name text[
@@ -848,6 +869,7 @@ ideapallo project[
         connectedTo(
             ideapallo.AddIdealistToAccountApi.create
             ideapallo.TagApi.tags
+            ideapallo.TagApi.byName
             ideapallo.IdeaApi.readIdea
             ideapallo.IdeaApi.createIdea
             ideapallo.IdeaApi.updateIdea
@@ -907,7 +929,17 @@ ideapallo project[
             )](
             ideaView ideaView
         )
-        findByTags page[
+        findByTag page[
+            path /tag/:name/ideas
+            params(
+                name text
+            )](
+            ideasByTags ideasByTags[
+                bind(
+                    params . name
+                )]
+        )
+        allTags page[
             path /tags
             secured(
                 ADMIN
@@ -1168,6 +1200,35 @@ ideapallo project[
                     event . id
                 )
             )}
+        ideasByTags view[
+            load TagApi.byName
+            params[
+                dto ideapallo.TagApi.ByNameRequest](
+                name text[
+                    max 255]
+            )
+            model[
+                dto ideapallo.TagApi.ByNameResponse](
+                id integer[
+                    max 9223372036854775807]
+                name text[
+                    max 255]
+            )
+            visible(
+                id
+                name
+            )](
+            id integer[
+                bind(
+                    model . id
+                )
+                max 9223372036854775807]
+            name text[
+                bind(
+                    model . name
+                )
+                max 255]
+        )
         tags table[
             load TagApi.tags
             model[
