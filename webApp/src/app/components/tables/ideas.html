@@ -9,6 +9,7 @@
                         <th>{{'IDEAS_CONTENT' | translate}}</th>
                         <th>{{'IDEAS_IDEALIST_ID' | translate}}</th>
                         <th>{{'IDEAS_TAGS_ID' | translate}}</th>
+                        <th>{{'IDEAS_VIEW_IDEA' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,6 +19,9 @@
                         <td>{{item.content}}</td>
                         <td>{{item.idealistId}}</td>
                         <td>{{item.tagsId}}</td>
+                        <td>
+                            <a href ng-click="onClickViewIdea(item)">{{'IDEAS_VIEW_IDEA' | translate}}</a>
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot data-ng-if="model.length == 0">
