@@ -22,25 +22,25 @@
 
     angular
         .module('webApp')
-        .directive('viewIdeaModal', function() {
+        .directive('viewSingleIdeaModal', function() {
             return {
                 restrict: 'E',
                 scope: {
                     visible: '=',
                     id: '='
                 },
-                templateUrl: 'src/app/components/views/viewIdeaModal.html',
-                controller: 'ViewIdeaModalController'
+                templateUrl: 'src/app/components/views/viewSingleIdeaModal.html',
+                controller: 'ViewSingleIdeaModalController'
             };
         });
 
     angular
         .module('webApp')
-        .controller('ViewIdeaModalController', ViewIdeaModalController);
+        .controller('ViewSingleIdeaModalController', ViewSingleIdeaModalController);
 
-    ViewIdeaModalController.$inject = ['$scope', 'eventBus', 'ideaApi'];
+    ViewSingleIdeaModalController.$inject = ['$scope', 'eventBus', 'ideaApi'];
 
-    function ViewIdeaModalController($scope, eventBus, ideaApi) {
+    function ViewSingleIdeaModalController($scope, eventBus, ideaApi) {
 
         $scope.model = {};
         $scope.errorCode = null;
@@ -69,7 +69,7 @@
         }
 
         function onViewIdea(event, payload) {
-
+            modalWindows.openCreateNewIdea();
             $scope.visible = true;
         }
 

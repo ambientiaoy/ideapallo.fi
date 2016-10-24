@@ -59,6 +59,40 @@
                     '</div>' +
                     '<div class="modal-footer"></div>'
                 );
+            },
+
+            openIdea: function( model ) {
+                return openModal({},
+                    '<div class="modal-header">' +
+                    '<button type="button" data-ng-click="close()" data-dismiss="modal" class="btn btn-link close" title="{{\'MODAL_WINDOW_CLOSE\' | translate}}">' +
+                    '&times;' +
+                    '</button>' +
+                    '<h3 class="modal-title">{{"IDEA" | translate}}</h3>' +
+                    '</div>' +
+                    '<div class="modal-body">' +
+                    '<div class="row">' +
+                    '<div class="col-lg-12">' +
+                    '<div class="panel panel-default">' +
+                    '<div class="panel-body">' +
+                    '<dl class="dl-horizontal">' +
+                    '<dt>{{"VIEW_IDEA_MODAL_ID" | translate}}</dt>' +
+                '<dd>' + model.id + '</dd>' +
+                '<dt>{{"VIEW_IDEA_MODAL_TITLE" | translate}}</dt>' +
+                '<dd>' + model.title + '</dd>' +
+                '<dt>{{"VIEW_IDEA_MODAL_CONTENT" | translate}}</dt>' +
+                '<dd>' + model.content + '</dd>' +
+                '</dl>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-lg-12">' +
+
+                    '</div>' +
+                    '</div>' +
+
+                    '</div>' +
+                    '<div class="modal-footer"></div>'
+                );
             }
 
         };

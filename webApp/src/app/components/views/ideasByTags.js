@@ -37,9 +37,9 @@
         .module('webApp')
         .controller('IdeasByTagsController', IdeasByTagsController);
 
-    IdeasByTagsController.$inject = ['$scope', 'eventBus', 'tagApi'];
+    IdeasByTagsController.$inject = ['$scope', 'eventBus', 'tagApi', 'modalWindows'];
 
-    function IdeasByTagsController($scope, eventBus, tagApi) {
+    function IdeasByTagsController($scope, eventBus, tagApi, modalWindows) {
         $scope.model = [];
         $scope.errorCode = null;
 
@@ -68,9 +68,10 @@
         }
 
         function onClickViewIdea(item) {
-            eventBus.emitEvent('ViewIdea', {
-                id: item.id
-            });
+            modalWindows.openIdea(item);
+            // eventBus.emitEvent('ViewIdea', {
+            //     id: item.id
+            // });
         }
 
     }
