@@ -44,7 +44,6 @@
         $scope.errorCode = null;
         $scope.onIdeaUpdated = eventBus.onEvent('IdeaUpdated', onIdeaUpdated);
         $scope.onClickViewIdea = onClickViewIdea;
-        $scope.onClickViewIdeaX = onClickViewIdeaX;
 
         load();
 
@@ -71,12 +70,6 @@
         }
 
         function onClickViewIdea(item) {
-            eventBus.emitEvent('ViewIdea', {
-                id: item.id
-            });
-        }
-
-        function onClickViewIdeaX(item) {
             $state.go('ideaPage', {
                 id: item.id
             });

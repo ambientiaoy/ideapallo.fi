@@ -86,7 +86,6 @@
                 IDEAS_TAGS_ID: 'Tags id',
                 IDEAS_TITLE: 'Title',
                 IDEAS_VIEW_IDEA: 'View idea',
-                IDEAS_VIEW_IDEA_X: 'View idea x',
                 IDEA_VIEW_CONTENT: 'Content',
                 IDEA_VIEW_ID: 'Id',
                 IDEA_VIEW_TITLE: 'Title',
