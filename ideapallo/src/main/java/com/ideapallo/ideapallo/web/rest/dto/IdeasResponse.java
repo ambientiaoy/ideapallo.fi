@@ -19,9 +19,14 @@
 **/
 package com.ideapallo.ideapallo.web.rest.dto;
 
+import com.ideapallo.ideapallo.repository.TagRepository;
+
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.*;
 
@@ -45,7 +50,7 @@ public class IdeasResponse implements Serializable {
     private List<Long> idealistId;
 
     @NotNull
-    private List<String> tagNames;
+    private Map<String, String> tagNames;
 
     public Long getId() {
         return id;
@@ -79,12 +84,14 @@ public class IdeasResponse implements Serializable {
         this.idealistId = idealistId;
     }
 
-    public List<String> getTagNames() {
+    public Map<String, String> getTagNames() {
         return tagNames;
     }
 
     public void setTagsId(List<String> tagNames) {
-        this.tagNames = tagNames;
+        Map<String, String> result =
+                tagNames.stream().collect(Collectors.toMap(t -> t, c -> "/tags/" + c));
+        this.tagNames = result;
     }
 
     @Override

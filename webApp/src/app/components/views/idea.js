@@ -54,6 +54,7 @@
 
             function onSuccess(response) {
                 $scope.model = response.data;
+                $scope.model.tagNamesAsLinks = toLink
             }
 
             function onError(response) {

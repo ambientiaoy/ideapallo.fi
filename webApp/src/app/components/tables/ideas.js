@@ -44,6 +44,11 @@
         $scope.errorCode = null;
         $scope.onIdeaUpdated = eventBus.onEvent('IdeaUpdated', onIdeaUpdated);
 
+        $scope.onClickSearchTags = onClickSearchTags;
+        function onClickSearchTags( tag ) {
+            console.log('search ' + tag);
+        }
+
         load();
 
         function load() {

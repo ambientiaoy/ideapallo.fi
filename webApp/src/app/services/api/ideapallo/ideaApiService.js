@@ -83,7 +83,8 @@
                 url: ideapalloApiUrl + '/api/idea',
                 data: {
                     title: model.title,
-                    content: model.content
+                    content: model.content,
+                    tagNames: model.tagNames.split(',')
                 },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken
@@ -110,7 +111,8 @@
                 url: ideapalloApiUrl + '/api/idea/' + model.id + '',
                 data: {
                     title: model.title,
-                    content: model.content
+                    content: model.content,
+                    tagNames: model.tagNames
                 },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken

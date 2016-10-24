@@ -17,6 +17,13 @@
                     <div ng-message="maxlength" ng-if="!createNewIdea.content.$pristine">{{'CREATE_NEW_IDEA_CONTENT_MAX' | translate:'{ max: 255 }'}}</div>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="tagNames">{{'CREATE_NEW_IDEA_TAGS' | translate}}</label>
+                <input type="text" id="tagNames" name="tagNames" class="form-control" ng-model="model.tagNames" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }" required>
+                <div ng-messages="createNewIdea.tagsNames.$error" ng-if="createNewIdea.$submitted || !createNewIdea.tagsNames.$pristine">
+                    <div ng-message="required">{{'CREATE_NEW_IDEA_TAGNAMES_IS_REQUIRED' | translate}}</div>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">
                 {{'CREATE_NEW_IDEA_SUBMIT' | translate}}
             </button>
