@@ -28,7 +28,8 @@
 
         /* jshint ignore:start */
         var publicStates = [];
-        publicStates['homePage'] = true;
+        publicStates['appPage'] = true;
+        publicStates['appPage.homePage'] = true;
         publicStates['ideaPage'] = true;
         publicStates['signInPage'] = true;
         publicStates['signUpPage'] = true;
@@ -37,9 +38,9 @@
         publicStates['resetPasswordPage'] = true;
 
         var stateAccessRights = [];
-        stateAccessRights['ideasPage'] = [];
-        stateAccessRights['ideasPage']['ADMIN'] = true;
-        stateAccessRights['ideasPage']['CLIENT'] = true;
+        stateAccessRights['appPage.ideasPage'] = [];
+        stateAccessRights['appPage.ideasPage']['ADMIN'] = true;
+        stateAccessRights['appPage.ideasPage']['CLIENT'] = true;
 
         stateAccessRights['findByTags'] = [];
         stateAccessRights['findByTags']['ADMIN'] = true;

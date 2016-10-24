@@ -22,22 +22,22 @@
 
     angular
         .module('webApp')
-        .directive('header', function() {
+        .directive('siteHeader', function() {
             return {
                 restrict: 'E',
                 scope: {},
-                templateUrl: 'src/app/components/containers/header.html',
-                controller: 'HeaderController'
+                templateUrl: 'src/app/components/containers/siteHeader.html',
+                controller: 'SiteHeaderController'
             };
         });
 
     angular
         .module('webApp')
-        .controller('HeaderController', HeaderController);
+        .controller('SiteHeaderController', SiteHeaderController);
 
-    HeaderController.$inject = [];
+    SiteHeaderController.$inject = [];
 
-    function HeaderController() {
+    function SiteHeaderController() {
 
     }
 })();

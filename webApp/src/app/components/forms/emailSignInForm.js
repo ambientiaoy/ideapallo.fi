@@ -58,8 +58,7 @@
                     role: response.data.role,
                     email: response.data.email
                 });
-
-                $state.go('ideasPage');
+                $state.go('appPage.ideasPage');
                 $scope.errorCode = null;
             }
 

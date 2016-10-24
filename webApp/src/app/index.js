@@ -32,13 +32,18 @@
 
     function appConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('homePage', {
-                url: '/home/home',
+            .state('appPage', {
+                url: '/home',
+                templateUrl: 'src/app/components/pages/appPage.html',
+                controller: 'AppPageController'
+            })
+            .state('appPage.homePage', {
+                url: '/home',
                 templateUrl: 'src/app/components/pages/homePage.html',
                 controller: 'HomePageController'
             })
-            .state('ideasPage', {
-                url: '/home/ideas',
+            .state('appPage.ideasPage', {
+                url: '/ideas',
                 templateUrl: 'src/app/components/pages/ideasPage.html',
                 controller: 'IdeasPageController'
             })

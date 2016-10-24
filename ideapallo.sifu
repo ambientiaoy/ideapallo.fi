@@ -89,15 +89,18 @@ ideapallo project[
     path /home
     home homePage
   ](
-    header container[](
-      osallistu link
-      uusiIdea link
-      haku form
-      kuinkaPalveluToimii link
-      profilePicture label
+    appPage page[path /](
+      siteHeader container (
+        osallistu link
+        uusiIdea link
+        haku form
+        kuinkaPalveluToimii link
+        profilePicture label
+      )
+      placeholder
     )
 
-    homePage page[path /home](
+    homePage appPage[path /home](
       seeIdeas link{on click goto ideasPage}
     )
     
@@ -105,7 +108,7 @@ ideapallo project[
     ViewTags event(name text)
     ViewIdea event(id integer)
 
-    ideasPage page[path /ideas, secured(ADMIN, CLIENT)](
+    ideasPage appPage[path /ideas, secured(ADMIN, CLIENT)](
       addNote button{on click open createNewIdea}
       ideas table[load IdeaApi.ideas](
         viewIdea link{on click fire ViewIdea(item.id)}

@@ -22,17 +22,11 @@
 
     angular
         .module('webApp')
-        .controller('HomePageController', HomePageController);
+        .controller('AppPageController', AppPageController);
 
-    HomePageController.$inject = ['$scope', '$state'];
+    AppPageController.$inject = [];
 
-    function HomePageController($scope, $state) {
-
-        $scope.onClickSeeIdeas = onClickSeeIdeas;
-
-        function onClickSeeIdeas() {
-            $state.go('appPage.ideasPage');
-        }
+    function AppPageController() {
 
     }
 })();
