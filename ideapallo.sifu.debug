@@ -1037,9 +1037,10 @@ ideapallo project[
         siteHeader container(
             osallistu link
             uusiIdea link
-            haku haku
+            haku text[
+                max 255]
+            hae button
             kuinkaPalveluToimii link
-            profilePicture label
         )
         ideas table[
             load IdeaApi.ideas
@@ -1385,6 +1386,5 @@ ideapallo project[
             on success(
                 goto signInPage
             )}
-        haku form
     )
 )

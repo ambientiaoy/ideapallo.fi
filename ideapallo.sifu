@@ -93,9 +93,9 @@ ideapallo project[
       siteHeader container (
         osallistu link
         uusiIdea link
-        haku form
+        haku text
+        hae button
         kuinkaPalveluToimii link
-        profilePicture label
       )
       placeholder
     )
@@ -133,9 +133,6 @@ ideapallo project[
     )
 
     findByTags page[path /tags, secured(ADMIN, CLIENT)](
-      
-
-
       tags table[hidden, load TagApi.tags](
         viewTags link{on click fire ViewTags(item.name)}
       )
