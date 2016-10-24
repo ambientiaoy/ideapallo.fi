@@ -2,6 +2,14 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
     <changeSet author="generator" id="1">
         <!--CREATE TABLES-->
+        <createTable tableName="Tag">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
         <createTable tableName="Account">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -52,16 +60,44 @@
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="VARCHAR(255)">
+            <column name="content" type="VARCHAR(6000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="IdeaIdealist">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ideaId" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="idealistId" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="IdeaTag">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ideaId" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tagId" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
         <!--ADD FOREIGN KEYS-->
         <addForeignKeyConstraint baseColumnNames="accountId" baseTableName="Idealist" constraintName="FK_IDEA.AI_ACCO.I_4F4134" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Account"/>
+        <addForeignKeyConstraint baseColumnNames="ideaId" baseTableName="IdeaIdealist" constraintName="FK_IDEA.II_IDEA.I_81328F" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Idea"/>
+        <addForeignKeyConstraint baseColumnNames="idealistId" baseTableName="IdeaIdealist" constraintName="FK_IDEA.II_IDEA.I_7C6CE1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Idealist"/>
+        <addForeignKeyConstraint baseColumnNames="ideaId" baseTableName="IdeaTag" constraintName="FK_IDEA.II_IDEA.I_1B3653" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Idea"/>
+        <addForeignKeyConstraint baseColumnNames="tagId" baseTableName="IdeaTag" constraintName="FK_IDEA.TI_TAG.I_79E7FC" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="Tag"/>
         <!--ADD UNIQUE CONSTRAINTS-->
         <addUniqueConstraint columnNames="email" constraintName="UNQ_ACCO_E_637A1E" tableName="Account"/>
         <addUniqueConstraint columnNames="emailVerificationCode" constraintName="UNQ_ACCO_EVC_9F1591" tableName="Account"/>
         <addUniqueConstraint columnNames="resetPasswordCode" constraintName="UNQ_ACCO_RPC_402383" tableName="Account"/>
         <addUniqueConstraint columnNames="facebookId" constraintName="UNQ_ACCO_FI_16E314" tableName="Account"/>
+        <addUniqueConstraint columnNames="ideaId, idealistId" constraintName="UNQ_IDEA_II_II_5EC54F" tableName="IdeaIdealist"/>
+        <addUniqueConstraint columnNames="ideaId, tagId" constraintName="UNQ_IDEA_II_TI_06F058" tableName="IdeaTag"/>
     </changeSet>
 </databaseChangeLog>
