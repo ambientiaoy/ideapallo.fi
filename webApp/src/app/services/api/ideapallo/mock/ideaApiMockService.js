@@ -44,6 +44,7 @@
          *   id: Int
          *   title: String
          *   content: String
+         *   tagsId: List[Int]
          * }
          *
          */
@@ -59,12 +60,14 @@
          * request - CreateIdeaRequest {
          *   title: String
          *   content: String
+         *   tagsIds: List[Int]
          * }
          *
          * response - CreateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
+         *   tagsId: List[Int]
          * }
          *
          */
@@ -80,12 +83,14 @@
          * request - RestUpdateIdeaRequest {
          *   title: String
          *   content: String
+         *   tagsIds: List[Int]
          * }
          *
          * response - UpdateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
+         *   tagsId: List[Int]
          * }
          *
          */

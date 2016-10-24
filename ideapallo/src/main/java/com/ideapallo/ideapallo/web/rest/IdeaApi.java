@@ -58,6 +58,9 @@ public class IdeaApi {
     @Inject
     private IdealistRepository idealistRepository;
 
+    @Inject
+    private TagRepository tagRepository;
+
     @RequestMapping(value = "/idea/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
@@ -136,6 +139,7 @@ public class IdeaApi {
         dto.setId(model.getId());
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());
+        dto.setTagsId(model.getTags().stream().map(Tag::getId).collect(Collectors.toList()));
         return dto;
     }
 
@@ -143,6 +147,8 @@ public class IdeaApi {
         final Idea idea = new Idea();
         idea.setTitle(dto.getTitle());
         idea.setContent(dto.getContent());
+        final List<Tag> tags = tagRepository.findAll(dto.getTagsIds());
+        idea.setTags(tags);
         return idea;
     }
 
@@ -151,6 +157,7 @@ public class IdeaApi {
         dto.setId(model.getId());
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());
+        dto.setTagsId(model.getTags().stream().map(Tag::getId).collect(Collectors.toList()));
         return dto;
     }
 
@@ -159,6 +166,8 @@ public class IdeaApi {
         idea.setId(id);
         idea.setTitle(dto.getTitle());
         idea.setContent(dto.getContent());
+        final List<Tag> tags = tagRepository.findAll(dto.getTagsIds());
+        idea.setTags(tags);
         return idea;
     }
 
@@ -167,6 +176,7 @@ public class IdeaApi {
         dto.setId(model.getId());
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());
+        dto.setTagsId(model.getTags().stream().map(Tag::getId).collect(Collectors.toList()));
         return dto;
     }
 

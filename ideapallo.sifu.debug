@@ -320,6 +320,7 @@ ideapallo project[
                     Idea.id
                     Idea.title
                     Idea.content
+                    Idea.tags.id
                 )
                 errors
                 request ReadIdeaRequest
@@ -335,6 +336,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                tagsId list integer[
+                    max 9223372036854775807]
             )
             createIdea create[
                 secured(
@@ -348,6 +351,7 @@ ideapallo project[
                     Idea.id
                     Idea.title
                     Idea.content
+                    Idea.tags.id
                 )
                 errors
                 request CreateIdeaRequest
@@ -366,12 +370,19 @@ ideapallo project[
                         create
                         read
                     )]
+                tagsIds tags.id[
+                    visible(
+                        create
+                        read
+                    )]
             )
             CreateIdeaRequest dto(
                 title text[
                     max 255]
                 content text[
                     max 255]
+                tagsIds list integer[
+                    max 9223372036854775807]
             )
             CreateIdeaResponse dto(
                 id integer[
@@ -380,6 +391,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                tagsId list integer[
+                    max 9223372036854775807]
             )
             updateIdea update[
                 secured(
@@ -393,6 +406,7 @@ ideapallo project[
                     Idea.id
                     Idea.title
                     Idea.content
+                    Idea.tags.id
                 )
                 errors
                 request UpdateIdeaRequest
@@ -412,6 +426,11 @@ ideapallo project[
                         read
                         update
                     )]
+                tagsIds tags.id[
+                    visible(
+                        read
+                        update
+                    )]
             )
             UpdateIdeaRequest dto(
                 id integer[
@@ -420,6 +439,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                tagsIds list integer[
+                    max 9223372036854775807]
             )
             UpdateIdeaResponse dto(
                 id integer[
@@ -428,6 +449,8 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                tagsId list integer[
+                    max 9223372036854775807]
             )
             deleteIdea delete[
                 secured(
@@ -816,10 +839,13 @@ ideapallo project[
                     max 255]
                 content text[
                     max 255]
+                tagsIds list integer[
+                    max 9223372036854775807]
             )
             visible(
                 title
                 content
+                tagsIds
             )](
             title text[
                 bind(
@@ -831,6 +857,11 @@ ideapallo project[
                     model . content
                 )
                 max 255]
+            tagsIds list integer[
+                bind(
+                    model . tagsIds
+                )
+                max 9223372036854775807]
             submit button
         ){
             on success(

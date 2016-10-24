@@ -51,6 +51,7 @@
          *   id: Int
          *   title: String
          *   content: String
+         *   tagsId: List[Int]
          * }
          *
          */
@@ -68,12 +69,14 @@
          * request - CreateIdeaRequest {
          *   title: String
          *   content: String
+         *   tagsIds: List[Int]
          * }
          *
          * response - CreateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
+         *   tagsId: List[Int]
          * }
          *
          */
@@ -83,7 +86,8 @@
                 url: ideapalloApiUrl + '/api/idea',
                 data: {
                     title: model.title,
-                    content: model.content
+                    content: model.content,
+                    tagsIds: model.tagsIds
                 },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken
@@ -95,12 +99,14 @@
          * request - RestUpdateIdeaRequest {
          *   title: String
          *   content: String
+         *   tagsIds: List[Int]
          * }
          *
          * response - UpdateIdeaResponse {
          *   id: Int
          *   title: String
          *   content: String
+         *   tagsId: List[Int]
          * }
          *
          */
@@ -110,7 +116,8 @@
                 url: ideapalloApiUrl + '/api/idea/' + model.id + '',
                 data: {
                     title: model.title,
-                    content: model.content
+                    content: model.content,
+                    tagsIds: model.tagsIds
                 },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken
