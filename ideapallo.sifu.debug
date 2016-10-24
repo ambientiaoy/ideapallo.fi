@@ -852,12 +852,10 @@ ideapallo project[
             en
         )
         loggedin ideasPage](
-        header container(
-            osallistu link
-            uusiIdea link
-            haku haku
-            kuinkaPalveluToimii link
-            profilePicture label
+        appPage page[
+            path /](
+            siteHeader siteHeader
+            placeholder
         )
         homePage page[
             path /home](
@@ -1036,6 +1034,13 @@ ideapallo project[
             on success(
                 goto signInPage
             )}
+        siteHeader container(
+            osallistu link
+            uusiIdea link
+            haku haku
+            kuinkaPalveluToimii link
+            profilePicture label
+        )
         ideas table[
             load IdeaApi.ideas
             model[
