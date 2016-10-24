@@ -88,6 +88,7 @@
                 IDEAS_VIEW_IDEA: 'View idea',
                 IDEAS_VIEW_IDEA_X: 'View idea x',
                 IDEA_VIEW_CONTENT: 'Content',
+                IDEA_VIEW_PEOPLE: 'Folks interested in the idea',
                 IDEA_VIEW_ID: 'Id',
                 IDEA_VIEW_TITLE: 'Title',
                 MODAL_WINDOW_CLOSE: 'Close',

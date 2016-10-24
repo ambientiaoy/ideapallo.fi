@@ -127,7 +127,6 @@ public class IdeaApi {
     @RequestMapping(value = "/tag/{name}/ideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<List<TagResponse>> tag(@PathVariable("name") String name) {
         log.debug("GET /tag");
         final List<IdeaTagTuple> result = ideaRepository.findIdeaByTag(name);

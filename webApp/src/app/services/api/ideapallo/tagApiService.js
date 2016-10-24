@@ -72,10 +72,7 @@
         function byName(model) {
             return $http({
                 method: 'GET',
-                url: ideapalloApiUrl + '/api/by-name',
-                params: {
-                    name: model.name
-                }
+                url: ideapalloApiUrl + '/api/tag/' + model.name + '/ideas',
             });
         }
 
