@@ -124,7 +124,7 @@ public class IdeaApi {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/ideas/tag/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/tag/{name}/ideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
     @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
