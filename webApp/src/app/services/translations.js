@@ -81,7 +81,6 @@
                 IDEAS_CONTENT: 'Content',
                 IDEAS_ID: 'Id',
                 IDEAS_IDEALIST_ID: 'Idealist id',
-                IDEAS_PAGE_ADD_NOTE: 'Add note',
                 IDEAS_TAGS_ID: 'Tags id',
                 IDEAS_TITLE: 'Title',
                 IDEAS_VIEW_IDEA: 'View idea',
