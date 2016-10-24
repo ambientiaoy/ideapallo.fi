@@ -929,7 +929,7 @@ ideapallo project[
             )](
             ideaView ideaView
         )
-        findByTag page[
+        findByTagPage page[
             path /tag/:name/ideas
             params(
                 name text
