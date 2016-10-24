@@ -26,6 +26,7 @@
             return {
                 restrict: 'E',
                 scope: {
+                    visible: '=',
                     id: '='
                 },
                 templateUrl: 'src/app/components/views/ideaView.html',
@@ -37,12 +38,13 @@
         .module('webApp')
         .controller('IdeaViewController', IdeaViewController);
 
-    IdeaViewController.$inject = ['$scope', 'ideaApi'];
+    IdeaViewController.$inject = ['$scope', 'eventBus', 'ideaApi'];
 
-    function IdeaViewController($scope, ideaApi) {
+    function IdeaViewController($scope, eventBus, ideaApi) {
 
         $scope.model = {};
         $scope.errorCode = null;
+        $scope.onViewIdea = eventBus.onEvent('ViewIdea', onViewIdea);
 
         if ($scope.id) load($scope.id);
 
@@ -64,6 +66,11 @@
                 }
             }
 
+        }
+
+        function onViewIdea(event, payload) {
+            load(payload.id);
+            $scope.visible = true;
         }
 
     }

@@ -1204,7 +1204,13 @@ ideapallo project[
                     model . tagsId
                 )
                 max 9223372036854775807]
-        )
+        ){
+            on ViewIdea(
+                show
+                reload(
+                    event . id
+                )
+            )}
         tags table[
             load TagApi.tags
             model[
