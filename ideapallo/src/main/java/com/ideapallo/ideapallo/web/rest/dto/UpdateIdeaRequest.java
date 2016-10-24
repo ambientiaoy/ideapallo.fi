@@ -21,8 +21,6 @@ package com.ideapallo.ideapallo.web.rest.dto;
 
 import java.io.Serializable;
 
-import java.util.List;
-
 import javax.validation.constraints.*;
 
 
@@ -40,9 +38,6 @@ public class UpdateIdeaRequest implements Serializable {
     @NotNull
     @Size(max = 255)
     private String content;
-
-    @NotNull
-    private List<Long> tagsIds;
 
     public Long getId() {
         return id;
@@ -68,14 +63,6 @@ public class UpdateIdeaRequest implements Serializable {
         this.content = content;
     }
 
-    public List<Long> getTagsIds() {
-        return tagsIds;
-    }
-
-    public void setTagsIds(List<Long> tagsIds) {
-        this.tagsIds = tagsIds;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -91,8 +78,6 @@ public class UpdateIdeaRequest implements Serializable {
             return false;
         if ((content == null && other.content != null) || !content.equals(other.content))
             return false;
-        if ((tagsIds == null && other.tagsIds != null) || !tagsIds.equals(other.tagsIds))
-            return false;
         return true;
     }
 
@@ -103,13 +88,12 @@ public class UpdateIdeaRequest implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((content == null) ? 0 : content.hashCode());
-        result = prime * result + ((tagsIds == null) ? 0 : tagsIds.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "UpdateIdeaRequest[" + "id=" + id + ", title=" + title + ", content=" + content + ", tagsIds=" + tagsIds + "]";
+        return "UpdateIdeaRequest[" + "id=" + id + ", title=" + title + ", content=" + content + "]";
     }
 
 }
