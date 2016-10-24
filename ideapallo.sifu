@@ -8,6 +8,7 @@ ideapallo project[
     template java-springboot
     developer (akis)
     default model type mysql
+    file storage fs
     security(
       principal Account 
 #      permission  // I have no idea what permission actually does and how to make use of it.

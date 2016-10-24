@@ -27,6 +27,10 @@ public class CustomProperties {
 
     private String secretKey;
 
+    private String storageFolder;
+
+    private String baseUrl;
+
     private String clientUrl;
 
     private final Mail mail = new Mail();
@@ -41,6 +45,14 @@ public class CustomProperties {
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+    public String getStorageFolder() {
+        return storageFolder;
+    }
+
+    public void setStorageFolder(String storageFolder) {
+        this.storageFolder = storageFolder;
     }
 
     public Datasource getDatasource() {
@@ -163,6 +175,14 @@ public class CustomProperties {
         public void setPrefix(String prefix) {
             this.prefix = prefix;
         }
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
     public String getClientUrl() {
