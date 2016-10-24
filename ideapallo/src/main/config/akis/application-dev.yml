@@ -41,7 +41,7 @@ management:
     context-path: /management
 custom:
     secretKey: changeme
-    storageFolder:
+    storageFolder: files
     datasource:
         cachePrepStmts: true
         prepStmtCacheSize: 250
