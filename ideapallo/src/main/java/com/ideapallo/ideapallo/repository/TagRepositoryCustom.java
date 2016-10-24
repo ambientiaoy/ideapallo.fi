@@ -32,6 +32,4 @@ public interface TagRepositoryCustom {
 
     List<Tag> findByName(String name);
 
-    List<Tag> tags();
-
 }

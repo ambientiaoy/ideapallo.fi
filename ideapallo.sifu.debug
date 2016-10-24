@@ -46,7 +46,6 @@ ideapallo project[
             getById get from Tag as Tag where Tag.id == id
             deleteById delete from Tag as Tag where Tag.id == id
             findByName find from Tag as Tag where Tag.name == name
-            tags find from Tag as Tag
         )
         Account model[
             type mysql
@@ -303,23 +302,7 @@ ideapallo project[
                     max 255]
             )
         )
-        TagApi api(
-            tags find[
-                query Tag.tags
-                get /tags
-                errors
-                response(
-                    Tag.id
-                    Tag.name
-                )
-                response list TagsResponse]
-            TagsResponse dto(
-                id integer[
-                    max 9223372036854775807]
-                name text[
-                    max 255]
-            )
-        )
+        TagApi api
         IdeaApi api[
             secured(
                 CLIENT
@@ -830,7 +813,6 @@ ideapallo project[
         template js-angular
         connectedTo(
             ideapallo.AddIdealistToAccountApi.create
-            ideapallo.TagApi.tags
             ideapallo.IdeaApi.readIdea
             ideapallo.IdeaApi.createIdea
             ideapallo.IdeaApi.updateIdea
@@ -860,9 +842,6 @@ ideapallo project[
                 )}
         )
         IdeaUpdated event
-        ViewTags event(
-            name text
-        )
         ideasPage page[
             path /ideas
             secured(
@@ -910,14 +889,6 @@ ideapallo project[
                 id text
             )](
             idea idea
-        )
-        findByTags page[
-            path /tags
-            secured(
-                ADMIN
-                CLIENT
-            )](
-            tags tags
         )
         signInPage page[
             path /sign-in](
@@ -1128,36 +1099,6 @@ ideapallo project[
                     model . tagsId
                 )
                 max 9223372036854775807]
-        )
-        tags table[
-            load TagApi.tags
-            model[
-                dto ideapallo.TagApi.TagsResponse](
-                id integer[
-                    max 9223372036854775807]
-                name text[
-                    max 255]
-            )
-            visible(
-                id
-                name
-            )](
-            id integer[
-                bind(
-                    model . id
-                )
-                max 9223372036854775807]
-            name text[
-                bind(
-                    model . name
-                )
-                max 255]
-            viewTags link{
-                on click(
-                    fire ViewTags(
-                        item . name
-                    )
-                )}
         )
         emailSignInForm form[
             submit ideapallo.AuthenticationApi.emailSignIn

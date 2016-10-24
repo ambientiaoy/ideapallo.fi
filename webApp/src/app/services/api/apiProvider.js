@@ -51,35 +51,6 @@
 
     angular
         .module('webApp')
-        .provider('tagApi', tagApi)
-        .config(tagApiProvider);
-
-    function tagApi() {
-        var isMocked = false;
-
-        var $get = ['tagApiService', 'tagApiMockService', 'clientConfigurationValues', function(tagApiService, tagApiMockService, clientConfigurationValues) {
-            if (this.isMocked) {
-                return tagApiMockService;
-            } else {
-                if (clientConfigurationValues.remoteIdeapalloUrl) {
-                    tagApiService.init(clientConfigurationValues.remoteIdeapalloUrl);
-                }
-                return tagApiService;
-            }
-        }];
-
-        return {
-            isMocked: isMocked,
-            $get: $get
-        };
-    }
-
-    function tagApiProvider(clientConfigurationValues, tagApiProvider) {
-        tagApiProvider.isMocked = clientConfigurationValues.useServerMock;
-    }
-
-    angular
-        .module('webApp')
         .provider('addIdealistToAccountApi', addIdealistToAccountApi)
         .config(addIdealistToAccountApiProvider);
 

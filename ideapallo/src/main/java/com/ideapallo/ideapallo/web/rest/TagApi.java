@@ -19,10 +19,6 @@
 **/
 package com.ideapallo.ideapallo.web.rest;
 
-import java.util.Optional;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -36,8 +32,6 @@ import javax.validation.Valid;
 import com.ideapallo.ideapallo.model.*;
 import com.ideapallo.ideapallo.web.rest.dto.*;
 
-import com.ideapallo.ideapallo.repository.*;
-
 
 @RestController
 @RequestMapping("/api/")
@@ -45,22 +39,4 @@ public class TagApi {
 
     private final Logger log = LoggerFactory.getLogger(TagApi.class);
 
-    @Inject
-    private TagRepository tagRepository;
-
-    @RequestMapping(value = "/tags", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @Transactional(readOnly = true)
-    public ResponseEntity<List<TagsResponse>> tags() {
-        log.debug("GET /tags");
-        final List<Tag> result = tagRepository.tags();
-        return ResponseEntity.ok().body(result.stream().map(this::convertToTagsResponse).collect(Collectors.toList()));
-    }
-
-    private TagsResponse convertToTagsResponse(Tag model) {
-        final TagsResponse dto = new TagsResponse();
-        dto.setId(model.getId());
-        dto.setName(model.getName());
-        return dto;
-    }
 }

@@ -47,11 +47,6 @@
                 templateUrl: 'src/app/components/pages/ideaPage.html',
                 controller: 'IdeaPageController'
             })
-            .state('findByTags', {
-                url: '/home/tags',
-                templateUrl: 'src/app/components/pages/findByTags.html',
-                controller: 'FindByTagsController'
-            })
             .state('signInPage', {
                 url: '/home/sign-in',
                 templateUrl: 'src/app/components/pages/signInPage.html',
