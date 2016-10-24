@@ -146,7 +146,7 @@ ideapallo project[
             title text[
                 max 255]
             content text[
-                max 255]
+                max 6000]
             idealist list Idealist[
                 manyToMany IdeaIdealist]
             tags list Tag[
@@ -372,7 +372,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             createIdea create[
                 secured(
@@ -414,7 +414,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             CreateIdeaResponse dto(
                 id integer[
@@ -422,7 +422,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             updateIdea update[
                 secured(
@@ -467,7 +467,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             UpdateIdeaResponse dto(
                 id integer[
@@ -475,7 +475,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             deleteIdea delete[
                 secured(
@@ -518,7 +518,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
                 idealistId list integer[
                     max 9223372036854775807]
                 tagsId list integer[
@@ -548,7 +548,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
                 idealistId list integer[
                     max 9223372036854775807]
                 tagsId list integer[
@@ -581,7 +581,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
                 idealistId list integer[
                     max 9223372036854775807]
                 tagsId list integer[
@@ -1073,7 +1073,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             visible(
                 title
@@ -1088,7 +1088,7 @@ ideapallo project[
                 bind(
                     model . content
                 )
-                max 255]
+                max 6000]
             submit button
         ){
             on success(
@@ -1109,7 +1109,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             visible(
                 id
@@ -1130,7 +1130,7 @@ ideapallo project[
                 bind(
                     model . content
                 )
-                max 255]
+                max 6000]
         ){
             on ViewIdea(
                 show
@@ -1144,7 +1144,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
                 idealistId list integer[
                     max 9223372036854775807]
                 tagsId list integer[
@@ -1171,7 +1171,7 @@ ideapallo project[
                 bind(
                     model . content
                 )
-                max 255]
+                max 6000]
             idealistId list integer[
                 bind(
                     model . idealistId
@@ -1206,7 +1206,7 @@ ideapallo project[
                 title text[
                     max 255]
                 content text[
-                    max 255]
+                    max 6000]
             )
             visible(
                 id
@@ -1227,7 +1227,7 @@ ideapallo project[
                 bind(
                     model . content
                 )
-                max 255]
+                max 6000]
         ){
             on ViewIdea(
                 show

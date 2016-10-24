@@ -41,7 +41,7 @@ ideapallo project[
 
     Idea model(
       title text
-      content text
+      content text [max 6000]
       idealist list Idealist[manyToMany]
       tags list Tag [manyToMany]
 
