@@ -21,8 +21,6 @@ package com.ideapallo.ideapallo.web.rest.dto;
 
 import java.io.Serializable;
 
-import java.util.List;
-
 import javax.validation.constraints.*;
 
 
@@ -37,9 +35,6 @@ public class RestUpdateIdeaRequest implements Serializable {
     @NotNull
     @Size(max = 255)
     private String content;
-
-    @NotNull
-    private List<Long> tagsIds;
 
     public String getTitle() {
         return title;
@@ -57,14 +52,6 @@ public class RestUpdateIdeaRequest implements Serializable {
         this.content = content;
     }
 
-    public List<Long> getTagsIds() {
-        return tagsIds;
-    }
-
-    public void setTagsIds(List<Long> tagsIds) {
-        this.tagsIds = tagsIds;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -78,8 +65,6 @@ public class RestUpdateIdeaRequest implements Serializable {
             return false;
         if ((content == null && other.content != null) || !content.equals(other.content))
             return false;
-        if ((tagsIds == null && other.tagsIds != null) || !tagsIds.equals(other.tagsIds))
-            return false;
         return true;
     }
 
@@ -89,13 +74,12 @@ public class RestUpdateIdeaRequest implements Serializable {
         int result = 1;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((content == null) ? 0 : content.hashCode());
-        result = prime * result + ((tagsIds == null) ? 0 : tagsIds.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "RestUpdateIdeaRequest[" + "title=" + title + ", content=" + content + ", tagsIds=" + tagsIds + "]";
+        return "RestUpdateIdeaRequest[" + "title=" + title + ", content=" + content + "]";
     }
 
 }
