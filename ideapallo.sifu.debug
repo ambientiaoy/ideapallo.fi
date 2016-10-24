@@ -880,6 +880,8 @@ ideapallo project[
         appPage page[
             path /](
             siteHeader siteHeader
+            banner file[
+                type image]
             placeholder
             createNewIdea createNewIdea
         )
