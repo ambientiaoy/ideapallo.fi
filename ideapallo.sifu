@@ -116,7 +116,7 @@ ideapallo project[
     }
 
     ideaPage page[path /idea/:id, params(id integer)](
-      ideaView view[load IdeaApi.findById ]{
+      ideaView view[load IdeaApi.readIdea ]{
         on ViewIdea( show,  reload(event.id)) 
       }
     )
