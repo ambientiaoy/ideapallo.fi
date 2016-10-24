@@ -64,6 +64,7 @@ ideapallo project[
 
     TagApi api[ ](
 
+      tags find[ from Tag, rest]
       
     )
 
@@ -94,6 +95,7 @@ ideapallo project[
     )
     
     IdeaUpdated event
+    ViewTags event(name text)
 
     ideasPage page[path /ideas, secured(ADMIN, CLIENT)](
       addNote button{on click open createNewIdea}
@@ -109,6 +111,15 @@ ideapallo project[
 
     ideaPage page[path /idea/:id, params(id text)](
       idea view[ load IdeaApi.findById ]
+    )
+
+    findByTags page[path /tags, secured(ADMIN, CLIENT)](
+      
+      tags table[load TagApi.tags](
+        viewTags link{on click fire ViewTags(item.name)}
+      )
+
+
     )
   )
 )
