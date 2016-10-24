@@ -26,7 +26,7 @@
             return {
                 restrict: 'E',
                 scope: {
-
+                    visible: '='
                 },
                 templateUrl: 'src/app/components/tables/tags.html',
                 controller: 'TagsController'

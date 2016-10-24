@@ -89,6 +89,14 @@ ideapallo project[
     path /home
     home homePage
   ](
+    header container[](
+      osallistu link
+      uusiIdea link
+      haku form
+      kuinkaPalveluToimii link
+      profilePicture label
+    )
+
     homePage page[path /home](
       seeIdeas link{on click goto ideasPage}
     )
@@ -123,7 +131,9 @@ ideapallo project[
 
     findByTags page[path /tags, secured(ADMIN, CLIENT)](
       
-      tags table[load TagApi.tags](
+
+
+      tags table[hidden, load TagApi.tags](
         viewTags link{on click fire ViewTags(item.name)}
       )
     )
