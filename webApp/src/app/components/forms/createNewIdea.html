@@ -11,10 +11,10 @@
             </div>
             <div class="form-group">
                 <label for="content">{{'CREATE_NEW_IDEA_CONTENT' | translate}}</label>
-                <input type="text" id="content" name="content" class="form-control" ng-model="model.content" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }" maxlength="255" required />
+                <textarea type="text" id="content" name="content" class="form-control" ng-model="model.content" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }" maxlength="6000" rows="10" required></textarea>
                 <div ng-messages="createNewIdea.content.$error" ng-if="createNewIdea.$submitted || !createNewIdea.content.$pristine">
                     <div ng-message="required">{{'CREATE_NEW_IDEA_CONTENT_IS_REQUIRED' | translate}}</div>
-                    <div ng-message="maxlength" ng-if="!createNewIdea.content.$pristine">{{'CREATE_NEW_IDEA_CONTENT_MAX' | translate:'{ max: 255 }'}}</div>
+                    <div ng-message="maxlength" ng-if="!createNewIdea.content.$pristine">{{'CREATE_NEW_IDEA_CONTENT_MAX' | translate:'{ max: 6000 }'}}</div>
                 </div>
             </div>
             <div class="form-group">

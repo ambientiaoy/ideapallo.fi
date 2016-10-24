@@ -35,7 +35,7 @@ public class CreateIdeaRequest implements Serializable {
     private String title;
 
     @NotNull
-    @Size(max = 255)
+    @Size(max = 6000)
     private String content;
 
     private List<String> tagNames;
