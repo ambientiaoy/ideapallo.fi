@@ -877,6 +877,8 @@ ideapallo project[
                     open createNewIdea
                 )}
             ideas ideas
+            idea idea[
+                hidden]
         )
         createNewIdea form[
             submit IdeaApi.createIdea
@@ -911,9 +913,7 @@ ideapallo project[
             path /idea/:id
             params(
                 id text
-            )](
-            idea idea
-        )
+            )]
         findByTags page[
             path /tags
             secured(
