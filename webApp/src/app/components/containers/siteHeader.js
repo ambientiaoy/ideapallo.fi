@@ -39,9 +39,9 @@
 
     function SiteHeaderController($scope, modalWindows, eventBus) {
 
-        $scope.onClickHae = onClickHae;
+        $scope.onClickUusiIdea = onClickUusiIdea;
 
-        function onClickHae() {
+        function onClickUusiIdea() {
             modalWindows.openCreateNewIdea();
         }
 
