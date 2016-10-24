@@ -28,7 +28,7 @@
                 scope: {
                     name: '='
                 },
-                templateUrl: 'src/app/components/tables/ideasByTags.html',
+                templateUrl: 'src/app/components/views/ideasByTags.html',
                 controller: 'IdeasByTagsController'
             };
         });

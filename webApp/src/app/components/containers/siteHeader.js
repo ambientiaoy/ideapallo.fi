@@ -47,7 +47,7 @@
         }
 
         function onClickHae(item) {
-            $state.go('findByTagPage', {
+            $state.go('appPage.findByTagPage', {
                 name: item
             });
 
