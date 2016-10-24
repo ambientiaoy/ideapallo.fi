@@ -80,6 +80,7 @@
                 HOME_PAGE_SEE_IDEAS: 'See ideas',
                 IDEAS_BY_TAGS_ID: 'Id',
                 IDEAS_BY_TAGS_NAME: 'Name',
+                IDEAS_BY_TAGS_VIEW_IDEA: 'View idea',
                 IDEAS_CONTENT: 'Content',
                 IDEAS_ID: 'Id',
                 IDEAS_IDEALIST_ID: 'Idealist id',
@@ -121,6 +122,9 @@
                 VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_MAX: 'Email verification code max',
                 VERIFY_EMAIL_FORM_EMAIL_VERIFICATION_CODE_MIN: 'Email verification code min',
                 VERIFY_EMAIL_FORM_SUBMIT: 'Submit',
+                VIEW_IDEA_MODAL_CONTENT: 'Content',
+                VIEW_IDEA_MODAL_ID: 'Id',
+                VIEW_IDEA_MODAL_TITLE: 'Title',
                 YES: 'Yes'
             });
 

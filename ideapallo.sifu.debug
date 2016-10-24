@@ -899,6 +899,9 @@ ideapallo project[
         ViewIdea event(
             id integer
         )
+        ViewIdeaModal event(
+            id integer
+        )
         appPage page[
             path /](
             siteHeader siteHeader
@@ -906,6 +909,7 @@ ideapallo project[
                 type image]
             placeholder
             createNewIdea createNewIdea
+            viewIdeaModal viewIdeaModal
         )
         homePage page[
             path /home](
@@ -1094,6 +1098,49 @@ ideapallo project[
                 close
                 fire IdeaUpdated
             )}
+        viewIdeaModal view[
+            load IdeaApi.readIdea
+            params[
+                dto ideapallo.IdeaApi.ReadIdeaRequest](
+                id integer[
+                    max 9223372036854775807]
+            )
+            model[
+                dto ideapallo.IdeaApi.ReadIdeaResponse](
+                id integer[
+                    max 9223372036854775807]
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            visible(
+                id
+                title
+                content
+            )](
+            id integer[
+                bind(
+                    model . id
+                )
+                max 9223372036854775807]
+            title text[
+                bind(
+                    model . title
+                )
+                max 255]
+            content text[
+                bind(
+                    model . content
+                )
+                max 255]
+        ){
+            on ViewIdea(
+                show
+                reload(
+                    event . id
+                )
+            )}
         ideas table[
             load IdeaApi.ideas
             model[
@@ -1194,7 +1241,7 @@ ideapallo project[
                     event . id
                 )
             )}
-        ideasByTags view[
+        ideasByTags table[
             load TagApi.byName
             params[
                 dto ideapallo.TagApi.ByNameRequest](
@@ -1222,6 +1269,12 @@ ideapallo project[
                     model . name
                 )
                 max 255]
+            viewIdea link{
+                on click(
+                    fire ViewIdea(
+                        item . id
+                    )
+                )}
         )
         tags table[
             load TagApi.tags

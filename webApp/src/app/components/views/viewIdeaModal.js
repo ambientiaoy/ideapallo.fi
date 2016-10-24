@@ -22,39 +22,37 @@
 
     angular
         .module('webApp')
-        .directive('ideas', function() {
+        .directive('viewIdeaModal', function() {
             return {
                 restrict: 'E',
                 scope: {
-
+                    visible: '=',
+                    id: '='
                 },
-                templateUrl: 'src/app/components/tables/ideas.html',
-                controller: 'IdeasController'
+                templateUrl: 'src/app/components/views/viewIdeaModal.html',
+                controller: 'ViewIdeaModalController'
             };
         });
 
     angular
         .module('webApp')
-        .controller('IdeasController', IdeasController);
+        .controller('ViewIdeaModalController', ViewIdeaModalController);
 
-    IdeasController.$inject = ['$scope', 'eventBus', '$state', 'ideaApi'];
+    ViewIdeaModalController.$inject = ['$scope', 'eventBus', 'ideaApi'];
 
-    function IdeasController($scope, eventBus, $state, ideaApi) {
-        $scope.model = [];
+    function ViewIdeaModalController($scope, eventBus, ideaApi) {
+
+        $scope.model = {};
         $scope.errorCode = null;
-        $scope.onIdeaUpdated = eventBus.onEvent('IdeaUpdated', onIdeaUpdated);
-        $scope.onClickViewIdea = onClickViewIdea;
+        $scope.onViewIdea = eventBus.onEvent('ViewIdea', onViewIdea);
 
-        $scope.onClickSearchTags = onClickSearchTags;
-        function onClickSearchTags( tag ) {
-            console.log('search ' + tag);
-        }
+        if ($scope.id) load($scope.id);
 
-        load();
-
-        function load() {
-
-            ideaApi.ideas().then(onSuccess, onError);
+        function load(id) {
+            var request = {
+                id: id
+            };
+            ideaApi.readIdea(request).then(onSuccess, onError);
 
             function onSuccess(response) {
                 $scope.model = response.data;
@@ -70,14 +68,9 @@
 
         }
 
-        function onIdeaUpdated(event, payload) {
-            load();
-        }
-
-        function onClickViewIdea(item) {
-            $state.go('appPage.ideaPage', {
-                id: item.id
-            });
+        function onViewIdea(event, payload) {
+            load(payload.id);
+            $scope.visible = true;
         }
 
     }

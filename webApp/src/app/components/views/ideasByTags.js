@@ -28,7 +28,7 @@
                 scope: {
                     name: '='
                 },
-                templateUrl: 'src/app/components/views/ideasByTags.html',
+                templateUrl: 'src/app/components/tables/ideasByTags.html',
                 controller: 'IdeasByTagsController'
             };
         });
@@ -37,12 +37,13 @@
         .module('webApp')
         .controller('IdeasByTagsController', IdeasByTagsController);
 
-    IdeasByTagsController.$inject = ['$scope', 'tagApi'];
+    IdeasByTagsController.$inject = ['$scope', 'eventBus', 'tagApi'];
 
-    function IdeasByTagsController($scope, tagApi) {
-
-        $scope.model = {};
+    function IdeasByTagsController($scope, eventBus, tagApi) {
+        $scope.model = [];
         $scope.errorCode = null;
+
+        $scope.onClickViewIdea = onClickViewIdea;
 
         if ($scope.name) load($scope.name);
 
@@ -64,6 +65,12 @@
                 }
             }
 
+        }
+
+        function onClickViewIdea(item) {
+            eventBus.emitEvent('ViewIdea', {
+                id: item.id
+            });
         }
 
     }

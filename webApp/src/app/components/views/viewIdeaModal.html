@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>{{'VIEW_IDEA_MODAL_ID' | translate}}</dt>
+                    <dd>{{model.id}}</dd>
+                    <dt>{{'VIEW_IDEA_MODAL_TITLE' | translate}}</dt>
+                    <dd>{{model.title}}</dd>
+                    <dt>{{'VIEW_IDEA_MODAL_CONTENT' | translate}}</dt>
+                    <dd>{{model.content}}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+
+    </div>
+</div>
+<div class="row" ng-show="errorCode">
+    <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="{{'ALERT_CLOSE' | translate}}">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{errorCode}}
+        </div>
+    </div>
+</div>
