@@ -67,6 +67,7 @@ ideapallo project[
 
       tags find[ from Tag, rest]
       
+      byName find [ from Tag where Tag.name == name, rest]
     )
 
     IdeaApi api[ secured (CLIENT, ADMIN)](
@@ -100,14 +101,12 @@ ideapallo project[
         osallistu link
         uusiIdea button{on click open createNewIdea}
         haku text
-        hae button 
+        hae button
         kuinkaPalveluToimii link
       )
       banner file[type image]
 
-
       placeholder
-
 
       createNewIdea form[submit IdeaApi.createIdea]{
         on success (close, fire IdeaUpdated)
@@ -130,7 +129,6 @@ ideapallo project[
 #        on ViewIdea (show,  reload(event.id))
 #      }
     )
-  
 
     ideaPage page[path /idea/:id, params(id integer)](
       ideaView view[load IdeaApi.readIdea ]{
@@ -138,7 +136,13 @@ ideapallo project[
       }
     )
 
-    findByTags page[path /tags, secured(ADMIN, CLIENT)](
+    findByTag page[path /tag/:name/ideas, params(name text)](
+      ideasByTags view[ bind params.name, load TagApi.byName ](
+        
+      )
+    )
+
+    allTags  page[path /tags, secured(ADMIN, CLIENT)](
       tags table[hidden, load TagApi.tags](
         viewTags link{on click fire ViewTags(item.name)}
       )

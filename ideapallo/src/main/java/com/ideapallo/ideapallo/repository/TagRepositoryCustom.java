@@ -34,4 +34,6 @@ public interface TagRepositoryCustom {
 
     List<Tag> tags();
 
+    List<Tag> byName(String name);
+
 }

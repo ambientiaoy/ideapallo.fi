@@ -29,7 +29,8 @@
     function tagApiMockService($timeout) {
 
         return {
-            tags: tags
+            tags: tags,
+            byName: byName
         };
 
         /** tags 
@@ -44,6 +45,25 @@
          *
          */
         function tags() {
+            $timeout(function() {
+                successCallback({
+                    //TODO fill up mocked data values
+                }, 500);
+            });
+        }
+
+        /** byName 
+         * request - Unit
+         *
+         * response - List [
+         *   ByNameResponse {
+         *     id: Int
+         *     name: String
+         *   }
+         * ]
+         *
+         */
+        function byName(model) {
             $timeout(function() {
                 successCallback({
                     //TODO fill up mocked data values
