@@ -35,9 +35,15 @@
         .module('webApp')
         .controller('SiteHeaderController', SiteHeaderController);
 
-    SiteHeaderController.$inject = [];
+    SiteHeaderController.$inject = ['$scope', 'modalWindows', 'eventBus'];
 
-    function SiteHeaderController() {
+    function SiteHeaderController($scope, modalWindows, eventBus) {
+
+        $scope.onClickHae = onClickHae;
+
+        function onClickHae() {
+            modalWindows.openCreateNewIdea();
+        }
 
     }
 })();

@@ -94,7 +94,7 @@ ideapallo project[
         osallistu link
         uusiIdea link
         haku text
-        hae button
+        hae button{on click open createNewIdea}
         kuinkaPalveluToimii link
       )
       placeholder
