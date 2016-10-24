@@ -35,14 +35,22 @@
         .module('webApp')
         .controller('SiteHeaderController', SiteHeaderController);
 
-    SiteHeaderController.$inject = ['$scope', 'modalWindows', 'eventBus'];
+    SiteHeaderController.$inject = ['$scope', 'modalWindows', 'eventBus', '$state'];
 
-    function SiteHeaderController($scope, modalWindows, eventBus) {
+    function SiteHeaderController($scope, modalWindows, eventBus, $state) {
 
         $scope.onClickUusiIdea = onClickUusiIdea;
+        $scope.onClickHae = onClickHae;
 
         function onClickUusiIdea() {
             modalWindows.openCreateNewIdea();
+        }
+
+        function onClickHae(item) {
+            $state.go('findByTagPage', {
+                name: item
+            });
+
         }
 
     }
