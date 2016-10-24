@@ -103,7 +103,11 @@ ideapallo project[
         hae button 
         kuinkaPalveluToimii link
       )
+      banner file[type image]
+
+
       placeholder
+
 
       createNewIdea form[submit IdeaApi.createIdea]{
         on success (close, fire IdeaUpdated)
