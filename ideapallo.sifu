@@ -91,7 +91,6 @@ ideapallo project[
   ](
     homePage page[path /home](
       seeIdeas link{on click goto ideasPage}
-      
     )
     
     IdeaUpdated event
@@ -102,25 +101,25 @@ ideapallo project[
       addNote button{on click open createNewIdea}
       ideas table[load IdeaApi.ideas](
         viewIdea link{on click fire ViewIdea(item.id)}
+        viewIdeaX link{on click goto ideaPage( item.id) }
       ){
         on IdeaUpdated reload
       }
 
-      idea table[hidden, load IdeaApi.findById ]{
+      idea view[hidden, load IdeaApi.findById ]{
         on ViewIdea (show,  reload(event.id))
       }
     )
-   
   
     createNewIdea form[submit IdeaApi.createIdea]{
       on success (close, fire IdeaUpdated)
     }
 
-    ideaPage page[path /idea/:id, params(id text)](
+    ideaPage page[path /idea/:id, params(id integer)](
+      ideaView view[load IdeaApi.findById ]
     )
 
     findByTags page[path /tags, secured(ADMIN, CLIENT)](
-      findByTag form
       
       tags table[load TagApi.tags](
         viewTags link{on click fire ViewTags(item.name)}

@@ -912,15 +912,16 @@ ideapallo project[
         ideaPage page[
             path /idea/:id
             params(
-                id text
-            )]
+                id integer
+            )](
+            ideaView ideaView
+        )
         findByTags page[
             path /tags
             secured(
                 ADMIN
                 CLIENT
             )](
-            findByTag findByTag
             tags tags
         )
         signInPage page[
@@ -1082,11 +1083,17 @@ ideapallo project[
                         item . id
                     )
                 )}
+            viewIdeaX link{
+                on click(
+                    goto ideaPage(
+                        item . id
+                    )
+                )}
         ){
             on IdeaUpdated(
                 reload
             )}
-        idea table[
+        idea view[
             load IdeaApi.findById
             params[
                 dto ideapallo.IdeaApi.FindByIdRequest](
@@ -1145,7 +1152,59 @@ ideapallo project[
                     event . id
                 )
             )}
-        findByTag form
+        ideaView view[
+            load IdeaApi.findById
+            params[
+                dto ideapallo.IdeaApi.FindByIdRequest](
+                id integer[
+                    max 9223372036854775807]
+            )
+            model[
+                dto ideapallo.IdeaApi.FindByIdResponse](
+                id integer[
+                    max 9223372036854775807]
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+                idealistId list integer[
+                    max 9223372036854775807]
+                tagsId list integer[
+                    max 9223372036854775807]
+            )
+            visible(
+                id
+                title
+                content
+                idealistId
+                tagsId
+            )](
+            id integer[
+                bind(
+                    model . id
+                )
+                max 9223372036854775807]
+            title text[
+                bind(
+                    model . title
+                )
+                max 255]
+            content text[
+                bind(
+                    model . content
+                )
+                max 255]
+            idealistId list integer[
+                bind(
+                    model . idealistId
+                )
+                max 9223372036854775807]
+            tagsId list integer[
+                bind(
+                    model . tagsId
+                )
+                max 9223372036854775807]
+        )
         tags table[
             load TagApi.tags
             model[

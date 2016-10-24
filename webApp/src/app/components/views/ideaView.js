@@ -22,27 +22,49 @@
 
     angular
         .module('webApp')
-        .directive('findByTag', function() {
+        .directive('ideaView', function() {
             return {
                 restrict: 'E',
-                scope: {},
-                templateUrl: 'src/app/components/forms/findByTag.html',
-                controller: 'FindByTagController'
+                scope: {
+                    id: '='
+                },
+                templateUrl: 'src/app/components/views/ideaView.html',
+                controller: 'IdeaViewController'
             };
         });
 
     angular
         .module('webApp')
-        .controller('FindByTagController', FindByTagController);
+        .controller('IdeaViewController', IdeaViewController);
 
-    FindByTagController.$inject = [];
+    IdeaViewController.$inject = ['$scope', 'ideaApi'];
 
-    function FindByTagController() {
+    function IdeaViewController($scope, ideaApi) {
 
         $scope.model = {};
         $scope.errorCode = null;
-        $scope.submit = submit;
+
+        if ($scope.id) load($scope.id);
+
+        function load(id) {
+            var request = {
+                id: id
+            };
+            ideaApi.findById(request).then(onSuccess, onError);
+
+            function onSuccess(response) {
+                $scope.model = response.data;
+            }
+
+            function onError(response) {
+                if (response.status && response.statusText) {
+                    $scope.errorCode = response.statusText;
+                } else {
+                    $scope.errorCode = 'Unknown error';
+                }
+            }
+
+        }
 
     }
-
 })();
