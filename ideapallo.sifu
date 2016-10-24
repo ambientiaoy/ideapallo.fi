@@ -136,7 +136,7 @@ ideapallo project[
       }
     )
 
-    findByTag page[path /tag/:name/ideas, params(name text)](
+    findByTagPage page[path /tag/:name/ideas, params(name text)](
       ideasByTags view[ bind params.name, load TagApi.byName ](
         
       )

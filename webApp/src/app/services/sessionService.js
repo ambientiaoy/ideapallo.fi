@@ -31,7 +31,7 @@
         publicStates['appPage'] = true;
         publicStates['appPage.homePage'] = true;
         publicStates['ideaPage'] = true;
-        publicStates['findByTag'] = true;
+        publicStates['findByTagPage'] = true;
         publicStates['signInPage'] = true;
         publicStates['signUpPage'] = true;
         publicStates['verifyEmailPage'] = true;

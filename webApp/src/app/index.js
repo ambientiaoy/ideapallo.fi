@@ -52,10 +52,10 @@
                 templateUrl: 'src/app/components/pages/ideaPage.html',
                 controller: 'IdeaPageController'
             })
-            .state('findByTag', {
+            .state('findByTagPage', {
                 url: '/home/tag/{name}/ideas',
-                templateUrl: 'src/app/components/pages/findByTag.html',
-                controller: 'FindByTagController'
+                templateUrl: 'src/app/components/pages/findByTagPage.html',
+                controller: 'FindByTagPageController'
             })
             .state('allTags', {
                 url: '/home/tags',
