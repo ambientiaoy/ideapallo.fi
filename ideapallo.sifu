@@ -95,7 +95,6 @@ ideapallo project[
     IdeaUpdated event
     ViewTags event(name text)
     ViewIdea event(id integer)
-    ViewIdeaModal event(id integer)
 
     appPage page[path /](
       siteHeader container (
@@ -113,8 +112,8 @@ ideapallo project[
         on success (close, fire IdeaUpdated)
       }
 
-      viewIdeaModal view[load IdeaApi.readIdea](){
-        on ViewIdea ( show, reload(event.id))
+      viewIdeaModal view[ load IdeaApi.readIdea](){
+        on ViewIdea ( show )
       }
 
     )
@@ -139,7 +138,7 @@ ideapallo project[
     findByTagPage appPage[path /tag/:name/ideas, params(name text)](
       ideasByTags table[ bind params.name, load TagApi.byName ](
         viewIdea link{ on click fire ViewIdea( item.id )}
-        
+
       )
     )
 

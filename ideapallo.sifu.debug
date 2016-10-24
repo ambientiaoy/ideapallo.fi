@@ -899,9 +899,6 @@ ideapallo project[
         ViewIdea event(
             id integer
         )
-        ViewIdeaModal event(
-            id integer
-        )
         appPage page[
             path /](
             siteHeader siteHeader
@@ -1137,9 +1134,6 @@ ideapallo project[
         ){
             on ViewIdea(
                 show
-                reload(
-                    event . id
-                )
             )}
         ideas table[
             load IdeaApi.ideas
