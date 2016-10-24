@@ -47,13 +47,13 @@
                 templateUrl: 'src/app/components/pages/ideasPage.html',
                 controller: 'IdeasPageController'
             })
-            .state('ideaPage', {
-                url: '/home/idea/{id}',
+            .state('appPage.ideaPage', {
+                url: '/idea/{id}',
                 templateUrl: 'src/app/components/pages/ideaPage.html',
                 controller: 'IdeaPageController'
             })
-            .state('findByTagPage', {
-                url: '/home/tag/{name}/ideas',
+            .state('appPage.findByTagPage', {
+                url: '/tag/{name}/ideas',
                 templateUrl: 'src/app/components/pages/findByTagPage.html',
                 controller: 'FindByTagPageController'
             })

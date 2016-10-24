@@ -22,34 +22,36 @@
 
     angular
         .module('webApp')
-        .directive('ideas', function() {
+        .directive('ideasByTags', function() {
             return {
                 restrict: 'E',
                 scope: {
-
+                    name: '='
                 },
-                templateUrl: 'src/app/components/tables/ideas.html',
-                controller: 'IdeasController'
+                templateUrl: 'src/app/components/tables/ideasByTags.html',
+                controller: 'IdeasByTagsController'
             };
         });
 
     angular
         .module('webApp')
-        .controller('IdeasController', IdeasController);
+        .controller('IdeasByTagsController', IdeasByTagsController);
 
-    IdeasController.$inject = ['$scope', 'eventBus', '$state', 'ideaApi'];
+    IdeasByTagsController.$inject = ['$scope', 'eventBus', 'tagApi'];
 
-    function IdeasController($scope, eventBus, $state, ideaApi) {
+    function IdeasByTagsController($scope, eventBus, tagApi) {
         $scope.model = [];
         $scope.errorCode = null;
-        $scope.onIdeaUpdated = eventBus.onEvent('IdeaUpdated', onIdeaUpdated);
+
         $scope.onClickViewIdea = onClickViewIdea;
 
-        load();
+        if ($scope.name) load($scope.name);
 
-        function load() {
-
-            ideaApi.ideas().then(onSuccess, onError);
+        function load(name) {
+            var request = {
+                name: name
+            };
+            tagApi.byName(request).then(onSuccess, onError);
 
             function onSuccess(response) {
                 $scope.model = response.data;
@@ -65,12 +67,8 @@
 
         }
 
-        function onIdeaUpdated(event, payload) {
-            load();
-        }
-
         function onClickViewIdea(item) {
-            $state.go('appPage.ideaPage', {
+            eventBus.emitEvent('ViewIdea', {
                 id: item.id
             });
         }

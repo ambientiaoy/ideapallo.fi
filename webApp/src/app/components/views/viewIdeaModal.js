@@ -22,35 +22,37 @@
 
     angular
         .module('webApp')
-        .directive('ideasByTags', function() {
+        .directive('viewIdeaModal', function() {
             return {
                 restrict: 'E',
                 scope: {
-                    name: '='
+                    visible: '=',
+                    id: '='
                 },
-                templateUrl: 'src/app/components/views/ideasByTags.html',
-                controller: 'IdeasByTagsController'
+                templateUrl: 'src/app/components/views/viewIdeaModal.html',
+                controller: 'ViewIdeaModalController'
             };
         });
 
     angular
         .module('webApp')
-        .controller('IdeasByTagsController', IdeasByTagsController);
+        .controller('ViewIdeaModalController', ViewIdeaModalController);
 
-    IdeasByTagsController.$inject = ['$scope', 'tagApi'];
+    ViewIdeaModalController.$inject = ['$scope', 'eventBus', 'ideaApi'];
 
-    function IdeasByTagsController($scope, tagApi) {
+    function ViewIdeaModalController($scope, eventBus, ideaApi) {
 
         $scope.model = {};
         $scope.errorCode = null;
+        $scope.onViewIdea = eventBus.onEvent('ViewIdea', onViewIdea);
 
-        if ($scope.name) load($scope.name);
+        if ($scope.id) load($scope.id);
 
-        function load(name) {
+        function load(id) {
             var request = {
-                name: name
+                id: id
             };
-            tagApi.byName(request).then(onSuccess, onError);
+            ideaApi.readIdea(request).then(onSuccess, onError);
 
             function onSuccess(response) {
                 $scope.model = response.data;
@@ -64,6 +66,11 @@
                 }
             }
 
+        }
+
+        function onViewIdea(event, payload) {
+            load(payload.id);
+            $scope.visible = true;
         }
 
     }

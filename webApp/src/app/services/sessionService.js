@@ -30,8 +30,8 @@
         var publicStates = [];
         publicStates['appPage'] = true;
         publicStates['appPage.homePage'] = true;
-        publicStates['ideaPage'] = true;
-        publicStates['findByTagPage'] = true;
+        publicStates['appPage.ideaPage'] = true;
+        publicStates['appPage.findByTagPage'] = true;
         publicStates['signInPage'] = true;
         publicStates['signUpPage'] = true;
         publicStates['verifyEmailPage'] = true;
