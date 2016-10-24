@@ -1086,7 +1086,7 @@ ideapallo project[
             on IdeaUpdated(
                 reload
             )}
-        idea view[
+        idea table[
             load IdeaApi.findById
             params[
                 dto ideapallo.IdeaApi.FindByIdRequest](
