@@ -119,8 +119,7 @@ ideapallo project[
 
     ideasPage appPage[path /ideas, secured(ADMIN, CLIENT)](
       ideas table[load IdeaApi.ideas](
-        viewIdea link{on click fire ViewIdea(item.id)}
-        viewIdeaX link{on click goto ideaPage( item.id) }
+        viewIdea link{on click goto ideaPage( item.id) }
       ){
         on IdeaUpdated reload
       }

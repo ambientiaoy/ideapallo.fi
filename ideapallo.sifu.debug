@@ -1143,12 +1143,6 @@ ideapallo project[
                 max 9223372036854775807]
             viewIdea link{
                 on click(
-                    fire ViewIdea(
-                        item . id
-                    )
-                )}
-            viewIdeaX link{
-                on click(
                     goto ideaPage(
                         item . id
                     )
