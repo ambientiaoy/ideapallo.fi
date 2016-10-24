@@ -81,6 +81,8 @@
                 '<dd>' + model.title + '</dd>' +
                 '<dt>{{"VIEW_IDEA_MODAL_CONTENT" | translate}}</dt>' +
                 '<dd>' + model.content + '</dd>' +
+                '<dt>{{"IDEA_VIEW_PEOPLE" | translate}}</dt>' +
+                '<dd class="img-rounded">' + '<img src="https://pbs.twimg.com/profile_images/567283774602227713/ZcdNwpWF.jpeg">' + '</dd>' +
                 '</dl>' +
                 '</div>' +
                 '</div>' +
