@@ -31,6 +31,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 
+import java.io.IOException;
 import org.springframework.social.NotAuthorizedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -95,6 +96,15 @@ public class ExceptionResolver {
             log.error(exception.getMessage(), exception);
         }
         return new ErrorResponse("facebook.access.denied", "Facebook sign in failed!");
+    }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(IOException.class)
+    public @ResponseBody ErrorResponse fileStorageError(HttpServletRequest request, IOException exception) {
+        if (log.isErrorEnabled()) {
+            log.error(exception.getMessage(), exception);
+        }
+        return new ErrorResponse("file.storage.error", "File upload/retrieval failed!");
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)

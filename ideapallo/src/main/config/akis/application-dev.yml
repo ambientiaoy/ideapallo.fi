@@ -41,6 +41,7 @@ management:
     context-path: /management
 custom:
     secretKey: changeme
+    storageFolder:
     datasource:
         cachePrepStmts: true
         prepStmtCacheSize: 250
@@ -54,6 +55,7 @@ custom:
         password:
         starttls: true
         auth: false
+    baseUrl: http://localhost:8080
     clientUrl: http://localhost:3000/#/home
     metrics:
          logs:

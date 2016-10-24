@@ -51,6 +51,35 @@
 
     angular
         .module('webApp')
+        .provider('fileApi', fileApi)
+        .config(fileApiProvider);
+
+    function fileApi() {
+        var isMocked = false;
+
+        var $get = ['fileApiService', 'fileApiMockService', 'clientConfigurationValues', function(fileApiService, fileApiMockService, clientConfigurationValues) {
+            if (this.isMocked) {
+                return fileApiMockService;
+            } else {
+                if (clientConfigurationValues.remoteIdeapalloUrl) {
+                    fileApiService.init(clientConfigurationValues.remoteIdeapalloUrl);
+                }
+                return fileApiService;
+            }
+        }];
+
+        return {
+            isMocked: isMocked,
+            $get: $get
+        };
+    }
+
+    function fileApiProvider(clientConfigurationValues, fileApiProvider) {
+        fileApiProvider.isMocked = clientConfigurationValues.useServerMock;
+    }
+
+    angular
+        .module('webApp')
         .provider('tagApi', tagApi)
         .config(tagApiProvider);
 

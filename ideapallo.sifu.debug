@@ -8,6 +8,7 @@ ideapallo project[
             docker
         )
         default model type mysql
+        file storage fs
         security(
             principal Account
             role AccountTypes
@@ -573,6 +574,10 @@ ideapallo project[
         EMAIL_NOT_VERIFIED unauthorized
         EMAIL_VERIFICATION_CODE_EXPIRED badRequest
         EMAIL_RESET_PASSWORD_CODE_EXPIRED badRequest
+        File embedded(
+            path text[
+                max 255]
+        )
         IdeaIdealist model[
             type mysql
             unique(
@@ -825,6 +830,18 @@ ideapallo project[
                     regex "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$"]
             )
         )
+        FileApi api(
+            findFile find[
+                request FindFileRequest
+                get /file/:key/:fileName
+                errors]
+            FindFileRequest dto(
+                key text[
+                    max 255]
+                fileName text[
+                    max 255]
+            )
+        )
     )
     webApp client[
         template js-angular
@@ -845,6 +862,7 @@ ideapallo project[
             ideapallo.AuthenticationApi.verifyEmail
             ideapallo.AuthenticationApi.changePassword
             ideapallo.AuthenticationApi.facebookSignIn
+            ideapallo.FileApi.findFile
         )
         path /home
         home homePage
