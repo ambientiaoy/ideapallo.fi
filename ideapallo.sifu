@@ -105,6 +105,10 @@ ideapallo project[
       ){
         on IdeaUpdated reload
       }
+
+      idea view[hidden, load IdeaApi.findById ]{
+        on ViewIdea (show,  reload(event.id))
+      }
     )
    
   
@@ -113,9 +117,6 @@ ideapallo project[
     }
 
     ideaPage page[path /idea/:id, params(id text)](
-      idea view[ load IdeaApi.findById ]{
-        on ViewIdea (show,  reload(event.id))
-      }
     )
 
     findByTags page[path /tags, secured(ADMIN, CLIENT)](
