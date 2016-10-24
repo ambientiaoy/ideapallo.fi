@@ -29,7 +29,7 @@
                     visible: '=',
                     id: '='
                 },
-                templateUrl: 'src/app/components/views/idea.html',
+                templateUrl: 'src/app/components/tables/idea.html',
                 controller: 'IdeaController'
             };
         });
@@ -41,8 +41,7 @@
     IdeaController.$inject = ['$scope', 'eventBus', 'ideaApi'];
 
     function IdeaController($scope, eventBus, ideaApi) {
-
-        $scope.model = {};
+        $scope.model = [];
         $scope.errorCode = null;
         $scope.onViewIdea = eventBus.onEvent('ViewIdea', onViewIdea);
 

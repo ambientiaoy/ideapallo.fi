@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive" data-ng-show="visible">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>{{'IDEA_ID' | translate}}</th>
+                        <th>{{'IDEA_TITLE' | translate}}</th>
+                        <th>{{'IDEA_CONTENT' | translate}}</th>
+                        <th>{{'IDEA_IDEALIST_ID' | translate}}</th>
+                        <th>{{'IDEA_TAGS_ID' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in model">
+                        <td>{{item.id}}</td>
+                        <td>{{item.title}}</td>
+                        <td>{{item.content}}</td>
+                        <td>{{item.idealistId}}</td>
+                        <td>{{item.tagsId}}</td>
+                    </tr>
+                </tbody>
+                <tfoot data-ng-if="model.length == 0">
+                    <tr>
+                        <td colspan="100%" class="small text-muted text-center">{{'DATA_SET_EMPTY_NO_DATA' | translate}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div class="row" ng-show="errorCode">
+    <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="{{'ALERT_CLOSE' | translate}}">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{errorCode}}
+        </div>
+    </div>
+</div>

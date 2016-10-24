@@ -106,7 +106,7 @@ ideapallo project[
         on IdeaUpdated reload
       }
 
-      idea view[hidden, load IdeaApi.findById ]{
+      idea table[hidden, load IdeaApi.findById ]{
         on ViewIdea (show,  reload(event.id))
       }
     )
