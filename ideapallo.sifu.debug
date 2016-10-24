@@ -39,9 +39,7 @@ ideapallo project[
                 max 9223372036854775807]
             name text[
                 max 255]
-            related list Tag[
-                oneToMany]
-            findIdeaBytag find from Idea as Idea left join Tag as Tag on Idea with Idea.tags
+            findIdeaByTag find from Idea as Idea left join Tag as Tag on Idea with Idea.tags where Tag.name == name
             findAll find from Tag as Tag
             countAll count from Tag as Tag
             findById find from Tag as Tag where Tag.id == id
@@ -304,6 +302,7 @@ ideapallo project[
                     max 255]
             )
         )
+        TagApi api
         IdeaApi api[
             secured(
                 CLIENT
@@ -452,6 +451,42 @@ ideapallo project[
                 id integer[
                     max 9223372036854775807]
             )
+            tag find[
+                query Tag.findIdeaByTag
+                get /tag
+                secured(
+                    CLIENT
+                    ADMIN
+                )
+                errors
+                request TagRequest
+                response(
+                    Idea.id
+                    Idea.title
+                    Idea.content
+                    Idea.idealist.id
+                    Idea.tags.id
+                    Tag.name
+                )
+                response list TagResponse]
+            TagRequest dto(
+                name text[
+                    max 255]
+            )
+            TagResponse dto(
+                id integer[
+                    max 9223372036854775807]
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+                idealistId list integer[
+                    max 9223372036854775807]
+                tagsId list integer[
+                    max 9223372036854775807]
+                tagName optional text[
+                    max 255]
+            )
             ideas find[
                 query Idea.ideas
                 get /ideas
@@ -481,7 +516,7 @@ ideapallo project[
                     max 9223372036854775807]
             )
             findById find[
-                query Idea.byId
+                query Idea.findById
                 get /find-by-id
                 secured(
                     CLIENT
@@ -782,6 +817,7 @@ ideapallo project[
             ideapallo.IdeaApi.createIdea
             ideapallo.IdeaApi.updateIdea
             ideapallo.IdeaApi.deleteIdea
+            ideapallo.IdeaApi.tag
             ideapallo.IdeaApi.ideas
             ideapallo.IdeaApi.findById
             ideapallo.AuthenticationApi.emailSignUp

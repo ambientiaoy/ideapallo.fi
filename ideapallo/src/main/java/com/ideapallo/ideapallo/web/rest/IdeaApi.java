@@ -44,6 +44,7 @@ import com.ideapallo.ideapallo.model.*;
 import com.ideapallo.ideapallo.web.rest.dto.*;
 
 import com.ideapallo.ideapallo.repository.*;
+import com.ideapallo.ideapallo.repository.tuple.*;
 
 
 @RestController
@@ -123,6 +124,16 @@ public class IdeaApi {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/tag", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
+    public ResponseEntity<List<TagResponse>> tag(@RequestParam("name") String name) {
+        log.debug("GET /tag");
+        final List<IdeaTagTuple> result = ideaRepository.findIdeaByTag(name);
+        return ResponseEntity.ok().body(result.stream().map(this::convertToTagResponse).collect(Collectors.toList()));
+    }
+
     @RequestMapping(value = "/ideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
@@ -139,7 +150,7 @@ public class IdeaApi {
     @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
     public ResponseEntity<FindByIdResponse> findById(@RequestParam("id") Long id) {
         log.debug("GET /find-by-id");
-        final Optional<Idea> result = ideaRepository.byId(id);
+        final Optional<Idea> result = Optional.ofNullable(ideaRepository.findOne(id));
         if (result.isPresent()) {
             return ResponseEntity.ok().body(convertToFindByIdResponse(result.get()));
         }
@@ -185,6 +196,17 @@ public class IdeaApi {
         dto.setTitle(model.getTitle());
         dto.setContent(model.getContent());
         dto.setTags(model.getTags().stream().map(Tag::getName).collect(Collectors.toList()));
+        return dto;
+    }
+
+    private TagResponse convertToTagResponse(IdeaTagTuple model) {
+        final TagResponse dto = new TagResponse();
+        dto.setId(model.getIdea().getId());
+        dto.setTitle(model.getIdea().getTitle());
+        dto.setContent(model.getIdea().getContent());
+        dto.setIdealistId(model.getIdea().getIdealist().getId());
+        dto.setTagsId(model.getIdea().getTags().getId());
+        dto.setTagName(model.getTag().getName());
         return dto;
     }
 

@@ -44,11 +44,11 @@ public class TagRepositoryImpl implements TagRepositoryCustom {
     private JPQLQueryFactory factory;
 
     @Override
-    public List<IdeaTagTuple> findIdeaBytag() {
-        log.trace(".findIdeaBytag()");
+    public List<IdeaTagTuple> findIdeaByTag(String name) {
+        log.trace(".findIdeaByTag(name: {})", name);
         final QIdea idea = QIdea.idea;
         final QTag tag = QTag.tag;
-        return factory.select(idea, tag).from(idea).leftJoin(idea.tags, tag).fetch().stream().map(t -> new IdeaTagTuple(t.get(idea), t.get(tag))).collect(Collectors.toList());
+        return factory.select(idea, tag).from(idea).leftJoin(idea.tags, tag).where(tag.name.eq(name)).fetch().stream().map(t -> new IdeaTagTuple(t.get(idea), t.get(tag))).collect(Collectors.toList());
     }
 
     @Override

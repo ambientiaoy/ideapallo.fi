@@ -33,6 +33,7 @@
             createIdea: createIdea,
             updateIdea: updateIdea,
             deleteIdea: deleteIdea,
+            tag: tag,
             ideas: ideas,
             findById: findById
         };
@@ -106,6 +107,29 @@
          *
          */
         function deleteIdea(model) {
+            $timeout(function() {
+                successCallback({
+                    //TODO fill up mocked data values
+                }, 500);
+            });
+        }
+
+        /** tag (secured)
+         * request - Unit
+         *
+         * response - List [
+         *   TagResponse {
+         *     id: Int
+         *     title: String
+         *     content: String
+         *     idealistId: List[Int]
+         *     tagsId: List[Int]
+         *     tagName: Optional[String]
+         *   }
+         * ]
+         *
+         */
+        function tag(model) {
             $timeout(function() {
                 successCallback({
                     //TODO fill up mocked data values

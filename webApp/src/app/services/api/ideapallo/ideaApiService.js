@@ -36,6 +36,7 @@
             createIdea: createIdea,
             updateIdea: updateIdea,
             deleteIdea: deleteIdea,
+            tag: tag,
             ideas: ideas,
             findById: findById
         };
@@ -134,6 +135,34 @@
                 url: ideapalloApiUrl + '/api/idea/' + model.id + '',
                 data: {
                     id: model.id
+                },
+                headers: {
+                    'Authorization': "Bearer " + sessionService.getSessionData().accessToken
+                }
+            });
+        }
+
+        /** tag (secured)
+         * request - Unit
+         *
+         * response - List [
+         *   TagResponse {
+         *     id: Int
+         *     title: String
+         *     content: String
+         *     idealistId: List[Int]
+         *     tagsId: List[Int]
+         *     tagName: Optional[String]
+         *   }
+         * ]
+         *
+         */
+        function tag(model) {
+            return $http({
+                method: 'GET',
+                url: ideapalloApiUrl + '/api/tag',
+                params: {
+                    name: model.name
                 },
                 headers: {
                     'Authorization': "Bearer " + sessionService.getSessionData().accessToken
