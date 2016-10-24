@@ -17,19 +17,26 @@
 * You should have received a copy of the GNU General Public License
 * along with ideapallo. If not, see <http://www.gnu.org/licenses/>.*
 **/
-package com.ideapallo.ideapallo.repository;
+package com.ideapallo.ideapallo.web.rest;
 
-import java.util.List;
+import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.*;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import com.codahale.metrics.annotation.Timed;
+import javax.validation.Valid;
 import com.ideapallo.ideapallo.model.*;
+import com.ideapallo.ideapallo.web.rest.dto.*;
 
-import com.ideapallo.ideapallo.repository.tuple.*;
 
+@RestController
+@RequestMapping("/api/")
+public class TagApi {
 
-public interface TagRepositoryCustom {
-
-    List<IdeaTagTuple> findIdeaByTag(String name);
-
-    List<Tag> findByName(String name);
+    private final Logger log = LoggerFactory.getLogger(TagApi.class);
 
 }

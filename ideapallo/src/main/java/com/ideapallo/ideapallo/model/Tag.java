@@ -21,9 +21,6 @@ package com.ideapallo.ideapallo.model;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -43,10 +40,6 @@ public class Tag implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @NotNull
-    @OneToMany(mappedBy = "id")
-    private List<Tag> related = new ArrayList<>();
-
     public Long getId() {
         return id;
     }
@@ -63,14 +56,6 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
-    public List<Tag> getRelated() {
-        return related;
-    }
-
-    public void setRelated(List<Tag> related) {
-        this.related = related;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -84,8 +69,6 @@ public class Tag implements Serializable {
             return false;
         if ((name == null && other.name != null) || !name.equals(other.name))
             return false;
-        if ((related == null && other.related != null) || !related.equals(other.related))
-            return false;
         return true;
     }
 
@@ -95,13 +78,12 @@ public class Tag implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((related == null) ? 0 : related.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "Tag[" + "id=" + id + ", name=" + name + ", related=" + related + "]";
+        return "Tag[" + "id=" + id + ", name=" + name + "]";
     }
 
 }

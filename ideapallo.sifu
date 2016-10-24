@@ -25,9 +25,7 @@ ideapallo project[
 
     Tag model(
       name text
-      related list Tag
-      findIdeaBytag find from Idea 
-        left join Tag  on Idea.tags
+      findIdeaByTag find from Idea left join Tag  on Idea.tags where Tag.name == name
     )
 
     #MODEL
@@ -64,6 +62,11 @@ ideapallo project[
 #      Tag.name
 #    )
 
+    TagApi api[ ](
+
+      
+    )
+
     IdeaApi api[ secured (CLIENT, ADMIN)](
       idea crud[model Idea, rest](
         title  
@@ -71,8 +74,9 @@ ideapallo project[
         tags optional list text
       )
 
+      tag find[query Tag.findIdeaByTag, rest]
       ideas find[from Idea, rest]
-      findById find[query Idea.byId , rest ]
+      findById find[query Idea.findById , rest ]
     )
 
   )
