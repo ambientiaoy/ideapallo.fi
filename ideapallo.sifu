@@ -106,9 +106,9 @@ ideapallo project[
         on IdeaUpdated reload
       }
 
-      idea view[hidden, load IdeaApi.findById ]{
-        on ViewIdea (show,  reload(event.id))
-      }
+#      idea view[hidden, load IdeaApi.findById ]{
+#        on ViewIdea (show,  reload(event.id))
+#      }
     )
   
     createNewIdea form[submit IdeaApi.createIdea]{
@@ -118,7 +118,6 @@ ideapallo project[
     ideaPage page[path /idea/:id, params(id integer)](
       ideaView view[load IdeaApi.findById ]{
         on ViewIdea( show,  reload(event.id)) 
-
       }
     )
 
