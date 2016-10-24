@@ -1039,7 +1039,10 @@ ideapallo project[
             uusiIdea link
             haku text[
                 max 255]
-            hae button
+            hae button{
+                on click(
+                    open createNewIdea
+                )}
             kuinkaPalveluToimii link
         )
         ideas table[
