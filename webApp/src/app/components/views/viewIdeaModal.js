@@ -69,7 +69,6 @@
         }
 
         function onViewIdea(event, payload) {
-            load(payload.id);
             $scope.visible = true;
         }
 
