@@ -856,6 +856,7 @@ ideapallo project[
             path /](
             siteHeader siteHeader
             placeholder
+            createNewIdea createNewIdea
         )
         homePage page[
             path /home](
@@ -883,35 +884,6 @@ ideapallo project[
                 )}
             ideas ideas
         )
-        createNewIdea form[
-            submit IdeaApi.createIdea
-            model[
-                dto ideapallo.IdeaApi.CreateIdeaRequest](
-                title text[
-                    max 255]
-                content text[
-                    max 255]
-            )
-            visible(
-                title
-                content
-            )](
-            title text[
-                bind(
-                    model . title
-                )
-                max 255]
-            content text[
-                bind(
-                    model . content
-                )
-                max 255]
-            submit button
-        ){
-            on success(
-                close
-                fire IdeaUpdated
-            )}
         ideaPage page[
             path /idea/:id
             params(
@@ -1045,6 +1017,35 @@ ideapallo project[
                 )}
             kuinkaPalveluToimii link
         )
+        createNewIdea form[
+            submit IdeaApi.createIdea
+            model[
+                dto ideapallo.IdeaApi.CreateIdeaRequest](
+                title text[
+                    max 255]
+                content text[
+                    max 255]
+            )
+            visible(
+                title
+                content
+            )](
+            title text[
+                bind(
+                    model . title
+                )
+                max 255]
+            content text[
+                bind(
+                    model . content
+                )
+                max 255]
+            submit button
+        ){
+            on success(
+                close
+                fire IdeaUpdated
+            )}
         ideas table[
             load IdeaApi.ideas
             model[
