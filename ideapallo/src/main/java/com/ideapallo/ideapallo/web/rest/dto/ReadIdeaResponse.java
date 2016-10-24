@@ -20,7 +20,7 @@
 package com.ideapallo.ideapallo.web.rest.dto;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.*;
@@ -41,8 +41,8 @@ public class ReadIdeaResponse implements Serializable {
     @Size(max = 255)
     private String content;
 
-    @NotNull
-    private List<Long> tagsId;
+    private List<String> tags;
+
 
     public Long getId() {
         return id;
@@ -68,12 +68,12 @@ public class ReadIdeaResponse implements Serializable {
         this.content = content;
     }
 
-    public List<Long> getTagsId() {
-        return tagsId;
+    public void setTags(List<String> tags){
+        this.tags = tags;
     }
 
-    public void setTagsId(List<Long> tagsId) {
-        this.tagsId = tagsId;
+    public List<String> getTags() {
+        return null == tags ? new ArrayList<>() : tags ;
     }
 
     @Override
@@ -91,8 +91,6 @@ public class ReadIdeaResponse implements Serializable {
             return false;
         if ((content == null && other.content != null) || !content.equals(other.content))
             return false;
-        if ((tagsId == null && other.tagsId != null) || !tagsId.equals(other.tagsId))
-            return false;
         return true;
     }
 
@@ -103,13 +101,11 @@ public class ReadIdeaResponse implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((content == null) ? 0 : content.hashCode());
-        result = prime * result + ((tagsId == null) ? 0 : tagsId.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "ReadIdeaResponse[" + "id=" + id + ", title=" + title + ", content=" + content + ", tagsId=" + tagsId + "]";
+        return "ReadIdeaResponse[" + "id=" + id + ", title=" + title + ", content=" + content + "]";
     }
-
 }

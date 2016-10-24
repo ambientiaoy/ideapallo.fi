@@ -58,13 +58,19 @@ ideapallo project[
       )
 
     )
+#    IdeaDto dto(
+#      Idea.title
+#      Idea.content
+#      Tag.name
+#    )
 
     IdeaApi api[ secured (CLIENT, ADMIN)](
       idea crud[model Idea, rest](
-        title
-        content
-        tags
+        title  
+        content 
+        tags optional list text
       )
+
       ideas find[from Idea, rest]
       findById find[query Idea.byId , rest ]
     )

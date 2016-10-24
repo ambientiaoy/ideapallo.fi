@@ -43,8 +43,6 @@
                 CREATE_NEW_IDEA_CONTENT_IS_REQUIRED: 'Content is required',
                 CREATE_NEW_IDEA_CONTENT_MAX: 'Content max',
                 CREATE_NEW_IDEA_SUBMIT: 'Submit',
-                CREATE_NEW_IDEA_TAGS_IDS: 'Tags ids',
-                CREATE_NEW_IDEA_TAGS_IDS_IS_REQUIRED: 'Tags ids is required',
                 CREATE_NEW_IDEA_TITLE: 'Title',
                 CREATE_NEW_IDEA_TITLE_IS_REQUIRED: 'Title is required',
                 CREATE_NEW_IDEA_TITLE_MAX: 'Title max',
