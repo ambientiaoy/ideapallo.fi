@@ -143,4 +143,8 @@ public class Idea implements Serializable {
         }
         this.idealist.add( idealist );
     }
+
+    public void addTag(Tag tag) {
+        this.tags.add( tag );
+    }
 }

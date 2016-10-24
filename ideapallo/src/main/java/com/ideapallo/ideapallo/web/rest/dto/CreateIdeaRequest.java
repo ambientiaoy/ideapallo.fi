@@ -20,7 +20,9 @@
 package com.ideapallo.ideapallo.web.rest.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.*;
 
 
@@ -35,6 +37,8 @@ public class CreateIdeaRequest implements Serializable {
     @NotNull
     @Size(max = 255)
     private String content;
+
+    private List<String> tagNames;
 
     public String getTitle() {
         return title;
@@ -82,4 +86,15 @@ public class CreateIdeaRequest implements Serializable {
         return "CreateIdeaRequest[" + "title=" + title + ", content=" + content + "]";
     }
 
+    public List<String> getTagNames() {
+        return tagNames;
+    }
+
+    public void setTagNames(List<String> tagNames) {
+        this.tagNames = tagNames;
+    }
+
+    public Iterable<String> forEachTag() {
+        return tagNames;
+    }
 }

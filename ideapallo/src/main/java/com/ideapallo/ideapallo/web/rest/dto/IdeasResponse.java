@@ -45,7 +45,7 @@ public class IdeasResponse implements Serializable {
     private List<Long> idealistId;
 
     @NotNull
-    private List<Long> tagsId;
+    private List<String> tagNames;
 
     public Long getId() {
         return id;
@@ -79,12 +79,12 @@ public class IdeasResponse implements Serializable {
         this.idealistId = idealistId;
     }
 
-    public List<Long> getTagsId() {
-        return tagsId;
+    public List<String> getTagNames() {
+        return tagNames;
     }
 
-    public void setTagsId(List<Long> tagsId) {
-        this.tagsId = tagsId;
+    public void setTagsId(List<String> tagNames) {
+        this.tagNames = tagNames;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class IdeasResponse implements Serializable {
             return false;
         if ((idealistId == null && other.idealistId != null) || !idealistId.equals(other.idealistId))
             return false;
-        if ((tagsId == null && other.tagsId != null) || !tagsId.equals(other.tagsId))
+        if ((tagNames == null && other.tagNames != null) || !tagNames.equals(other.tagNames))
             return false;
         return true;
     }
@@ -117,13 +117,13 @@ public class IdeasResponse implements Serializable {
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((content == null) ? 0 : content.hashCode());
         result = prime * result + ((idealistId == null) ? 0 : idealistId.hashCode());
-        result = prime * result + ((tagsId == null) ? 0 : tagsId.hashCode());
+        result = prime * result + ((tagNames == null) ? 0 : tagNames.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "IdeasResponse[" + "id=" + id + ", title=" + title + ", content=" + content + ", idealistId=" + idealistId + ", tagsId=" + tagsId + "]";
+        return "IdeasResponse[" + "id=" + id + ", title=" + title + ", content=" + content + ", idealistId=" + idealistId + ", tagNames=" + tagNames + "]";
     }
 
 }
