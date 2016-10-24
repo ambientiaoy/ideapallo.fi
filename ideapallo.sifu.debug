@@ -852,6 +852,13 @@ ideapallo project[
             en
         )
         loggedin ideasPage](
+        IdeaUpdated event
+        ViewTags event(
+            name text
+        )
+        ViewIdea event(
+            id integer
+        )
         appPage page[
             path /](
             siteHeader siteHeader
@@ -864,13 +871,6 @@ ideapallo project[
                 on click(
                     goto ideasPage
                 )}
-        )
-        IdeaUpdated event
-        ViewTags event(
-            name text
-        )
-        ViewIdea event(
-            id integer
         )
         ideasPage page[
             path /ideas
@@ -1008,13 +1008,13 @@ ideapallo project[
             )}
         siteHeader container(
             osallistu link
-            uusiIdea link
-            haku text[
-                max 255]
-            hae button{
+            uusiIdea button{
                 on click(
                     open createNewIdea
                 )}
+            haku text[
+                max 255]
+            hae button
             kuinkaPalveluToimii link
         )
         createNewIdea form[

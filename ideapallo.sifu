@@ -89,12 +89,17 @@ ideapallo project[
     path /home
     home homePage
   ](
+
+    IdeaUpdated event
+    ViewTags event(name text)
+    ViewIdea event(id integer)
+
     appPage page[path /](
       siteHeader container (
         osallistu link
-        uusiIdea link
+        uusiIdea button{on click open createNewIdea}
         haku text
-        hae button{on click open createNewIdea}
+        hae button 
         kuinkaPalveluToimii link
       )
       placeholder
@@ -107,10 +112,6 @@ ideapallo project[
     homePage appPage[path /home](
       seeIdeas link{on click goto ideasPage}
     )
-    
-    IdeaUpdated event
-    ViewTags event(name text)
-    ViewIdea event(id integer)
 
     ideasPage appPage[path /ideas, secured(ADMIN, CLIENT)](
       addNote button{on click open createNewIdea}
