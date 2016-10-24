@@ -52,7 +52,7 @@
             var request = {
                 id: id
             };
-            ideaApi.findById(request).then(onSuccess, onError);
+            ideaApi.readIdea(request).then(onSuccess, onError);
 
             function onSuccess(response) {
                 $scope.model = response.data;

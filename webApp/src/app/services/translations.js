@@ -88,8 +88,6 @@
                 IDEAS_VIEW_IDEA_X: 'View idea x',
                 IDEA_VIEW_CONTENT: 'Content',
                 IDEA_VIEW_ID: 'Id',
-                IDEA_VIEW_IDEALIST_ID: 'Idealist id',
-                IDEA_VIEW_TAGS_ID: 'Tags id',
                 IDEA_VIEW_TITLE: 'Title',
                 MODAL_WINDOW_CLOSE: 'Close',
                 NO: 'No',

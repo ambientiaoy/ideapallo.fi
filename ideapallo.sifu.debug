@@ -1092,31 +1092,25 @@ ideapallo project[
                 reload
             )}
         ideaView view[
-            load IdeaApi.findById
+            load IdeaApi.readIdea
             params[
-                dto ideapallo.IdeaApi.FindByIdRequest](
+                dto ideapallo.IdeaApi.ReadIdeaRequest](
                 id integer[
                     max 9223372036854775807]
             )
             model[
-                dto ideapallo.IdeaApi.FindByIdResponse](
+                dto ideapallo.IdeaApi.ReadIdeaResponse](
                 id integer[
                     max 9223372036854775807]
                 title text[
                     max 255]
                 content text[
                     max 255]
-                idealistId list integer[
-                    max 9223372036854775807]
-                tagsId list integer[
-                    max 9223372036854775807]
             )
             visible(
                 id
                 title
                 content
-                idealistId
-                tagsId
             )](
             id integer[
                 bind(
@@ -1133,16 +1127,6 @@ ideapallo project[
                     model . content
                 )
                 max 255]
-            idealistId list integer[
-                bind(
-                    model . idealistId
-                )
-                max 9223372036854775807]
-            tagsId list integer[
-                bind(
-                    model . tagsId
-                )
-                max 9223372036854775807]
         ){
             on ViewIdea(
                 show
