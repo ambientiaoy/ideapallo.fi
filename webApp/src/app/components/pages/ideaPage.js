@@ -28,6 +28,5 @@
 
     function IdeaPageController($scope, $stateParams) {
         $scope.id = parseInt($stateParams.id);
-
     }
 })();

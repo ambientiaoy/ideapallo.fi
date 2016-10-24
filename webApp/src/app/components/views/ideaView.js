@@ -46,7 +46,7 @@
         $scope.errorCode = null;
         $scope.onViewIdea = eventBus.onEvent('ViewIdea', onViewIdea);
 
-        if ($scope.$id) load($scope.$id);
+        if ($scope.$parent.id) load($scope.$parent.id);
 
         function load(id) {
             var request = {
