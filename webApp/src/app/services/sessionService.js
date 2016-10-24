@@ -41,6 +41,10 @@
         stateAccessRights['ideasPage']['ADMIN'] = true;
         stateAccessRights['ideasPage']['CLIENT'] = true;
 
+        stateAccessRights['findByTags'] = [];
+        stateAccessRights['findByTags']['ADMIN'] = true;
+        stateAccessRights['findByTags']['CLIENT'] = true;
+
         /* jshint ignore:end */
 
         return {
