@@ -27,7 +27,7 @@
     IdeaPageController.$inject = ['$scope', '$stateParams'];
 
     function IdeaPageController($scope, $stateParams) {
-        $scope.id = $stateParams.id;
+        $scope.id = parseInt($stateParams.id);
 
     }
 })();
