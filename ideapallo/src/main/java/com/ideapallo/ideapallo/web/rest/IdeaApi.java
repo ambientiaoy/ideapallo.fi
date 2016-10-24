@@ -124,11 +124,11 @@ public class IdeaApi {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/tag", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/ideas/tag/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
     @PreAuthorize("hasAuthority('CLIENT') or hasAuthority('ADMIN')")
-    public ResponseEntity<List<TagResponse>> tag(@RequestParam("name") String name) {
+    public ResponseEntity<List<TagResponse>> tag(@PathVariable("name") String name) {
         log.debug("GET /tag");
         final List<IdeaTagTuple> result = ideaRepository.findIdeaByTag(name);
         return ResponseEntity.ok().body(result.stream().map(this::convertToTagResponse).collect(Collectors.toList()));
@@ -204,8 +204,8 @@ public class IdeaApi {
         dto.setId(model.getIdea().getId());
         dto.setTitle(model.getIdea().getTitle());
         dto.setContent(model.getIdea().getContent());
-        dto.setIdealistId(model.getIdea().getIdealist().getId());
-        dto.setTagsId(model.getIdea().getTags().getId());
+        dto.setIdealistId(model.getIdea().getIdealist().stream().map(Idealist::getId).collect(Collectors.toList()));
+        dto.setTagsId(model.getIdea().getTags().stream().map(idea -> idea.getId()).collect(Collectors.toList()));
         dto.setTagName(model.getTag().getName());
         return dto;
     }

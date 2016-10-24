@@ -39,4 +39,5 @@ public interface IdeaRepositoryCustom {
 
     List<Idea> ideas();
 
+    List<IdeaTagTuple> findIdeaByTag(String name);
 }

@@ -79,4 +79,13 @@ public class IdeaRepositoryImpl implements IdeaRepositoryCustom {
         return factory.select(idea).from(idea).fetch();
     }
 
+    @Override
+    public List<IdeaTagTuple> findIdeaByTag(String name) {
+
+        log.trace(".findIdeaByTag()");
+        final QTag tag = QTag.tag;
+        final QIdea idea = QIdea.idea;
+        return factory.select(tag, idea).from(idea).innerJoin(idea.tags, tag).where(tag.name.eq(name)).groupBy(idea.id).fetch().stream().map(t -> new IdeaTagTuple(t.get(idea), t.get(tag))).collect(Collectors.toList());
+    }
+
 }
