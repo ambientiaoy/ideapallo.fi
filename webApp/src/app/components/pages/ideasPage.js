@@ -24,15 +24,9 @@
         .module('webApp')
         .controller('IdeasPageController', IdeasPageController);
 
-    IdeasPageController.$inject = ['$scope', 'modalWindows', 'eventBus'];
+    IdeasPageController.$inject = [];
 
-    function IdeasPageController($scope, modalWindows, eventBus) {
-
-        $scope.onClickAddNote = onClickAddNote;
-
-        function onClickAddNote() {
-            modalWindows.openCreateNewIdea();
-        }
+    function IdeasPageController() {
 
     }
 })();

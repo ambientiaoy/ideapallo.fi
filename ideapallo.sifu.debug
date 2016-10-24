@@ -878,10 +878,6 @@ ideapallo project[
                 ADMIN
                 CLIENT
             )](
-            addNote button{
-                on click(
-                    open createNewIdea
-                )}
             ideas ideas
         )
         ideaPage page[

@@ -114,7 +114,6 @@ ideapallo project[
     )
 
     ideasPage appPage[path /ideas, secured(ADMIN, CLIENT)](
-      addNote button{on click open createNewIdea}
       ideas table[load IdeaApi.ideas](
         viewIdea link{on click fire ViewIdea(item.id)}
         viewIdeaX link{on click goto ideaPage( item.id) }
