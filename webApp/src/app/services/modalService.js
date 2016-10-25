@@ -84,6 +84,11 @@
                 '<dt>{{"IDEA_VIEW_PEOPLE" | translate}}</dt>' +
                 '<dd class="img-rounded">' + '<img src="https://pbs.twimg.com/profile_images/567283774602227713/ZcdNwpWF.jpeg">' + '</dd>' +
                 '</dl>' +
+                '<div class="flex">'+
+                '<span class="stars"><i class="fa fa-star-o fa-2x" aria-hidden="true"></i><i class="fa fa-star-o fa-2x" aria-hidden="true"></i><i class="fa fa-star-o fa-2x" aria-hidden="true"></i></span>' +
+                '<span class="smileys"><i class="fa fa-smile-o fa-2x" aria-hidden="true"></i><i class="fa fa-smile-o fa-2x" aria-hidden="true"></i><i class="fa fa-smile-o fa-2x" aria-hidden="true"></i><i class="fa fa-smile-o fa-2x" aria-hidden="true"></i></span>' +
+                '<span class="euros"><i class="fa fa-eur fa-2x" aria-hidden="true"></i></span>' +
+                '</div>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
