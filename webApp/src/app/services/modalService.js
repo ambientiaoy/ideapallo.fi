@@ -75,14 +75,12 @@
                     '<div class="panel panel-default">' +
                     '<div class="panel-body">' +
                     '<dl class="dl-horizontal">' +
-                    '<dt>{{"VIEW_IDEA_MODAL_ID" | translate}}</dt>' +
-                '<dd>' + model.id + '</dd>' +
                 '<dt>{{"VIEW_IDEA_MODAL_TITLE" | translate}}</dt>' +
                 '<dd>' + model.title + '</dd>' +
                 '<dt>{{"VIEW_IDEA_MODAL_CONTENT" | translate}}</dt>' +
                 '<dd>' + model.content + '</dd>' +
                 '<dt>{{"IDEA_VIEW_PEOPLE" | translate}}</dt>' +
-                '<dd class="img-rounded">' + '<img src="https://pbs.twimg.com/profile_images/567283774602227713/ZcdNwpWF.jpeg">' + '</dd>' +
+                '<dd class="img-rounded">' + '<img src="http://localhost:8080/api/file/user/heini.jpg">' + '</dd>' +
                 '</dl>' +
                 '<div class="flex">'+
                 '<span class="stars"><i class="fa fa-star-o fa-2x" aria-hidden="true"></i><i class="fa fa-star-o fa-2x" aria-hidden="true"></i><i class="fa fa-star-o fa-2x" aria-hidden="true"></i></span>' +
